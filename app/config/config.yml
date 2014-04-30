@@ -104,3 +104,51 @@ liip_cache_control:
 bazinga_hateoas: ~
 
 bazinga_rest_extra: ~
+
+knp_paginator:
+    page_range: 5  # número de páginas que se muestran en el paginador
+
+    default_options:
+        # los siguientes tres parámetros permiten "traducir" el paginador
+        # puedes utilizar por ejemplo: 'pagina', 'ordenar' y 'direccion'
+        page_name:           page
+        sort_field_name:     sort
+        sort_direction_name: direction
+
+        # sólo incluir resultados diferentes (útil cuando haces consultas GROUP BY)
+        distinct: true
+
+    template:
+        # estas opciones configuran la plantilla utilizada para la paginación
+        # y para los controles que premiten reordenar los resultados
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_pagination.html.twig
+        sortable:   KnpPaginatorBundle:Pagination:sortable_link.html.twig
+
+avalanche_imagine:
+    filters:
+        galerias_noticias:
+            type:    thumbnail
+            options: { size: [500, 500], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        galerias_artistas:
+            type:    thumbnail
+            options: { size: [365, 300], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        galerias_productos:
+            type:    thumbnail
+            options: { size: [510, 330], mode: inset, cache_type: public, cache_expires: '2 weeks' }    
+
+
+inori_twitter_app:
+    file: %kernel.root_dir%/../vendor/abraham/twitteroauth/twitteroauth/twitteroauth.php
+    consumer_key: CvGvq3g8R9dBqIP3QIxaUw
+    consumer_secret: l9IlAqYPC3PKZAk3OeW8pseO73nNxYBjpYMH8d9eTw
+    oauth_token: 179341683-OzUZOQ9JtXfEcRlookJ10pMzFMIid7S2atQabo3Q
+    oauth_token_secret: ufLfz9xxFrSTrm6wLjmDwmr4UnhN3iCDVs9Tx9xRItY
+
+knp_last_tweets:
+    fetcher:
+        driver: oauth
+        
+parameters:
+    # dirección de correo electrónico
+    richpolis.emails.to_email: richpolis@gmail.com
+    richpolis.uploads: %kernel.root_dir%/../web/uploads

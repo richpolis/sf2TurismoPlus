@@ -1,3 +1,8 @@
+paginas:
+    resource: "@PaginasBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 frontend:
     resource: "@FrontendBundle/Controller/"
     type:     annotation
@@ -6,8 +11,23 @@ frontend:
 backend:
     resource: "@BackendBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /backend
+    
+usuarios:
+    type:     rest
+    prefix:   /api
+    resource: "@BackendBundle/Resources/config/routing.yml"
+
+publicaciones_fosrest_api:
+    type:     rest
+    prefix:   /api
+    resource: "@PublicacionesBundle/Resources/config/routing.yml"
+    
 
 NelmioApiDocBundle:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
   prefix:   /api/doc
+
+_imagine:
+    resource: .
+    type:     imagine
