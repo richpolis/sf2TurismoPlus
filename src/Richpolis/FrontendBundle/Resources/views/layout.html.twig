@@ -1,25 +1,25 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Siglo V{% endblock %}
+{% block title %}Turismo Plus MG{% endblock %}
 
 {% set urlAbsolutaFoto = 'http://'
                              ~ app.request.server.get('SERVER_NAME')
-                             ~ asset('images/keyarts/logo_250x250.png') %}
+                             ~ asset('images/keyarts/inicio/logomenu.png') %}
 
 {% block stylesheets %}
     
     {% block redes_sociales %}
 
     <meta property="og:url" content="{{url('homepage')}}" />
-    <meta property="og:title" content="Siglo V" />
+    <meta property="og:title" content="Turismo Plus MG" />
     <meta property="og:image" content="{{urlAbsolutaFoto}}" />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="SigloV.com" />
+    <meta property="og:site_name" content="TurismoPlusMG.com" />
     <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@siglov">
-    <meta name="twitter:title" content="Siglo V">
+    <meta name="twitter:title" content="Turismo Plus MG">
     <meta name="twitter:description" content="Descripcion de la publicaicon">
     <meta name="twitter:creator" content="@richpolis">
     <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
@@ -41,9 +41,11 @@
 <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 <link rel="stylesheet" href="{{asset('css/bootstrap-responsive.html')}}">
 <link rel="stylesheet" href="{{asset('css/fuentes.css')}}">
+<link rel="stylesheet" href="{{asset('css/menu.css')}}">
 <link rel="stylesheet" href="{{asset('css/main.css')}}">
 <style>
     .loader {
+        display: none;
         position: fixed;
         left: 0px;
         top: 0px;
@@ -56,55 +58,79 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <header>
-            <div class="menu-principal">
-                <figure id="logo">
-                    {% block logo %}    
-                        <a href="#!/">
-                            <img src="{{asset('images/keyarts/logo.png')}}" alt="">
-                        </a>
-                    {% endblock %}
-                </figure>
-                <nav class="menu">
-                    <ul>
-                        <li><a href="#" class="mostrar-categorias">categorías&nbsp;<i class="fa fa-bars"></i></a></li>
-                        <li><a href="#" class="mostrar-contacto" data-toggle="modal" data-target="#formContacto">contacto</a></li>
-                    </ul>
-                </nav>
-            </div>
-                {% block menu_secundario %}
-                <div class="menu-secundario">
-                    <ul>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                        <li><a href="#">categoria</a></li>
-                    </ul>
+    <div class="container">
+        <header class="encabezado inicio">
+            <div id="lenguajes-redes-sociales">
+                <div class="redes-sociales">
+                    <span class="twitter"></span>
+                    <span class="facebook"></span>
+                    <span class="youtube"></span>
+                    <span class="email"></span>
                 </div>
-                {% endblock %}
-    </header>
-    {% block contenido %}{% endblock %}
-    <footer>
-
-    </footer>
-    <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
-    <div class="loader"></div>
-</div>
+                <div class="lenguajes">
+                    Seleccion de lenguaje    
+                </div>
+            </div>
+            <nav class="main-nav">
+                <figure class="logo">
+                    <img src="images/keyarts/inicio/logomenu.png" alt="">
+                </figure>
+                <ul class="menu">
+                    <li>
+                        <a href="#">
+                            <span data-hover="inicio">inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span data-hover="nosotros">nosotros</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span data-hover="autobuses">autobuses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span data-hover="servicios">servicios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span data-hover="cotizador">cotizador</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span data-hover="tours">tours</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span data-hover="contacto">contacto</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% block extra_header %}
+                <div class="container-extra-header">
+                    <img src="{{asset('images/keyarts/inicio/camiones.png')}}" alt="" class="autobuses">
+                    <img src="{{asset('images/keyarts/inicio/escudo.png')}}" alt="" class="escudo">
+                    <img src="{{asset('images/keyarts/inicio/slogan.png')}}" alt="" class="slogan">
+                </div>
+            {% endblock %}
+        </header>
+        <section>
+            {% block contenido %} 
+            {% endblock %}
+        </section>
+        <footer>
+            <p class="col-lg-12">Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999</p>
+        </footer>
+        <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
+        <div class="loader"></div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

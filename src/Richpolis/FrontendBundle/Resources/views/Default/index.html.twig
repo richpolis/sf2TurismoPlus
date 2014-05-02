@@ -1,134 +1,163 @@
-{# extends 'FrontendBundle::layout.html.twig' #}
+{% extends 'FrontendBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{asset('css/main.css')}}"/>
-{% endblock %}
+    {{  parent()  }}
 
-{% block logo %}
-    <a href="#!/">
-        <img src="/uploads/configuraciones/{{logo.texto}}" alt="logo">
-    </a>
-{% endblock %}
-
-{% block menu_secundario %}
-    <div class="menu-secundario">
-        <ul>
-            <li class="menu-secundario-item">
-                <a href="#!/portada" class="portada active">
-                   PORTADA
-                </a>
-            </li>
-            {% for categoria in categorias %}
-                <li class="menu-secundario-item">
-                    <a href="#!/categoria/{{categoria.slug}}">
-                        {{categoria.nombre}}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-        <span class="flechita">&nbsp;</span>
-    </div>
 {% endblock %}
 
 {% block contenido %}
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=611621672201000";
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-<section class="contenido">
-    <article class="encabezado">
-      <ul class="slider1">  {# divImagenes #}
-          {% for publicacion in  publicaciones %}
-          <li class="slide {% if loop.index == 1 %} active {% endif %}"> {# li #}
-            {% set indice = 0 %}
-            {% for galeria in publicacion.galerias  %}
-              {% if indice == 0 and galeria.isImagen %}
-              {{ galeria.archivoView | raw }}
-              {% set indice = indice + 1 %}
-              {% endif %}
-            {% else %}
-              <!--img src="http://placehold.it/638x369&text=FooBar{{publicacion.titulo}}" /-->
-            {% endfor %}
-            <div class="slide-titulo">
-                {{publicacion.titulo}}
+            <div class="cotizador-promociones">
+                <div class="cotizador-linea">
+                    Visite nuestro cotizador en linea
+                </div>
+                <div class="newsletter">
+                    Reciba ofertas y promociones en su correo
+                    <span class="newsletter-correo"></span>
+                </div>
             </div>
-            <div class="slide-descripcion">
-                {{ publicacion.descripcionCorta | raw }}
-                <span class="slide-descripcion-boton" data-url="#!/publicacion/{{publicacion.slug}}" data-real="{{url('homepage_publicacion',{'slug': publicacion.slug})}}">&nbsp;</span>
-            </div>
-          </li>
-          {% endfor %}
-     </ul>
-    </article>
-    <!--article class="publicaciones"></article-->
-    <!--article class="single-article"></article-->
-</section>
-    {% include 'FrontendBundle:Default:templates.html.twig' with {'form': form } %}
-  
-  
-  
+            <article class="destinos-eventos row">
+                <div class="destinos col-lg-6">
+                    <span class="titulo">DESTINOS</span>
+                    <ul>
+                        <li class="active">
+                            <figure>
+                                <img src="http://placehold.it/508x256&text=Destinos1" alt="">
+                                <figcaption>
+                                    PUERTO VALLARTA, JALISCO
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <img src="http://placehold.it/508x256&text=Destinos2" alt="">
+                                <figcaption>
+                                    ACAPULCO, GUERRERO
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <li>    
+                            <figure>
+                                <img src="http://placehold.it/508x256&text=Destinos3" alt="">
+                                <figcaption>
+                                    DESTINO NUMERO TRES, EN ALGUN LUGAR
+                                </figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </div>
+                <div class="eventos">
+                    <span class="titulo">EVENTOS</span>
+                    <ul>
+                        <li class="active">
+                            <figure>
+                                <img src="http://placehold.it/508x256&text=Eventos1" alt="">
+                                <figcaption>
+                                    EVENTO 1, JALISCO
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <img src="http://placehold.it/508x256&text=Eventos2" alt="">
+                                <figcaption>
+                                    EVENTO 2, GUERRERO
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <img src="http://placehold.it/508x256&text=Eventos3" alt="">
+                                <figcaption>
+                                    EVENTO 3, DISTRITO FEDERAL
+                                </figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+            <article class="twitters">
+                <ul class="twitter-feed">
+                    {% for number in range(1,10) %}
+                    <li class="twit">
+                        <figure class="logo-twit">
+                            <img src="images/keyarts/inicio/logomenu.png" alt=""/>
+                        </figure>
+                        <h3 class="titulo-twit">TurismoPlusMG</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae itaque quasi error totam commodi aperiam libero temporibus ut animi recusandae vitae cumque pariatur ipsum! Eos est ab magnam cupiditate illum.
+                            <a href="#">#Trabajo</a>
+                        </p>
+                        <span class="time-twit">
+                            <i class="fa fa-twitter"></i>{{number}} Hours ago
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="experiencias">
+                    <span class="titulo-experiencias">Experiencias MG</span>
+                    <div class="contenedor-experiencias">
+                        {% for number in range(1,3) %}
+                        <div class="experiencia {% if number == 1 %} active {% endif %}">
+                            <p class="contenido-experiencia">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus quod quibusdam nostrum dolore explicabo excepturi sint cum laudantium deleniti quia atque vero nemo dicta non porro illo harum molestias quos.    
+                            </p>
+                            <span class="autor-experiencia">
+                                -Escuela Normal No. {{number}} Nezahualcoyotl
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
-<script src="{{asset('bundles/frontend/js/app.js')}}"></script> 
-<!--script src="{{asset('bundles/frontend/js/sliderRichpolis.js')}}"></script-->
-<script src="{{asset('js/bxslider/jquery.fitvids.js')}}"></script>
-<script src="{{asset('js/jquery.bxslider.js')}}"></script>
-<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
-<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
-<script src="{{asset('js/jquery.masonry.min.js')}}"></script> 
-<script src="{{asset('bundles/frontend/js/main.js')}}"></script>  
-<script type="text/javascript">
-$(function(){
-    window.api = {
-      url: '{{path('api_1_get_publicacions')}}',
-      urlCategorias: '{{path('api_1_get_categorias')}}',
-      status: 'portada',
-      page: 1,
-      root: '{{root}}',
-      base: '{{url('homepage')}}',
-      modelo: {
-        id: 0  
-      },
-    };
-    
-    $('.slider1').bxSlider({
-        mode: 'fade',
-        tickerHover: true,
-        auto: true,
-        pause: 8000,
-        slideWidth: 638,
-        controls: false,
-        onSlideNext: function($slideElement, oldIndex, newIndex){
-            $(".slider1 li").removeClass("active");
-            $slideElement.addClass("active");
-        }
+    {{ parent() }}
+    <script>
+    $(document).on("ready",function(){
+        setTimeout(function(){
+            iniciarCircle();
+            iniciarDestinos();
+            iniciarEventos();
+        },6000);
     });
-    
-    $(".loader").fadeIn();
-    window.routers.app = new Siglov.Routers.App();
-    window.collections.publicaciones = new Siglov.Collections.Publicaciones();
-    window.collections.publicaciones.url=window.api.url+"/categorias";
-    var xhr = window.collections.publicaciones.fetch({data: {limit: 12, slug:'portada',page: 1}});
-    xhr.done(function(){
-        debugger;
-        $(".loader").fadeOut();
-        Backbone.history.start({
-            root : "!/",
-            pushState:false
+    var iniciarCircle=function(){
+        $('ul.twitter-feed li:first-child').slideUp("slow",function(){
+            $('ul.twitter-feed').append($(this).slideDown("fast"));
         });
-        if(window.api.root = "!/"){
-            window.routers.app.createArticlePublicaciones();
-        }else{
-            window.routers.app.navigate(window.api.root);
-        }
-    });
-    
-});
-</script> 
+                 
+        setTimeout(function(){
+            iniciarCircle();
+        },6000);
+                    
+    }
+    var iniciarDestinos=function(){
+        var destinos = $(".destinos ul");
+        var primero = destinos.find('li:first-child');
+        var segundo = primero.next();
+        segundo.addClass("active").fadeIn("slow",function(){
+            primero.removeClass("active");
+            destinos.append(primero);
+        });
+                 
+        setTimeout(function(){
+            iniciarDestinos();
+        },6000);
+                    
+    }
+    var iniciarEventos=function(){
+        var eventos = $(".eventos ul");
+        var primero = eventos.find('li:first-child');
+        var segundo = primero.next();
+        segundo.addClass("active").fadeIn("slow",function(){
+            primero.removeClass("active");
+            eventos.append(primero);
+        });
+                 
+        setTimeout(function(){
+            iniciarEventos();
+        },6000);
+                    
+    }
+    </script>
 {% endblock %}
 
