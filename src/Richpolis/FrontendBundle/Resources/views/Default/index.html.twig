@@ -2,8 +2,18 @@
 
 {% block stylesheets %}
     {{  parent()  }}
-
+    <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <style>
+    .bx-wrapper .bx-viewport{
+        padding: 0px;
+        border: none;
+        top: 0px;
+        left: 0px;
+    }
+    </style>
 {% endblock %}
+
+{% block header_class 'inicio' %}
 
 {% block contenido %}
             <div class="cotizador-promociones">
@@ -15,63 +25,25 @@
                     <span class="newsletter-correo"></span>
                 </div>
             </div>
-            <article class="destinos-eventos row">
-                <div class="destinos col-lg-6">
+            <article class="destinos-eventos">
+                <div class="destinos">
                     <span class="titulo">DESTINOS</span>
-                    <ul>
-                        <li class="active">
-                            <figure>
-                                <img src="http://placehold.it/508x256&text=Destinos1" alt="">
-                                <figcaption>
-                                    PUERTO VALLARTA, JALISCO
-                                </figcaption>
-                            </figure>
-                        </li>
+                    <ul class="sliderDestinos">
+                        {% for number in range(1,3) %}
                         <li>
-                            <figure>
-                                <img src="http://placehold.it/508x256&text=Destinos2" alt="">
-                                <figcaption>
-                                    ACAPULCO, GUERRERO
-                                </figcaption>
-                            </figure>
+                                <img src="http://placehold.it/508x256&text=Destino{{number}}" title="{{"Titulo de la imagen " ~ number }}">
                         </li>
-                        <li>    
-                            <figure>
-                                <img src="http://placehold.it/508x256&text=Destinos3" alt="">
-                                <figcaption>
-                                    DESTINO NUMERO TRES, EN ALGUN LUGAR
-                                </figcaption>
-                            </figure>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="eventos">
                     <span class="titulo">EVENTOS</span>
-                    <ul>
-                        <li class="active">
-                            <figure>
-                                <img src="http://placehold.it/508x256&text=Eventos1" alt="">
-                                <figcaption>
-                                    EVENTO 1, JALISCO
-                                </figcaption>
-                            </figure>
-                        </li>
+                    <ul class="sliderEventos">
+                        {% for number in range(1,3) %}
                         <li>
-                            <figure>
-                                <img src="http://placehold.it/508x256&text=Eventos2" alt="">
-                                <figcaption>
-                                    EVENTO 2, GUERRERO
-                                </figcaption>
-                            </figure>
+                                <img src="http://placehold.it/508x256&text=Evento{{number}}" title="{{"Titulo de la imagen " ~ number }}">
                         </li>
-                        <li>
-                            <figure>
-                                <img src="http://placehold.it/508x256&text=Eventos3" alt="">
-                                <figcaption>
-                                    EVENTO 3, DISTRITO FEDERAL
-                                </figcaption>
-                            </figure>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </article>
@@ -80,7 +52,7 @@
                     {% for number in range(1,10) %}
                     <li class="twit">
                         <figure class="logo-twit">
-                            <img src="images/keyarts/inicio/logomenu.png" alt=""/>
+                            <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt=""/>
                         </figure>
                         <h3 class="titulo-twit">TurismoPlusMG</h3>
                         <p>
@@ -111,14 +83,27 @@
             </article>
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
-    <script>
+{{ parent() }}
+<script src="{{asset('js/jquery.bxslider.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>
+<script>
     $(document).on("ready",function(){
         setTimeout(function(){
             iniciarCircle();
-            iniciarDestinos();
-            iniciarEventos();
         },6000);
+
+        $('.sliderDestinos,.sliderEventos').bxSlider({
+            mode: 'fade',
+            captions: true,
+            randomStart: true,
+            pager: false,
+            auto: true,
+            controls: false,
+            speed: 4000,
+        });
+
+
+
     });
     var iniciarCircle=function(){
         $('ul.twitter-feed li:first-child').slideUp("slow",function(){
@@ -130,34 +115,7 @@
         },6000);
                     
     }
-    var iniciarDestinos=function(){
-        var destinos = $(".destinos ul");
-        var primero = destinos.find('li:first-child');
-        var segundo = primero.next();
-        segundo.addClass("active").fadeIn("slow",function(){
-            primero.removeClass("active");
-            destinos.append(primero);
-        });
-                 
-        setTimeout(function(){
-            iniciarDestinos();
-        },6000);
-                    
-    }
-    var iniciarEventos=function(){
-        var eventos = $(".eventos ul");
-        var primero = eventos.find('li:first-child');
-        var segundo = primero.next();
-        segundo.addClass("active").fadeIn("slow",function(){
-            primero.removeClass("active");
-            eventos.append(primero);
-        });
-                 
-        setTimeout(function(){
-            iniciarEventos();
-        },6000);
-                    
-    }
-    </script>
+    
+</script>
 {% endblock %}
 

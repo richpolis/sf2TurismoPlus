@@ -1,0 +1,52 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height: 258px; background-color: white;">
+        <img src="{{asset('images/keyarts/nosotros/headernosotros.png')}}" alt="" class="autobuses">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+        <article class="nosotros">
+            <h3>Historia</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, delectus, facere, ullam, quos alias provident reiciendis itaque ea id commodi necessitatibus officiis repudiandae aspernatur! Maiores, repellendus adipisci nisi accusamus placeat.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, necessitatibus inventore similique voluptatibus fugit corrupti dolores doloremque! Pariatur, perferendis, debitis, beatae dicta rerum mollitia magnam voluptatem consectetur accusantium voluptatum placeat.</p>
+            <ul class="mision-vision-valores">
+                    <li class="mision">
+                        <img src="http://placehold.it/100x100&text=Mision" alt=""/>
+                        <h3>nuestra mision</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, tenetur, officia possimus amet exercitationem laboriosam eaque iste itaque fugiat porro voluptas voluptate quas qui debitis necessitatibus vel placeat. Enim, nostrum.</p>
+                    </li>
+                    <li class="vision">
+                        <img src="http://placehold.it/100x100&text=Vision" alt=""/>
+                        <h3>nuestra vision</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, tenetur, officia possimus amet exercitationem laboriosam eaque iste itaque fugiat porro voluptas voluptate quas qui debitis necessitatibus vel placeat. Enim, nostrum.</p>
+                    </li>
+                    <li class="valores">
+                        <img src="http://placehold.it/100x100&text=Valores" alt="" class="redonda"/>
+                        <h3>valores</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, tenetur, officia possimus amet exercitationem laboriosam eaque iste itaque fugiat porro voluptas voluptate quas qui debitis necessitatibus vel placeat. Enim, nostrum.</p>
+                    </li>
+            </ul>
+            <h3 class="azul">
+                ¿porque nosotros?
+            </h3>
+            <ul class="vinetas-azules">
+                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, dolor assumenda nihil nemo repellendus quae amet. Ex, optio, ducimus pariatur sit voluptatibus inventore labore repellat est voluptatem quam recusandae fugiat.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, sequi nihil doloremque soluta eveniet iusto aliquid iure natus iste sit? Quam, temporibus quae ab esse nisi ratione exercitationem neque voluptatibus!</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, incidunt, maiores dolores culpa facilis qui et dicta aliquam quis inventore earum voluptas accusantium ducimus. Est, impedit sequi recusandae natus cumque!</li>
+            </ul>
+            <h3>alianzas estrategicas</h3>
+            <ul class="vinetas-azules">
+                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure temporibus assumenda fugit eaque asperiores rem et error qui repudiandae mollitia! Assumenda, culpa, quasi? Blanditiis, veritatis similique vero nobis provident aut.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, enim fugit officiis vitae aliquam ea fuga cumque nam eveniet illum voluptatum repudiandae ullam blanditiis iusto perferendis illo itaque cupiditate. Voluptatem?</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, dolorem, atque, reprehenderit, est asperiores a nesciunt odio at doloribus sapiente sint ipsam vel provident dolorum magni debitis doloremque illo voluptatem.</li>
+            </ul>
+        </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+</script>
+{% endblock %}
+

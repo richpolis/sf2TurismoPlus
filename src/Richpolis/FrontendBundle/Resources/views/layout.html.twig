@@ -59,7 +59,7 @@
 
 {% block body %}
     <div class="container">
-        <header class="encabezado inicio">
+        <header class="encabezado {% block header_class %}{% endblock %}">
             <div id="lenguajes-redes-sociales">
                 <div class="redes-sociales">
                     <span class="twitter"></span>
@@ -68,46 +68,46 @@
                     <span class="email"></span>
                 </div>
                 <div class="lenguajes">
-                    Seleccion de lenguaje    
+                  Seleccionar lenguaje
                 </div>
             </div>
             <nav class="main-nav">
                 <figure class="logo">
-                    <img src="images/keyarts/inicio/logomenu.png" alt="">
+                    <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt="">
                 </figure>
                 <ul class="menu">
                     <li>
-                        <a href="#">
+                        <a href="{{path('homepage')}}">
                             <span data-hover="inicio">inicio</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{path('frontend_nosotros')}}">
                             <span data-hover="nosotros">nosotros</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{path('frontend_autobuses')}}">
                             <span data-hover="autobuses">autobuses</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{path('frontend_servicios')}}">
                             <span data-hover="servicios">servicios</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{path('frontend_cotizador')}}">
                             <span data-hover="cotizador">cotizador</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{path('frontend_tours')}}">
                             <span data-hover="tours">tours</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{path('frontend_contacto')}}">
                             <span data-hover="contacto">contacto</span>
                         </a>
                     </li>
@@ -135,7 +135,6 @@
 
 {% block javascripts %}
     {# JS #}
-    <!--script src="{{asset('js/jquery-2.0.2.min.js')}}"></script-->
     <script src="{{asset('js/jquery.js')}}"></script>
     <script src="{{asset('js/underscore-min.js')}}"></script>
     <script src="{{asset('js/backbone-min.js')}}"></script>
