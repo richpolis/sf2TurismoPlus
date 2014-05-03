@@ -399,89 +399,110 @@ body {
 .container .destinos-eventos-tours .destinos figure span.precio,
 .container .destinos-eventos-tours .eventos figure span.precio,
 .container .destinos-eventos-tours .tours figure span.precio {
-  padding: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 2px 2px #000;
-  -moz-box-shadow: 2px 2px #000;
-  -ms-box-shadow: 2px 2px #000;
-  -o-box-shadow: 2px 2px #000;
-  box-shadow: 2px 2px #000;
+  padding: 5px 10px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 2px 2px 3px #000;
+  -moz-box-shadow: 2px 2px 3px #000;
+  -ms-box-shadow: 2px 2px 3px #000;
+  -o-box-shadow: 2px 2px 3px #000;
+  box-shadow: 2px 2px 3px #000;
   position: absolute;
   bottom: 10px;
   right: 20px;
   z-index: 2000;
-  background-color: #0ff;
   color: #fff;
-  text-shadow: -1px -1px 2px #618926;
-  background: -moz-linear-gradient(#98ba40, #a6c250 35%, #618926);
+  text-shadow: 1px 1px 1px #00f;
 }
-background -webkit-gradient(linear img,
-left top img,
-left bottom img,
-color-stop(0 img,
-#98ba40) img,
-color-stop(0.35 img,
-#a6c250) img,
-color-stop(1 img,
-#618926)) img {
+.container .destinos-eventos-tours .destinos img,
+.container .destinos-eventos-tours .eventos img,
+.container .destinos-eventos-tours .tours img {
   width: 100%;
   border: 2px solid #0ff;
 }
-background -webkit-gradient(linear h3,
-left top h3,
-left bottom h3,
-color-stop(0 h3,
-#98ba40) h3,
-color-stop(0.35 h3,
-#a6c250) h3,
-color-stop(1 h3,
-#618926)) h3 {
+.container .destinos-eventos-tours .destinos h3,
+.container .destinos-eventos-tours .eventos h3,
+.container .destinos-eventos-tours .tours h3 {
   margin: 15px 0px 5px;
   text-transform: uppercase;
   font-size: 20px;
   font-weight: bold;
 }
-background -webkit-gradient(linear h4,
-left top h4,
-left bottom h4,
-color-stop(0 h4,
-#98ba40) h4,
-color-stop(0.35 h4,
-#a6c250) h4,
-color-stop(1 h4,
-#618926)) h4 {
+.container .destinos-eventos-tours .destinos h4,
+.container .destinos-eventos-tours .eventos h4,
+.container .destinos-eventos-tours .tours h4 {
   margin: 5px 0px 5px;
   color: #0ff;
   font-size: 16px;
   font-weight: bold;
 }
-& .destino .evento,
-& .destino .tour {
+.container .destinos-eventos-tours .destino,
+.container .destinos-eventos-tours .evento,
+.container .destinos-eventos-tours .tour {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.container .servicios {
+  margin: 10px 0px;
+  overflow: hidden;
+  text-align: left;
+  background-color: transparent;
+  position: relative;
+  top: -70px;
+  color: #00f;
+  font-family: 'antipastoregular';
+}
+.container .servicios p {
+  text-align: justify;
+}
+.container .servicios h3 {
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bold;
+}
+.container .servicios h3.azul {
+  color: #00f;
+}
+.container .servicios .galeria {
+  position: relative;
+}
+.container .servicios .galeria #slider-prev .bx-prev {
+  background: url("../images/keyarts/autobuses/anterior.png") no-repeat center center;
+  width: 28px;
+  height: 197px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+  z-index: 2000;
+}
+.container .servicios .galeria #slider-next .bx-next {
+  background: url("../images/keyarts/autobuses/sig.png") no-repeat center center;
+  width: 28px;
+  height: 197px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: block;
+  z-index: 2000;
 }
 @-moz-keyframes autobusesInicio {
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
@@ -490,19 +511,15 @@ color-stop(1 h4,
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
@@ -511,40 +528,15 @@ color-stop(1 h4,
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
-  100% {
-    background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
-  }
-}
-@-ms-keyframes autobusesInicio {
-  0% {
-    background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
-  }
-
-  25% {
-    background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
-  }
-
-  50% {
-    background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
-  }
-
-  75% {
-    background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
-  }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
@@ -553,19 +545,15 @@ color-stop(1 h4,
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }

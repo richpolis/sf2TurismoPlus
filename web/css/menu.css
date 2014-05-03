@@ -126,3 +126,9 @@
 	color: #eee;
 	text-decoration: none;
 }
+
+span.precio{
+    background: -webkit-linear-gradient(aqua,blue);
+    background: -moz-linear-gradient(aqua,blue);
+    background: linear-gradient(aqua,blue);    
+}
