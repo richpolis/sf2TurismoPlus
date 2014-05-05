@@ -1,0 +1,121 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
+    <style>
+        .dtpicker{
+            max-width:120px;
+            display:inline-block;
+        }
+    </style>
+{% endblock %}
+
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height:90px;">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+    <article class="cotizador">
+        <h3>Cotizador en linea</h3>
+        <hr>
+        <form action="#" class="form-horizontal" role="form"  method="post" >
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nombre</label>
+                <div class="col-lg-8">
+                    <input type="text" name="nombre" class="form-control" placeholder="Input Box">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Telefono</label>
+                <div class="col-lg-8">
+                    <input type="text" name="telefono" class="form-control" placeholder="Input Box">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Email</label>
+                <div class="col-lg-8">
+                    <input type="text" name="email" class="form-control" placeholder="Input Box">
+                </div>
+            </div>
+            <hr/>
+            <fieldset>
+                <legend>Origen</legend>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Salida</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control placeholder" id="origen" name="origen" placeholder="Origen de salida" data-bind="value: origen" />
+                    </div>
+                </div>
+                 <div class="form-group">
+                     <label class="col-lg-2 control-label">Fecha</label>
+                    <div class="fecha-salida input-append col-lg-4">
+                        <input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker">
+                        <span class="add-on">
+                            <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                        </span>
+                    </div>
+
+                </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Hora</label>
+                            <div class="hora-salida input-append col-lg-4">
+                                <input data-format="hh:mm:ss" class="form-control dtpicker" type="text">
+                                <span class="add-on">
+                                  <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                </span>
+                              </div>
+
+                        </div>
+            </fieldset>
+            <fieldset>
+                <legend>Regreso</legend>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Fecha</label>
+                            <div class="fecha-regreso input-append col-lg-4">
+                                <input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker">
+                                <span class="add-on">
+                                  <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                </span>
+                              </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Hora</label>
+                            <div class="hora-regreso input-append col-lg-4">
+                                <input data-format="hh:mm:ss" class="form-control dtpicker" type="text">
+                                <span class="add-on">
+                                  <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                </span>
+                              </div>
+
+                        </div>
+            </fieldset>
+            <hr/>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Comentarios</label>
+                <div class="col-lg-8">
+                    <textarea name="comentarios" class="form-control" rows="4" cols="50"></textarea>
+                </div>
+            </div>  
+        </form>    
+    </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>
+<script>
+$(function() {
+    $('.fecha-salida, .fecha-regreso').datetimepicker({
+        pickTime: false
+    });
+    $('.hora-salida, .hora-regreso').datetimepicker({
+        pickDate: false
+    });
+});
+</script>
+
+{% endblock %}

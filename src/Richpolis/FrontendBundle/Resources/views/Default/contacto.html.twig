@@ -1,72 +1,46 @@
-{%if error is not defined%}
-    {%set error=false%}
-{%endif%}
-{%if ok is not defined%}
-    {%set ok=false%}
-{%endif%}
-{%if mensaje is not defined%}
-    {%set mensaje=""%}
-{%endif%}
+{% extends 'FrontendBundle::layout.html.twig' %}
 
-<div id="formulario_contacto">
-     <form onsubmit="return false;" action="{{path('frontend_contacto')}}" method="post" class="form-contacto {%if error == true%}invalid{%endif%} {%if ok == true%}sent{%endif%}" novalidate="novalidate" role="form">
-          <div class="form-group">
-             {{ form_label(form.name) }}
-                 {{ form_widget(form.name, {'attr': {'class': 'form-control','placeholder':'nombre'}}) }}
-             <span class="errores"> 
-                 {{ form_errors(form.name) }}
-             </span>
-         </div>
-         <div class="form-group">
-             {{ form_label(form.email) }}
-                 {{ form_widget(form.email, {'attr': {'class': 'form-control','placeholder':'email'}}) }}
-             <span class="errores"> 
-                 {{ form_errors(form.email) }}
-             </span>
-         </div>
-          <div class="form-group">
-             {{ form_label(form.subject) }}
-                 {{ form_widget(form.subject, {'attr': {'class': 'form-control','placeholder':'asunto'}}) }}
-             <span class="errores"> 
-                 {{ form_errors(form.subject) }}
-             </span>
-         </div>
-         <div class="form-group">
-             {{ form_label(form.telefono) }}
-                 {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'telefono'}}) }}
-             <span class="errores"> 
-                 {{ form_errors(form.telefono) }}
-             </span>
-         </div>    
-         <div class="form-group">
-             {{ form_label(form.body) }}
-                 {{ form_widget(form.body, {'attr': {'class': 'form-control','placeholder':'mensaje'}}) }}
-             <span class="errores"> 
-                 {{ form_errors(form.body) }}
-             </span>
-         </div> 
-         <div class="form-group">
-             <input type="submit" value="Enviar" class="form-contacto-control form-submit">
-             <img class="ajax-loader" src="/images/bx_loader.gif" alt="Enviando ..." style="visibility: hidden;">
-         </div>
-         {% if ok == true and error == false%}    
-         <div class="form-response-output form-mail-sent-ok">
-             {{mensaje}}
-         </div>
-         {% elseif ok == false and error == true %}
-         <div class="form-response-output form-mail-sent-ng form-validation-errors">
-             {{mensaje}}{{form_errors(form)}}
-         </div>    
-         {% else %}
-         <div class="form-response-output">
-             {{mensaje}}
-         </div>    
-         {% endif %}    
-         {{ form_rest(form) }}    
-     </form>
- </div>
-<script type='text/javascript'>
-$(document).on('ready',function() {   
-    iniciarlizarFormContacto();
-});
-</script>
+{% block stylesheets %}
+    {{  parent()  }}
+{% endblock %}
+
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height:90px;">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+    <article class="contacto">
+        <h3 class="centrado">contacto</h3>
+        <div class="mapa row">
+            <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.mx/maps/ms?msa=0&amp;msid=204579824161303343154.0004c16c862400524945e&amp;ie=UTF8&amp;t=h&amp;ll=19.269544,-98.892424&amp;spn=0,0&amp;output=embed"></iframe>
+        </div>
+        <div class="formulario-informacion row">
+            <div class="formulario col-lg-4">
+                {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
+            </div>
+            <div class="imagen-contacto col-lg-4">
+                <img src="{{asset('images/keyarts/contacto/recepcionista.png')}}" alt=""/>
+            </div>
+            <div class="informacion col-lg-4">
+                <p>
+                    Calle Reforma Manzana #3 Local #4
+                    Col. La Bomba
+                    Chalco, Edo. de Mex.
+                    <br/>
+                    tel1. 5555-5555
+                    tel2. 5555-5555
+                    <br/>
+                    email@turismoplusmg.com.mx
+                </p>
+                <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt=""/>
+            </div>
+        </div>
+    </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+
+{% endblock %}

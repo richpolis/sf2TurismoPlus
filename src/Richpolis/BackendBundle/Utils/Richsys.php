@@ -6,19 +6,21 @@ use Buzz\Browser;
 
 class Richsys
 {
-    static public $TIPO_ARCHIVO_IMAGEN=1;
-    static public $TIPO_ARCHIVO_VIDEO=2;
-    static public $TIPO_ARCHIVO_LINK=3;
-    static public $TIPO_ARCHIVO_MUSICA=4;
-    static public $TIPO_ARCHIVO_FLASH=5;
+    const TIPO_ARCHIVO_IMAGEN=1;
+    const TIPO_ARCHIVO_VIDEO=2;
+    const TIPO_ARCHIVO_LINK=3;
+    const TIPO_ARCHIVO_MUSICA=4;
+    const TIPO_ARCHIVO_FLASH=5;
         
-    static private $sTipoArchivo=array(
-        'Imagen'    =>1 ,
-        'Video'     =>2 ,
-        'Link'      =>3 ,
-        'Musica'    =>4 ,
-        'Flash'     =>5 ,
+    static public $sTipoArchivo=array(
+        self::TIPO_ARCHIVO_IMAGEN=>'Imagen',
+        self::TIPO_ARCHIVO_VIDEO=>'Video',
+        self::TIPO_ARCHIVO_LINK=>'Link',
+        self::TIPO_ARCHIVO_MUSICA=>'Musica',
+        self::TIPO_ARCHIVO_FLASH=>'Flash',
     );
+    
+    
     
     static public function slugify($text)
     {
@@ -52,16 +54,16 @@ class Richsys
         $respuesta="";
         $tipoarchivo=$opciones['tipo_archivo'];
         switch($tipoarchivo){
-            case self::$sTipoArchivo['Imagen']:
+            case self::TIPO_ARCHIVO_IMAGEN:
                 $respuesta=Richsys::getArchivoViewImagen($opciones);
                 break;
-            case self::$sTipoArchivo['Link']:
+            case self::TIPO_ARCHIVO_LINK:
                 $respuesta=Richsys::getArchivoViewLinkVideo($opciones);
                 break;
-            case self::$sTipoArchivo['Video']:
+            case self::TIPO_ARCHIVO_VIDEO:
                 $respuesta=Richsys::getArchivoViewVideo($opciones);
                 break;
-            case self::$sTipoArchivo['Musica']:
+            case self::TIPO_ARCHIVO_MUSICA:
                 $respuesta= sprintf(<<<EOF
 <link href="/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
@@ -129,7 +131,7 @@ EOF
                   
     );
                 break;
-            case self::$sTipoArchivo['Flash']:
+            case self::TIPO_ARCHIVO_FLASH:
                 $respuesta=  Richsys::getArchivoViewFlash($opciones);
                 break;
         }
@@ -280,22 +282,22 @@ EOF;
             case "gif":
             case "jpg":
             case "jpeg":    
-              $resp=self::$TIPO_ARCHIVO_IMAGEN;
+              $resp=self::TIPO_ARCHIVO_IMAGEN;
               break;
             case "flv":
             case "mpg":
             case "mp4":
             case "avi":    
-              $resp=self::$TIPO_ARCHIVO_VIDEO;
+              $resp=self::TIPO_ARCHIVO_VIDEO;
               break;
             case "swf":    
-              $resp=self::$TIPO_ARCHIVO_FLASH;
+              $resp=self::TIPO_ARCHIVO_FLASH;
               break;
             case "mp3":    
-              $resp=self::$TIPO_ARCHIVO_MUSICA;
+              $resp=self::TIPO_ARCHIVO_MUSICA;
               break;
             default:    
-              $resp=self::$TIPO_ARCHIVO_LINK;
+              $resp=self::TIPO_ARCHIVO_LINK;
               break;
         }
         return $resp;

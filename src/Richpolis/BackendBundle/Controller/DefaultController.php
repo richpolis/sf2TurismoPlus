@@ -25,54 +25,6 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/usuarios", name="backend_usuarios")
-     * @Template()
-     */
-    public function usuariosAction()
-    {
-        
-    }
-    
-    /**
-     * @Route("/categorias", name="backend_categorias")
-     * @Template()
-     */
-    public function categoriasAction()
-    {
-        
-    }
-    
-    /**
-     * @Route("/publicaciones", name="backend_publicaciones")
-     * @Template()
-     */
-    public function publicacionesAction(Request $request)
-    {
-        return array("base_url"=>$request->getHttpHost());   
-    }
-    
-    /**
-     * @Route("/galerias", name="backend_galerias")
-     * @Template()
-     */
-    public function galeriasAction()
-    {
-        return array('tipos'=>Galeria::getArrayTipoArchivos());
-    }
-    
-    /**
-     * @Route("/publicaciones/galerias", name="backend_publicaciones_galerias")
-     * @Template()
-     */
-    public function publicacionesGaleriaAction(Request $request)
-    {
-        $id = $request->query->get('publicacion');
-        $publicacion = $this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
-                ->find($id);
-        return array("publicacion"=>$publicacion);
-    }
-
-    /**
      * @Route("/login", name="backend_login")
      * @Template()
      */

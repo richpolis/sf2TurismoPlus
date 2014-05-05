@@ -80,7 +80,7 @@ class PublicacionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Richpolis\PublicacionesBundle\Entity\Publicacion',
-            'csrf_protection' => false
+            'csrf_protection' => true
         ));
     }
 
@@ -89,6 +89,6 @@ class PublicacionType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'richpolis_publicacionesbundle_publicacion';
     }
 }

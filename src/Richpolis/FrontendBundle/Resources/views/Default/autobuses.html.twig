@@ -1,0 +1,104 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <style>
+    .bx-wrapper .bx-viewport{
+        padding: 0px;
+        border: none;
+        top: 0px;
+        left: 0px;
+        background: transparent;
+    }
+    </style>
+{% endblock %}
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height:90px;">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+        <article class="autobuses">
+            <div class="lista">
+                {% for number in range(1,7) %}
+                    <div class="item">
+                        <figure>
+                            <img src="http://placehold.it/330X210&text=Destino{{number}}" alt="{{"Titulo de la imagen " ~ number }}">
+                            <span class="lupa"></span>
+                            <div class="descripcion-autobus">
+                                <h3>
+                                    titulo del autobus
+                                </h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, amet, possimus autem harum veritatis recusandae voluptatem corporis illum similique deleniti debitis neque excepturi ipsam vel esse! Magnam ea veritatis dignissimos!
+                                </p>
+                            </div>
+                        </figure>
+                    </div>
+                {% endfor %}
+            </div>
+        </article>
+        <article class="autobus">
+            <div class="controlesAutbuses">
+                <span class="control-anterior"></span>
+                 <h2>Nombre del autobus</h2>
+                <span class="control-siguiente">Siguiente autobus</span>
+            </div>
+            <div class="galeria">
+                <ul class="galeriaContenedor">
+                    {% for galeria in range(1,7) %}
+                    <li><a href="#"><img src="http://placehold.it/310x197&text=Galeria{{galeria}}" alt=""></a></li>
+                    {% endfor %}
+                </ul>
+                <span id="slider-prev"></span>
+                <span id="slider-next"></span>
+            </div>
+            <div class="logos">
+                    <img src="http://placehold.it/310x197&text=logo1" alt="">
+                    <img src="http://placehold.it/310x197&text=logo2" alt="">
+            </div>
+            <div class="descripcion">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, omnis deserunt quod modi libero doloremque. Error, repellat, dolore, velit, quibusdam maiores delectus veniam nam mollitia enim necessitatibus modi nobis veritatis?
+            </div>
+            <div class="detalles-asientos row">
+                <div class="detalles col-lg-6">
+                    <ul>
+                        <li>algun contenido</li>
+                        <li>algun contenido</li>
+                        <li>algun contenido</li>
+                        <li>algun contenido</li>
+                        <li>algun contenido</li>
+                        <li>algun contenido</li>
+                        <li>algun contenido</li>
+                    </ul>
+                </div>
+                <div class="asientos col-lg-6">
+                    <a href="http://placehold.it/620x400&text=imagenAutobus">
+                        <img src="http://placehold.it/620x400&text=imagenAutobus" alt="">
+                    </a>
+                </div>
+            </div>
+        </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/jquery.bxslider.js')}}"></script>
+<script>
+    $(document).ready(function(){
+      $('.galeriaContenedor').bxSlider({
+          slideWidth: 310,
+          minSlides: 2,
+          maxSlides: 3,
+          slideMargin: 7,
+          pager: false,
+          nextSelector: '#slider-next',
+          prevSelector: '#slider-prev',
+          nextText: '',
+          prevText: ''
+      });
+    });
+</script>
+{% endblock %}

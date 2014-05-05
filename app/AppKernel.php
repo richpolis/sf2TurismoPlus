@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Knp\Bundle\LastTweetsBundle\KnpLastTweetsBundle(),
             new Inori\TwitterAppBundle\InoriTwitterAppBundle(),
+            new Richpolis\GaleriasBundle\GaleriasBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

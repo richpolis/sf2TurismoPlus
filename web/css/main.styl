@@ -53,6 +53,7 @@ body
 	font-size 16px
 	background-color white
 	font-family 'antipastoregular'
+
 	
 .container
 	margin 0 auto
@@ -60,6 +61,10 @@ body
 	max-width 1023px
 	padding 0
 	margin-bottom 10px
+	& h2
+	& h3
+	& h4
+		font-family 'antipastoregular'
 	& header.encabezado
 		background url("../images/keyarts/menu/backmenu3.png") no-repeat
 		//transition background-image 1s ease
@@ -420,7 +425,175 @@ body
 				right 0px
 				display block
 				z-index 2000
-				
+		& .logistica
+			margin-left 10px
+			& h4
+				margin 5px 0px
+				line-height 14px
+				font-size 16px
+				color aqua
+			& p
+				line-height 14px
+	& .cotizador
+		margin 10px 0px
+		overflow hidden
+		text-align left
+		background-color transparent
+		position relative
+		top -70px
+		color color_azul
+		font-family 'antipastoregular'
+	& .contacto
+		margin 10px 0px
+		overflow hidden
+		background-color transparent
+		position relative
+		top -70px
+		color color_azul
+		font-family 'antipastoregular'
+		& h3
+			text-transform uppercase
+			font-size 20px
+			font-weight bold
+			&.centrado
+				text-align center
+		& iframe
+			width 100%
+			height 400px
+		& form
+			text-align left
+		& .mapa
+			margin-bottom 10px
+	& article.autobuses
+		margin 10px 0px
+		overflow hidden
+		text-align left
+		background-color transparent
+		position relative
+		top -70px
+		color color_azul
+		font-family 'antipastoregular'
+		& .lista
+			overflow hidden
+			& .item
+				display inline-block
+				vertical-align top
+				width 329px
+				height 200px
+				margin 0px 5px 20px 5px
+				position relative
+				overflow hidden
+				cursor pointer
+				& img
+					width 100%
+					height 200px
+				& figure
+					position absolute
+					top 0px
+					left 0px
+				& .descripcion-autobus
+					position absolute
+					bottom -150px
+					left 0px
+					height 150px
+					background rgb(0,37,67)
+					transition all .5s ease-out
+					& h3
+						position absolute
+						left -5px
+						top -45px
+						background rgba(11,47,75,0.8)
+						color white
+						box-sizing border-box
+						padding 3px 10px
+						font-size 18px
+					& p
+						color white
+						box-sizing border-box
+						padding 0px 10px
+			& .item:hover .descripcion-autobus
+				bottom -10px
+	& article.autobus
+		margin 10px 0px
+		overflow hidden
+		text-align left
+		background-color transparent
+		position relative
+		top -70px
+		color color_azul
+		font-family 'antipastoregular'
+		& .controlesAutbuses
+			width 100%
+			position relative
+			margin-bottom 10px
+			overflow hidden
+			& span
+				display block
+				cursor pointer
+				height 54px
+				width 54px
+			& .control-anterior
+				position absolute 
+				top 0px
+				left 0px
+				background url("../images/keyarts/autobuses/flecha1.png") no-repeat center center
+			& .control-siguiente
+				background url("../images/keyarts/autobuses/flecha2.png") no-repeat top right
+				position absolute
+				top 0px
+				right 0px
+				padding-right 54px
+				background-color rgb(11,80,140)
+				width 230px
+				color white
+				line-height 54px
+				font-size 18px
+				box-sizing border-box
+				padding-left 10px
+			& h2
+				text-align center
+				text-transform uppercase
+				margin 10px 0px
+		& .galeria
+			position relative
+			& #slider-prev .bx-prev
+				background url("../images/keyarts/autobuses/anterior.png") no-repeat center center
+				width 28px
+				height 197px
+				position absolute
+				top 0px
+				left 0px
+				display block
+				z-index 2000
+			& #slider-next .bx-next
+				background url("../images/keyarts/autobuses/sig.png") no-repeat center center
+				width 28px
+				height 197px
+				position absolute
+				top 0px
+				right 0px
+				display block
+				z-index 2000
+		& .logos
+			margin 30px 0px 10px
+			text-align center
+			& img
+				display inline-block
+				vertical-align top
+		& .detalles-asientos
+			margin-top 20px
+			& ul 
+				padding 0px
+				margin 0px
+			& div
+				width 49%
+				& img
+					width 100%
+			& .detalles
+				background url("../images/keyarts/autobuses/separador.png") no-repeat 80% center
+				height 337px
+				box-sizing border-box
+				padding-left 40px
 
 @keyframes autobusesInicio
 	0%

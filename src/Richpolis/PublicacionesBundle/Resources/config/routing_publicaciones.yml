@@ -1,9 +1,0 @@
-publicaciones:
-    type:       annotation
-    prefix:    /v1
-    resource: Richpolis\PublicacionesBundle\Controller\PublicacionesController
-
-galerias:
-    type:       annotation
-    prefix:     /v1
-    resource: Richpolis\PublicacionesBundle\Controller\GaleriasController
