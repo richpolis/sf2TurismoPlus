@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\PaginasBundle\Entity;
+namespace Richpolis\PaginasBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

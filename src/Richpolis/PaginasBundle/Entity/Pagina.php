@@ -3,6 +3,8 @@
 namespace Richpolis\PaginasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Pagina
@@ -26,34 +28,35 @@ class Pagina
      * @var string
      *
      * @ORM\Column(name="pagina", type="string", length=150)
+     * @Assert\NotBlank
      */
     private $pagina;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="imagen", type="string", length=150)
+     * @ORM\Column(name="imagen", type="string", length=150, nullable=true)
      */
     private $imagen;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="contenido_es", type="text")
+     * @ORM\Column(name="contenido_es", type="text", nullable=true)
      */
     private $contenidoEs;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="contenido_en", type="text")
+     * @ORM\Column(name="contenido_en", type="text", nullable=true)
      */
     private $contenidoEn;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="contenido_fr", type="text")
+     * @ORM\Column(name="contenido_fr", type="text", nullable=true)
      */
     private $contenidoFr;
 
@@ -224,6 +227,9 @@ class Pagina
 
     /*** uploads ***/
     
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
     public $file;
     
     /**
@@ -242,6 +248,16 @@ class Pagina
         } else {
             $this->imagen = 'initial';
         }
+    }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
     
     /**

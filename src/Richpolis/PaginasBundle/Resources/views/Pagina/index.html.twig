@@ -88,7 +88,6 @@
                             <th>Pagina</th>
                             <th>Descripcion</th>
                             <th>Imagen</th>
-                            <th>Activo?</th>
                             <th>Actions</th>
                         </tr>
                       </thead>
@@ -103,13 +102,6 @@
                                         <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
                                     {% else %}    
                                         sin imagen
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if entity.isActive %}
-                                        <i class="fa fa-check-circle"></i>
-                                    {% else %}
-                                        <i class="fa fa-circle"></i>
                                     {% endif %}
                                 </td>
                                 <td>

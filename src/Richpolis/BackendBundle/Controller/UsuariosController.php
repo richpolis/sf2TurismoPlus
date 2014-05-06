@@ -7,8 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Richpolis\BackendBundle\Entity\Usuario;
 use Richpolis\BackendBundle\Form\UsuarioType;
+
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 /**
  * Usuario controller.
@@ -61,7 +64,7 @@ class UsuariosController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'errores' => $this->getErrorMessages($form)
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -99,7 +102,7 @@ class UsuariosController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'errores' => $this->getErrorMessages($form)
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -152,7 +155,7 @@ class UsuariosController extends Controller
             'entity'      => $entity,
             'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'errores' => $this->getErrorMessages($editForm)
+            'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
 
@@ -208,14 +211,14 @@ class UsuariosController extends Controller
             }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('users', array('id' => $id)));
+            return $this->redirect($this->generateUrl('users_show', array('id' => $id)));
         }
 
         return array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'errores' => $this->getErrorMessages($editForm)
+            'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
     /**
@@ -265,14 +268,7 @@ class UsuariosController extends Controller
         ;
     }
     
-    private function getErrorMessages(\Symfony\Component\Form\Form $form) {      
-        $errors = array();
-        foreach ($form->getErrors() as $key => $error) {
-                $errors[] = $error->getMessage();
-        }
-
-        return $errors;
-    }
+    
     
     private function setSecurePassword(&$entity) {
         // encoder

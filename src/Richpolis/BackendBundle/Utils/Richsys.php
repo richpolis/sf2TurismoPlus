@@ -552,6 +552,14 @@ EOF;
 
     }
     
+    static public function getErrorMessages(\Symfony\Component\Form\Form $form) {      
+        $errors = array();
+        foreach ($form->getErrors() as $key => $error) {
+                $errors[] = $error->getMessage();
+        }
+
+        return $errors;
+    }
     
     
 }

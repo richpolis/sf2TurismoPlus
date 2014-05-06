@@ -111,9 +111,9 @@
                     </span>
                 </a>
                 <ul>
-                    <li><a href="{{path('publicaciones_destinos')}}">Destinos</a></li>
-                    <li><a href="{{path('publicaciones_eventos')}}">Eventos</a></li>
-                    <li><a href="{{path('publicaciones_tours')}}">Tours</a></li>
+                    <li><a href="{{path('publicaciones')}}">Destinos</a></li>
+                    <li><a href="{{path('publicaciones')}}">Eventos</a></li>
+                    <li><a href="{{path('publicaciones')}}">Tours</a></li>
                 </ul>
             </li>
             <li>
@@ -127,13 +127,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{path('usuarios_newsletter')}}">
+                <a href="{{path('users_newsletter')}}">
                     <i class="fa fa-film"></i> <span>Usuarios Newsletter</span>
                 </a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
             <li>
-                <a {{usuarios}} href="{{path('backend_usuarios')}}">
+                <a {{usuarios}} href="{{path('users')}}">
                     <i class="fa fa-user"></i> <span>Usuarios</span>
                 </a>
             </li>
