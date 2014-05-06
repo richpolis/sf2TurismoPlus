@@ -8,7 +8,7 @@
     var uploader = new qq.FileUploader({
             element: document.getElementById('upload'),
             template: '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop archivos aqui para cargar</span></div><div class="qq-upload-button"><span id="status" ></span>Agregar archivos</div><ul class="qq-upload-list"></ul></div>',
-            action: '{{ path('galeria_upload',{ 'id': entity.id }) }}',
+            action: '{{ post_galerias }}',
             params: { },
             onComplete: function(id, file, responseJson){
                     refrescarGaleria();             },
@@ -28,7 +28,7 @@
      */
     function refrescarGaleria(){
         $.ajax({
-            url: '{{ path('galerias',{'id':entity.id })}}',
+            url: '{{ get_galerias }}',
             type: 'GET',
             dataType: 'html',
             success: function(data){
@@ -120,7 +120,7 @@
     function crearRegistroGaleria(archivo,tipo,publicacion){
         debugger;
         $('#image-loader').show();
-        var url='{{path('api_1_post_galeria')}}';
+        var url='{{ post_galerias }}';
         $.ajax({
            url: url,
            type: 'POST',
@@ -140,7 +140,7 @@
     }
     
     function crearVideoLink(){
-        $("input#tipoArchivo").val(2);
+        $("input#tipoArchivo").val('video_link');
         $("input#publicacion").val({{entity.id}});
         $("input#archivo").val("");
         $( "#newVideoLinkFormModal" ).modal( "show" );
@@ -247,8 +247,8 @@
                     $('#image-loader').show();
                     var order = $gallery.sortable('serialize');
                     $.ajax({
-                       url: '{{path('galerias_ordenar',{id: entity.id})}}?' + order,
-                       type: 'PATCH',
+                       url: '{{path('galerias_ordenar')}}?' + order,
+                       type: 'POST',
                        data: order,
                        dataType: 'json',
                        success: function(data){

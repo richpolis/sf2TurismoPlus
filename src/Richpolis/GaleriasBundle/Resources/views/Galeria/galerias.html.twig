@@ -5,7 +5,7 @@
     <ul id="gallery" class="gallery">
     {% for entity in galerias %}
          <li id="registro-{{entity.id}}" class="galeria-item-li">    
-         {% include "GaleriasBundle:Galeria:item.html.twig" with { 'galeria': entity } %}
+         {% include "GaleriasBundle:Galeria:item.html.twig" with { 'galeria': entity, 'url_delete': url_delete } %}
          </li><!--/span-->        
     {% else %}
         Sin registros

@@ -13,6 +13,10 @@ use Richpolis\PaginasBundle\Form\PaginaType;
 
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
+use Richpolis\BackendBundle\Utils\qqFileUploader;
+use Richpolis\GaleriasBundle\Entity\Galeria;
+
+
 /**
  * Pagina controller.
  *
@@ -127,7 +131,8 @@ class PaginaController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'get_galerias' =>$this->generateUrl('paginas_galerias',array('id'=>$entity->getId())),
-            'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId()))
+            'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId())),
+            'url_delete' => '/app.php/backend/' . $entity->getId().'/galerias/',
         );
     }
 
@@ -301,6 +306,7 @@ class PaginaController extends Controller
        if($max == null){
            $max=0;
        }
+        
        if(isset($result["success"])){
            $registro = new Galeria();
            $registro->setArchivo($result["filename"]);
@@ -327,7 +333,7 @@ class PaginaController extends Controller
      * @Route("/{id}/galerias/{idGaleria}", name="paginas_galerias_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id,$idGaleria)
+    public function deleteGaleriaAction(Request $request, $id,$idGaleria)
     {
             $em = $this->getDoctrine()->getManager();
             $pagina = $em->getRepository('PaginasBundle:Pagina')->find($id);
@@ -340,9 +346,11 @@ class PaginaController extends Controller
             $pagina->getGalerias()->removeElement($galeria);
             $em->remove($galeria);
             $em->flush();
-        }
+        
 
-        return $this->redirect($this->generateUrl('paginas'));
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData(array("ok"=>true));
+        return $response;
     }
     
 }
