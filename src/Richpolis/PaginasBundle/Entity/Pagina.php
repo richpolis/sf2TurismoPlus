@@ -111,29 +111,6 @@ class Pagina
     }
 
     /**
-     * Set titulo
-     *
-     * @param string $titulo
-     * @return Pagina
-     */
-    public function setTitulo($titulo)
-    {
-        $this->titulo = $titulo;
-
-        return $this;
-    }
-
-    /**
-     * Get titulo
-     *
-     * @return string 
-     */
-    public function getTitulo()
-    {
-        return $this->titulo;
-    }
-
-    /**
      * Set contenido
      *
      * @param string $contenido
@@ -166,6 +143,75 @@ class Pagina
             $contenido = $this->contenidoFr;
         }
         return $contenido;
+    }
+
+    /**
+     * Set contenidoEs
+     *
+     * @param string $contenidoEs
+     * @return Pagina
+     */
+    public function setContenidoEs($contenidoEs)
+    {
+        $this->contenidoEs = $contenidoEs;
+
+        return $this;
+    }
+
+    /**
+     * Get contenidoEs
+     *
+     * @return string 
+     */
+    public function getContenidoEs()
+    {
+        return $this->contenidoEs;
+    }
+
+    /**
+     * Set contenidoEn
+     *
+     * @param string $contenidoEn
+     * @return Pagina
+     */
+    public function setContenidoEn($contenidoEn)
+    {
+        $this->contenidoEn = $contenidoEn;
+
+        return $this;
+    }
+
+    /**
+     * Get contenidoEn
+     *
+     * @return string 
+     */
+    public function getContenidoEn()
+    {
+        return $this->contenidoEn;
+    }
+
+    /**
+     * Set contenidoFr
+     *
+     * @param string $contenidoFr
+     * @return Pagina
+     */
+    public function setContenidoFr($contenidoFr)
+    {
+        $this->contenidoFr = $contenidoFr;
+
+        return $this;
+    }
+
+    /**
+     * Get contenidoFr
+     *
+     * @return string 
+     */
+    public function getContenidoFr()
+    {
+        return $this->contenidoFr;
     }
 
     
@@ -331,73 +377,9 @@ class Pagina
         return null === $this->imagen ? null : $this->getUploadRootDir().'/'.$this->imagen;
     }
 
-
-    /**
-     * Set contenidoEs
-     *
-     * @param string $contenidoEs
-     * @return Pagina
-     */
-    public function setContenidoEs($contenidoEs)
-    {
-        $this->contenidoEs = $contenidoEs;
-
-        return $this;
+    public function getDescripcionCorta(){
+        return RpsStms::cut_string2(RpsStms::strip_html_tags($this->getContenidoEs()),250);
     }
 
-    /**
-     * Get contenidoEs
-     *
-     * @return string 
-     */
-    public function getContenidoEs()
-    {
-        return $this->contenidoEs;
-    }
-
-    /**
-     * Set contenidoEn
-     *
-     * @param string $contenidoEn
-     * @return Pagina
-     */
-    public function setContenidoEn($contenidoEn)
-    {
-        $this->contenidoEn = $contenidoEn;
-
-        return $this;
-    }
-
-    /**
-     * Get contenidoEn
-     *
-     * @return string 
-     */
-    public function getContenidoEn()
-    {
-        return $this->contenidoEn;
-    }
-
-    /**
-     * Set contenidoFr
-     *
-     * @param string $contenidoFr
-     * @return Pagina
-     */
-    public function setContenidoFr($contenidoFr)
-    {
-        $this->contenidoFr = $contenidoFr;
-
-        return $this;
-    }
-
-    /**
-     * Get contenidoFr
-     *
-     * @return string 
-     */
-    public function getContenidoFr()
-    {
-        return $this->contenidoFr;
-    }
+    
 }

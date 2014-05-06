@@ -74,6 +74,7 @@
                             <div class="padd">
                                 <!-- Form starts.  -->
                                 <form action="{{ path('experiencias_update', { 'id': entity.id }) }}" class="validate" id="formExperiencias"  method="post" {{ form_enctype(form)}}>
+                                    <input name="_method" value="put" type="hidden"/>
                                     {{form_widget(form)}}
                                 </form>
                             </div>

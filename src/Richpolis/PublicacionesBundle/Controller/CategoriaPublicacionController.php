@@ -10,6 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion;
 use Richpolis\PublicacionesBundle\Form\CategoriaPublicacionType;
 
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 /**
  * CategoriaPublicacion controller.
  *
@@ -59,6 +63,7 @@ class CategoriaPublicacionController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -76,7 +81,7 @@ class CategoriaPublicacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -96,6 +101,7 @@ class CategoriaPublicacionController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -146,8 +152,9 @@ class CategoriaPublicacionController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
 
@@ -165,10 +172,11 @@ class CategoriaPublicacionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
+    
     /**
      * Edits an existing CategoriaPublicacion entity.
      *
@@ -198,10 +206,12 @@ class CategoriaPublicacionController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'errores'     => RpsStms::getErrorMessages($editForm)
         );
     }
+    
     /**
      * Deletes a CategoriaPublicacion entity.
      *
@@ -240,8 +250,48 @@ class CategoriaPublicacionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('categorias_publicaciones_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            /*->add('submit', 'submit', array(
+                'label' => 'Eliminar',
+                'attr'=>array(
+                    'class'=>'btn btn-danger'
+            )))*/
             ->getForm()
         ;
+    }
+    
+    /**
+     * Creates a new CategoriaPublicacion entity.
+     *
+     * @Route("/", name="categorias_publicaciones_ordenar")
+     * @Method("POST")
+     */
+    public function ordenarRegistrosAction()
+    {
+        $request=$this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $registro_order = $request->query->get('registro');
+            $em=$this->getDoctrine()->getManager();
+            $result['ok']="ok";
+            foreach($registro_order as $order=>$idCategoria)
+            {
+                $registro=$em->getRepository('PublicacionesBundle:CategoriaPublicacion')->find($idCategoria);
+                if($registro->getPosition()!=($order+1)){
+                    try{
+                        $registro->setPosition($order+1);
+                        $em->flush();
+                    }catch(Exception $e){
+                        $result['ok']=$e->getMessage();
+                    }    
+                }
+            }
+            $response = new JsonResponse();
+            $response->setData(array('ok'=>true));
+            return $response;
+        }
+        else {
+            $response = new JsonResponse();
+            $response->setData(array('ok'=>false));
+            return $response;
+        }
     }
 }

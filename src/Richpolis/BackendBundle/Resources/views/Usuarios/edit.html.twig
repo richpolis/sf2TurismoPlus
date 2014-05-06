@@ -74,6 +74,7 @@
                             <div class="padd">
                                 <!-- Form starts.  -->
                                 <form action="{{path('users_update',{'id':entity.id})}}" class="validate" id="formUsuarios"  method="post" {{ form_enctype(form)}}>
+                                    <input name="_method" value="put" type="hidden"/>
                                     {{form_widget(form)}}
                                 </form>
                             </div>

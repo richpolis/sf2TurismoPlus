@@ -181,7 +181,7 @@ class UsuariosController extends Controller
      * Edits an existing Usuario entity.
      *
      * @Route("/{id}", name="users_update")
-     * @Method("POST")
+     * @Method("PUT")
      * @Template("BackendBundle:Usuario:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -259,11 +259,11 @@ class UsuariosController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('users_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
+            /*->add('submit', 'submit', array(
                 'label' => 'Eliminar',
                 'attr'=>array(
                     'class'=>'btn btn-danger'
-            )))
+            )))*/
             ->getForm()
         ;
     }

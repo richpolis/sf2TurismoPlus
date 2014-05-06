@@ -59,6 +59,7 @@ class PublicacionController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -76,7 +77,7 @@ class PublicacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -96,6 +97,7 @@ class PublicacionController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -146,8 +148,9 @@ class PublicacionController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
 
@@ -165,10 +168,11 @@ class PublicacionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
+    
     /**
      * Edits an existing Publicacion entity.
      *
@@ -198,10 +202,12 @@ class PublicacionController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'errores'     => RpsStms::getErrorMessages($editForm)
         );
     }
+    
     /**
      * Deletes a Publicacion entity.
      *
@@ -240,7 +246,11 @@ class PublicacionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('publicaciones_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            /*->add('submit', 'submit', array(
+                'label' => 'Eliminar',
+                'attr'=>array(
+                    'class'=>'btn btn-danger'
+            )))*/
             ->getForm()
         ;
     }

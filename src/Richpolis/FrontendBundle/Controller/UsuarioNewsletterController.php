@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\FrontendBundle\Entity\UsuarioNewsletter;
 use Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
 
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+
 /**
  * UsuarioNewsletter controller.
  *
@@ -59,6 +61,7 @@ class UsuarioNewsletterController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -76,7 +79,7 @@ class UsuarioNewsletterController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -96,6 +99,7 @@ class UsuarioNewsletterController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -146,8 +150,9 @@ class UsuarioNewsletterController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
 
@@ -165,7 +170,7 @@ class UsuarioNewsletterController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -198,8 +203,9 @@ class UsuarioNewsletterController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'errores'     => RpsStms::getErrorMessages($editForm)
         );
     }
     /**
@@ -240,7 +246,11 @@ class UsuarioNewsletterController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('users_newsletter_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            /*->add('submit', 'submit', array(
+                'label' => 'Eliminar',
+                'attr'=>array(
+                    'class'=>'btn btn-danger'
+            )))*/
             ->getForm()
         ;
     }

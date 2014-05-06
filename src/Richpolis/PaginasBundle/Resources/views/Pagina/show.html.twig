@@ -71,40 +71,75 @@
 
                                                 <div class="widget-content">
                                                     <div class="padd">
-                                                        <table>
-                                                            <tbody><tr>
-                                                                    <td>Id:</td>
-                                                                    <td>{{entity.id}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Pagina:</td>
-                                                                    <td>{{entity.pagina}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Español:</td>
-                                                                    <td>{{ entity.contenidoEs | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Ingles:</td>
-                                                                    <td>{{ entity.contenidoEn | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Frances:</td>
-                                                                    <td>{{ entity.contenidoFr | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Imagen:</td>
-                                                                    <td>
-                                                                        {% if entity.imagen | length > 0 %}
-                                                                            <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
-                                                                        {% else %}    
-                                                                            sin imagen
-                                                                        {% endif %}
-                                                                    </td>
-                                                                </tr>
-                                                                                                                              
-                                                            </tbody>
-                                                        </table>    
+                                                        <div class="tabbable" style="margin-bottom: 18px;">
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="active"><a href="#sistema" data-toggle="tab">Sistema</a></li>
+                                                                <li><a href="#galeria" data-toggle="tab">Imagenes</a></li>
+                                                            </ul>
+                                                            <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
+                                                                <div class="tab-pane active" id="sistema">
+                                                                    <table>
+                                                                        <tbody><tr>
+                                                                                <td>Id:</td>
+                                                                                <td>{{entity.id}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Pagina:</td>
+                                                                                <td>{{entity.pagina}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Contenido Español:</td>
+                                                                                <td>{{ entity.contenidoEs | raw }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Contenido Ingles:</td>
+                                                                                <td>{{ entity.contenidoEn | raw }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Contenido Frances:</td>
+                                                                                <td>{{ entity.contenidoFr | raw }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Imagen:</td>
+                                                                                <td>
+                                                                                    {% if entity.imagen | length > 0 %}
+                                                                                        <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
+                                                                                    {% else %}    
+                                                                                        sin imagen
+                                                                                    {% endif %}
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="tab-pane" id="galeria">
+                                                                    <div class="container-galeria">    
+                                                                            {# seccion de codigo html #}
+                                                                            <div id="lista_imagenes" style=" min-height: 400px; overflow: hidden;">
+                                                                                {% include 'GaleriasBundle:Galeria:galeria.html.twig' with {'galerias': entity.galerias } %}
+                                                                            </div>
+                                                                            <table style="width: 99%; margin: 0 auto;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div id="upload" style="margin: 30px 150px;"></div>
+                                                                                        Extenciones disponibles:   "jpeg","png","gif","jpg"
+                                                                                        <!--List Files-->
+                                                                                        <ul id="files" ></ul>
+                                                                                        <div class="clear"></div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button onclick="javascript:crearVideoLink()" class="btn btn-green btn-bg">Crear Video Link</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>  
                                                     </div>
                                                 </div>
                                                 <div class="widget-foot">
@@ -112,8 +147,8 @@
                                                     <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('paginas_edit',{id: entity.id})}}')">Editar</button>
                                                     <div style="float: left; margin-right: 3px;">
                                                         <form id="formEliminar" action="{{ path('paginas_delete', { 'id': entity.id }) }}" method="post">
-                                                                {{ form_widget(delete_form) }}
-                                                                <button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
+                                                            {{ form_widget(delete_form) }}
+                                                            <button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
                                                         </form>
                                                     </div>        
                                                 </div>
@@ -124,12 +159,12 @@
                             </div>
                         </div>
 
-    <!-- Matter ends -->
+                        <!-- Matter ends -->
 
-    </div>
+                        </div>
 
-    <!-- Mainbar ends -->        
-    <div class="clearfix"></div>
+                        <!-- Mainbar ends -->        
+                        <div class="clearfix"></div>
 
 {% endblock %}
 

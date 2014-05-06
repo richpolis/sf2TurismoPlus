@@ -96,7 +96,7 @@
                             <tr id="registro-{{entity.id}}">
                                 <td><a href="{{ path('paginas_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                                 <td>{{ entity.pagina }}</td>
-                                <td>{{ entity.contenidoEs | raw }}</td>
+                                <td>{{ entity.contenidoEs | striptags | slice(0,250) }}</td>
                                 <td>
                                     {% if entity.imagen | length > 0 %}
                                         <img src="{{ entity.webPath }}" style="max-width: 400px;"/>

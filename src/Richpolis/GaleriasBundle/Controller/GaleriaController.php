@@ -244,4 +244,40 @@ class GaleriaController extends Controller
             ->getForm()
         ;
     }
+    
+    /**
+     * Creates a new Galeria entity.
+     *
+     * @Route("/", name="galerias_ordenar")
+     * @Method("POST")
+     */
+    public function ordenarRegistrosAction()
+    {
+        $request=$this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $registro_order = $request->query->get('registro');
+            $em=$this->getDoctrine()->getManager();
+            $result['ok']=true;
+            foreach($registro_order as $order=>$id)
+            {
+                $registro=$em->getRepository('GaleriasBundle:Galeria')->find($id);
+                if($registro->getPosition()!=($order+1)){
+                    try{
+                        $registro->setPosition($order+1);
+                        $em->flush();
+                    }catch(Exception $e){
+                        $result['mensaje']=$e->getMessage();
+                    }    
+                }
+            }
+            $response = new JsonResponse();
+            $response->setData($result);
+            return $response;
+        }
+        else {
+            $response = new JsonResponse();
+            $response->setData(array('ok'=>false));
+            return $response;
+        }
+    }
 }

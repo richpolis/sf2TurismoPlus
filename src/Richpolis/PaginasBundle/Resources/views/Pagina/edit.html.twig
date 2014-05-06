@@ -74,10 +74,11 @@
                             <div class="padd">
                                 <!-- Form starts.  -->
                                 <form action="{{ path('paginas_update', { 'id': entity.id }) }}" class="validate" id="formPaginas"  method="post" {{ form_enctype(form)}}>
+                                    <input name="_method" value="put" type="hidden"/>
                                     {{form_widget(form)}}
                                 </form>
                                 <br/>
-                                {% if entity.imagen | lenght > 0 %}
+                                {% if entity.imagen | length > 0 %}
                                     <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
                                 {% else %}    
                                     sin imagen
