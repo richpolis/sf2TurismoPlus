@@ -86,7 +86,8 @@ body {
 .container header.encabezado nav {
   width: 100%;
   height: 70px;
-  background-color: #fff;
+  background-color: rgba(255,255,255,1);
+  /*background-color: transparent;*/
   overflow: hidden;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -137,7 +138,8 @@ body {
   height: 50px;
   line-height: 50px;
   background-color: #e5e6e7;
-  color: #738695;
+  color: #002543;
+  font-size: 18px;
 }
 .container .cotizador-promociones {
   margin: 10px 0px;
@@ -203,7 +205,7 @@ body {
 .container .destinos-eventos .eventos {
   overflow: hidden;
   position: relative;
-  heigth: 254px;
+  height: 254px;
   width: 49%;
 }
 .container .destinos-eventos .destinos ul,
@@ -229,7 +231,7 @@ body {
   float: right;
 }
 .container .twitters {
-  margin: 10px 0px;
+  margin: 10px 0px 20px;
   overflow: hidden;
 }
 .container .twitters ul.twitter-feed {
@@ -389,7 +391,7 @@ body {
   background-color: transparent;
   position: relative;
   top: -70px;
-  color: #00f;
+  color: #1e7bab;
 }
 .container .destinos-eventos-tours h2 {
   text-transform: uppercase;
@@ -405,16 +407,16 @@ body {
 .container .destinos-eventos-tours .eventos figure span.precio,
 .container .destinos-eventos-tours .tours figure span.precio {
   padding: 5px 10px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
-  border-radius: 15px;
-  -webkit-box-shadow: 2px 2px 3px #000;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  /*-webkit-box-shadow: 2px 2px 3px #000;
   -moz-box-shadow: 2px 2px 3px #000;
   -ms-box-shadow: 2px 2px 3px #000;
   -o-box-shadow: 2px 2px 3px #000;
-  box-shadow: 2px 2px 3px #000;
+  box-shadow: 2px 2px 3px #000;*/
   position: absolute;
   bottom: 10px;
   right: 20px;
@@ -426,7 +428,7 @@ body {
 .container .destinos-eventos-tours .eventos img,
 .container .destinos-eventos-tours .tours img {
   width: 100%;
-  border: 2px solid #0ff;
+  border: 2px solid #d6e4ef;
 }
 .container .destinos-eventos-tours .destinos h3,
 .container .destinos-eventos-tours .eventos h3,
@@ -443,6 +445,7 @@ body {
   color: #0ff;
   font-size: 16px;
   font-weight: bold;
+  color: #27a8eb;
 }
 .container .destinos-eventos-tours .destino,
 .container .destinos-eventos-tours .evento,
@@ -514,7 +517,7 @@ body {
   background-color: transparent;
   position: relative;
   top: -70px;
-  color: #00f;
+  color: #0b2f4b;
   font-family: 'antipastoregular';
 }
 .container .contacto {
@@ -523,7 +526,7 @@ body {
   background-color: transparent;
   position: relative;
   top: -70px;
-  color: #00f;
+  color: #0b2f4b;
   font-family: 'antipastoregular';
 }
 .container .contacto h3 {
@@ -581,7 +584,7 @@ body {
   bottom: -150px;
   left: 0px;
   height: 150px;
-  background: #002543;
+  background-color: rgba(0, 23, 42,0.8);
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
   -ms-transition: all 0.5s ease-out;
@@ -592,7 +595,7 @@ body {
   position: absolute;
   left: -5px;
   top: -45px;
-  background: rgba(11,47,75,0.8);
+  background: rgba(11, 47, 75,0.8);
   color: #fff;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -617,7 +620,7 @@ body {
   background-color: transparent;
   position: relative;
   top: -70px;
-  color: #00f;
+  color: #0b2f4b;
   font-family: 'antipastoregular';
 }
 .container article.autobus .controlesAutbuses {
@@ -711,6 +714,15 @@ body {
   box-sizing: border-box;
   padding-left: 40px;
 }
+
+#formulario_contacto .form-group label{
+    font-weight: normal;
+}
+
+article.cotizador .form-group label{
+    font-weight: normal;    
+}
+
 @-moz-keyframes autobusesInicio {
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;

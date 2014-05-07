@@ -62,13 +62,22 @@
         <header class="encabezado {% block header_class %}{% endblock %}">
             <div id="lenguajes-redes-sociales">
                 <div class="redes-sociales">
+                    <a href="https://twitter.com/TurismoPlusMG" target="_blank">
                     <span class="twitter"></span>
+                    </a>
+                    <a href="https://www.facebook.com/TurismoPlusMG" target="_blank">
                     <span class="facebook"></span>
+                    </a>
                     <span class="youtube"></span>
                     <span class="email"></span>
                 </div>
                 <div class="lenguajes">
-                  Seleccionar lenguaje
+                  <label for="selectLanguage">Select language</label>  
+                  <select name="selectLanguage">
+                      <option value="es">Español</option>
+                      <option value="en">Ingles</option>
+                      <option value="fr">Frances</option>
+                  </select>
                 </div>
             </div>
             <nav class="main-nav">
