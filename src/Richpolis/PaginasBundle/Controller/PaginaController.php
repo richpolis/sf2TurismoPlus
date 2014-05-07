@@ -132,7 +132,7 @@ class PaginaController extends Controller
             'delete_form' => $deleteForm->createView(),
             'get_galerias' =>$this->generateUrl('paginas_galerias',array('id'=>$entity->getId())),
             'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId())),
-            'url_delete' => '/app.php/backend/' . $entity->getId().'/galerias/',
+            'url_delete' => '/app.php/backend/paginas/' . $entity->getId().'/galerias/',
         );
     }
 
@@ -275,9 +275,17 @@ class PaginaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $pagina = $em->getRepository('PaginasBundle:Pagina')->find($id);
-
+        
+        $galerias = $pagina->getGalerias();
+        $get_galerias = $this->generateUrl('paginas_galerias',array('id'=>$pagina->getId()));
+        $post_galerias = $this->generateUrl('paginas_galerias_upload', array('id'=>$pagina->getId()));
+        $url_delete = '/app.php/backend/paginas/' . $pagina->getId().'/galerias/';
+        
         return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
-            'galerias'=>$pagina->getGalerias()
+            'galerias'=>$galerias,
+            'get_galerias' =>$get_galerias,
+            'post_galerias' =>$post_galerias,
+            'url_delete' => $url_delete,
         ));
     }
     

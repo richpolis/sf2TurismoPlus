@@ -169,6 +169,7 @@ class GaleriaController extends Controller
 
         return $form;
     }
+    
     /**
      * Edits an existing Galeria entity.
      *
@@ -202,6 +203,40 @@ class GaleriaController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    /**
+     * Edits an existing Galeria entity.
+     *
+     * @Route("/{id}", name="galerias_actualizar")
+     * @Method("PATCH")
+     */
+    public function actualizarGaleriaAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('GaleriasBundle:Galeria')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Galeria entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->submit($request->request->all(), 'PATCH' !== $request->getMethod());
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('galerias_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+    
     /**
      * Deletes a Galeria entity.
      *
@@ -248,7 +283,7 @@ class GaleriaController extends Controller
     /**
      * Creates a new Galeria entity.
      *
-     * @Route("/", name="galerias_ordenar")
+     * @Route("/ordenar", name="galerias_ordenar")
      * @Method("POST")
      */
     public function ordenarRegistrosAction()
