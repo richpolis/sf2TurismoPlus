@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Richpolis\BackendBundle\Repository\UsuariosRepository;
-use Richpolis\PublicacionesBundle\Entity\CategoriaRepository;
+use Richpolis\PublicacionesBundle\Repository\CategoriaPublicacionRepository;
 
 class PublicacionType extends AbstractType
 {
@@ -18,38 +18,94 @@ class PublicacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo','text',array(
-                'label'=>'Titulo','required'=>true,'attr'=>array(
+            ->add('tituloEs','text',array(
+                'label'=>'Titulo Español','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Titulo',
                     'data-bind'=>'value: titulo'
                     )
                 ))    
-            ->add('descripcionCorta',null,array(
-                'label'=>'Descripcion corta',
+            ->add('descripcionEs',null,array(
+                'label'=>'Descripcion',
                 'required'=>true,
                 'attr'=>array(
                     'class'=>'cleditor tinymce form-control placeholder',
                    'data-theme' => 'advanced',
                     )
+                ))
+            ->add('paqueteEs','text',array(
+                'label'=>'Paquete Español','required'=>false,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Paquete',
+                    'data-bind'=>'value: paquete'
+                    )
+                ))
+            ->add('precioEs',null,array(
+                'label'=>'Precio español','required'=>false,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Precio',
+                    'data-bind'=>'value: precio'
+                    )
+                ))
+            ->add('tituloEn','text',array(
+                'label'=>'Titulo Español','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Titulo',
+                    'data-bind'=>'value: titulo'
+                    )
                 ))    
-            ->add('contenido',null,array(
-                'label'=>'Contenido',
+            ->add('descripcionEn',null,array(
+                'label'=>'Descripcion',
                 'required'=>true,
                 'attr'=>array(
                     'class'=>'cleditor tinymce form-control placeholder',
-                    'data-theme' => 'advanced',
+                   'data-theme' => 'advanced',
                     )
                 ))
-            ->add('visitas','integer',array(
-                'label'=>'Visitas','required'=>false,'attr'=>array(
+            ->add('paqueteEn','text',array(
+                'label'=>'Paquete Español','required'=>false,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Visitas',
-                    'data-bind'=>'value: visitas',
-                    'readonly'=>true,
+                    'placeholder'=>'Paquete',
+                    'data-bind'=>'value: paquete'
+                    )
+                ))
+            ->add('precioEn',null,array(
+                'label'=>'Precio español','required'=>false,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Precio',
+                    'data-bind'=>'value: precio'
+                    )
+                ))
+            ->add('tituloFr','text',array(
+                'label'=>'Titulo Español','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Titulo',
+                    'data-bind'=>'value: titulo'
                     )
                 ))    
-            ->add('categoria',null,array(
+            ->add('descripcionFr',null,array(
+                'label'=>'Descripcion',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('paqueteFr','text',array(
+                'label'=>'Paquete Español','required'=>false,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Paquete',
+                    'data-bind'=>'value: paquete'
+                    )
+                ))
+            ->add('precioFr',null,array(
+                'label'=>'Precio español','required'=>false,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Precio',
+                    'data-bind'=>'value: precio'
+                    )
+                ))     
+            /*->add('categoria',null,array(
                 'label'=>'Categoria',
                 'required'=>true,
                 'attr'=>array(
@@ -57,7 +113,8 @@ class PublicacionType extends AbstractType
                     'placeholder'=>'Categoria',
                     'data-bind'=>'value: categoria'
                     )
-                ))
+                ))*/
+            ->add('categoria')
             ->add('isActive',null,array('label'=>'Activo?','attr'=>array(
                 'class'=>'checkbox-inline',
                 'placeholder'=>'Es activo',

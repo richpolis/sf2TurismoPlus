@@ -132,7 +132,7 @@ class PaginaController extends Controller
             'delete_form' => $deleteForm->createView(),
             'get_galerias' =>$this->generateUrl('paginas_galerias',array('id'=>$entity->getId())),
             'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId())),
-            'url_delete' => '/app.php/backend/paginas/' . $entity->getId().'/galerias/',
+            'url_delete' => $this->generateUrl('paginas_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0')),
         );
     }
 
@@ -279,7 +279,7 @@ class PaginaController extends Controller
         $galerias = $pagina->getGalerias();
         $get_galerias = $this->generateUrl('paginas_galerias',array('id'=>$pagina->getId()));
         $post_galerias = $this->generateUrl('paginas_galerias_upload', array('id'=>$pagina->getId()));
-        $url_delete = '/app.php/backend/paginas/' . $pagina->getId().'/galerias/';
+        $url_delete = $this->generateUrl('paginas_galerias_delete',array('id'=>$pagina->getId(),'idGaleria'=>'0'));
         
         return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
             'galerias'=>$galerias,
@@ -296,38 +296,48 @@ class PaginaController extends Controller
      * @Method("POST")
      */
     public function galeriasUploadAction(Request $request,$id){
-        
-       // list of valid extensions, ex. array("jpeg", "xml", "bmp")
-       $allowedExtensions = array("jpeg","png","gif","jpg");
-       // max file size in bytes
-       $sizeLimit = 6 * 1024 * 1024;
-       $uploader = new qqFileUploader($allowedExtensions, $sizeLimit,$request->server);
-       $uploads= $this->container->getParameter('richpolis.uploads');
-       $result = $uploader->handleUpload($uploads."/galerias/");
+        $em = $this->getDoctrine()->getManager();
+        $pagina=$em->getRepository('PaginasBundle:Pagina')->find($id);
        
-       // to pass data through iframe you will need to encode all html tags
-       /*****************************************************************/
-       //$file = $request->getParameter("qqfile");
-       $em = $this->getDoctrine()->getManager();
-       $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
-       $pagina=$em->getRepository('PaginasBundle:Pagina')->find($id);
-       if($max == null){
-           $max=0;
-       }
-        
-       if(isset($result["success"])){
-           $registro = new Galeria();
-           $registro->setArchivo($result["filename"]);
-           $registro->setThumbnail($result["filename"]);
-           $registro->setTitulo($result["titulo"]);
-           $registro->setIsActive(true);
-           $registro->setPosition($max+1);
-           $registro->setTipoArchivo(RpsStms::TIPO_ARCHIVO_IMAGEN);
-           //unset($result["filename"],$result['original'],$result['titulo'],$result['contenido']);
-           $em->persist($registro);
-           $registro->crearThumbnail();
-           $pagina->getGalerias()->add($registro);
-           $em->flush();
+        if(!$request->request->has('tipoArchivo')){ 
+            // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+            $allowedExtensions = array("jpeg","png","gif","jpg");
+            // max file size in bytes
+            $sizeLimit = 6 * 1024 * 1024;
+            $uploader = new qqFileUploader($allowedExtensions, $sizeLimit,$request->server);
+            $uploads= $this->container->getParameter('richpolis.uploads');
+            $result = $uploader->handleUpload($uploads."/galerias/");
+            // to pass data through iframe you will need to encode all html tags
+            /*****************************************************************/
+            //$file = $request->getParameter("qqfile");
+            $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
+            if($max == null){
+                $max=0;
+            }
+            if(isset($result["success"])){
+                $registro = new Galeria();
+                $registro->setArchivo($result["filename"]);
+                $registro->setThumbnail($result["filename"]);
+                $registro->setTitulo($result["titulo"]);
+                $registro->setIsActive(true);
+                $registro->setPosition($max+1);
+                $registro->setTipoArchivo(RpsStms::TIPO_ARCHIVO_IMAGEN);
+                //unset($result["filename"],$result['original'],$result['titulo'],$result['contenido']);
+                $em->persist($registro);
+                $registro->crearThumbnail();
+                $pagina->getGalerias()->add($registro);
+                $em->flush();
+            }
+        }else{
+            $result = $request->request->all(); 
+            $registro = new Galeria();
+            $registro->setArchivo($result["archivo"]);
+            $registro->setIsActive($result['isActive']);
+            $registro->setPosition($result['position']);
+            $registro->setTipoArchivo($result['tipoArchivo']);
+            $em->persist($registro);
+            $pagina->getGalerias()->add($registro);
+            $em->flush();  
         }
         
         $response = new \Symfony\Component\HttpFoundation\JsonResponse();
@@ -341,11 +351,11 @@ class PaginaController extends Controller
      * @Route("/{id}/galerias/{idGaleria}", name="paginas_galerias_delete")
      * @Method("DELETE")
      */
-    public function deleteGaleriaAction(Request $request, $id,$idGaleria)
+    public function deleteGaleriaAction(Request $request, $id, $idGaleria)
     {
             $em = $this->getDoctrine()->getManager();
             $pagina = $em->getRepository('PaginasBundle:Pagina')->find($id);
-            $galeria = $em->getRepository('GaleriasBundle:Galeria')->find($idGaleria);
+            $galeria = $em->getRepository('GaleriasBundle:Galeria')->find(intval($idGaleria));
 
             if (!$pagina) {
                 throw $this->createNotFoundException('Unable to find Pagina entity.');

@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Galeria edit</h1>
 
-    {{ form(edit_form) }}
+    {% include 'GaleriasBundle:Galeria:form.html.twig' with {'form': edit_form } %}
 
         <ul class="record_actions">
     <li>

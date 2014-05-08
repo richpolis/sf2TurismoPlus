@@ -117,16 +117,17 @@
         });
     }
     
-    function crearRegistroGaleria(archivo,tipo,publicacion){
+    function crearRegistroGaleriaVideoLink(){
         debugger;
         $('#image-loader').show();
         var url='{{ post_galerias }}';
         $.ajax({
            url: url,
            type: 'POST',
-           data: {archivo: archivo, 'tipoArchivo': tipo, publicacion: publicacion,titulo:'',descripcion:'','isActive': 1,thumbnail: ''},
-           dataType: 'json',
+           data: $("#contenidoVideoLink form").serialize(),
+           dataType: 'html',
            success: function(data){
+              console.log(data);
               refrescarGaleria();
               $('#image-loader').hide();
            },
@@ -140,10 +141,25 @@
     }
     
     function crearVideoLink(){
-        $("input#tipoArchivo").val('video_link');
-        $("input#publicacion").val({{entity.id}});
-        $("input#archivo").val("");
-        $( "#newVideoLinkFormModal" ).modal( "show" );
+        $('#image-loader').show();
+        $.ajax({
+            url: '{{path('galerias_new')}}',
+            type: 'GET',
+            data: {tipo: 'link_video'},
+            dataType: 'html',
+            success: function(data){
+                console.log(data);                
+                $('#image-loader').hide();
+                $("#contenidoVideoLink").html(data);
+                $("#newVideoLinkFormModal").modal( "show" );
+            },
+            error: function(data){
+               console.log(data);
+               $('#image-loader').hide();
+               $( "#newVideoLinkFormModal" ).modal( "hide" );
+            },
+        });
+        
     }
     
     function guardarEditarFormModal(){
@@ -167,18 +183,12 @@
         debugger;
         var bValid = true;
         var archivo=$("input#archivo");
-        var tipo = $("input#tipoArchivo");
-        var publicacion = $("input#publicacion");
         
         bValid=(archivo.val().length>0 && archivo.val()!="archivo")?true:false;
         /*bValid=(fieldDescription.val().length>0 && fieldDescription.val()!="Descripcion")?true:false;*/
         if ( bValid ) {
-            crearRegistroGaleria(
-               archivo.val(), 
-               tipo.val(),
-               publicacion.val()
-        );
-	$("#newVideoLinkFormModal").modal( "hide" );
+            crearRegistroGaleriaVideoLink();
+            $("#newVideoLinkFormModal").modal( "hide" );
        } 
     }
 
@@ -209,10 +219,9 @@
     
     function activarConfirmarFormModal(){
         $('#image-loader').show();
-        var id = $(".image-dialog").get('id');
-        var url = '/api/v1/galerias/'+id;
+        var $url=$("#field-activar");
         $.ajax({
-           url: url,
+           url: $url.val(),
            type: 'PATCH',
            data: {isActive: true},
            dataType: 'html',
@@ -220,8 +229,7 @@
               setTimeout(function(){
                 $('#image-loader').hide();
               }, 1000);
-              $("#registro-"+id).html(data);
-              inicializarGaleria();
+              refrescarGaleria();
            },
            error: function(data){
                console.log("error en activarConfirmarFormModal");

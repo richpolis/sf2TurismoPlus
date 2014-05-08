@@ -3,7 +3,7 @@
 namespace Richpolis\PublicacionesBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Richpolis\PublicacionesBundle\Entity\Categoria;
+use Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion;
 
 /**
  * CategoriaPublicacionRepository
@@ -18,7 +18,7 @@ class CategoriaPublicacionRepository extends EntityRepository
        
         $query=$em->createQuery('
             SELECT MAX(c.position) as value 
-            FROM PublicacionesBundle:Categoria c 
+            FROM PublicacionesBundle:CategoriaPublicacion c 
             ORDER BY c.position ASC
         ');
         
@@ -30,7 +30,7 @@ class CategoriaPublicacionRepository extends EntityRepository
         $em=$this->getEntityManager();
         $query=$em->createQuery('
                SELECT c,p,u,g 
-               FROM PublicacionesBundle:Categoria c 
+               FROM PublicacionesBundle:CategoriaPublicacion c 
                JOIN c.publicaciones p 
                JOIN p.usuario u 
                JOIN p.galerias g  
@@ -51,7 +51,7 @@ class CategoriaPublicacionRepository extends EntityRepository
         $em=$this->getEntityManager();
         $query=$em->createQuery('
                SELECT c,p,u,g 
-               FROM PublicacionesBundle:Categoria c 
+               FROM PublicacionesBundle:CategoriaPublicacion c 
                JOIN c.publicaciones p 
                JOIN p.usuario u 
                JOIN p.galerias g  
@@ -72,7 +72,7 @@ class CategoriaPublicacionRepository extends EntityRepository
         $em=$this->getEntityManager();
         $query=$em->createQuery('
                SELECT c,p,g 
-               FROM PublicacionesBundle:Categoria c 
+               FROM PublicacionesBundle:CategoriaPublicacion c 
                JOIN c.publicaciones p 
                JOIN p.galerias c 
                WHERE c.id = :categoria 
@@ -92,7 +92,7 @@ class CategoriaPublicacionRepository extends EntityRepository
         $query= $this->getEntityManager()->createQueryBuilder();
         if($conObjs){
             $query->select('c,p,u,g')
-                ->from('Richpolis\PublicacionesBundle\Entity\Categoria', 'c')
+                ->from('Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion', 'c')
                 ->leftJoin('c.publicaciones', 'p')
                 ->leftJoin('p.usuario', 'u')    
                 ->leftJoin('p.galerias', 'g')    
@@ -100,7 +100,7 @@ class CategoriaPublicacionRepository extends EntityRepository
                 ->addOrderBy('p.createdAt', 'DESC'); 
         }else{
             $query->select('c')
-                ->from('Richpolis\PublicacionesBundle\Entity\Categoria', 'c')
+                ->from('Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion', 'c')
                 ->orderBy('c.position', 'ASC'); 
         }
         if(!$activas){
@@ -124,7 +124,7 @@ class CategoriaPublicacionRepository extends EntityRepository
     }
     
        
-    public function getRegistroUpOrDown(Categoria $categoria,$up=true){
+    public function getRegistroUpOrDown(CategoriaPublicacion $categoria,$up=true){
         // $up = true, $up = false is down
         if($up){
             //up

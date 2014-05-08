@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\PublicacionesBundle\Entity\Publicacion;
 use Richpolis\PublicacionesBundle\Form\PublicacionType;
 
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+
 /**
  * Publicacion controller.
  *
@@ -92,6 +94,15 @@ class PublicacionController extends Controller
     public function newAction()
     {
         $entity = new Publicacion();
+        $max=$this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
+                ->getMaxPosicion();
+        
+        if(!is_null($max)){
+            $entity->setPosition($max +1);
+        }else{
+            $entity->setPosition(1);
+        }
+        
         $form   = $this->createCreateForm($entity);
 
         return array(

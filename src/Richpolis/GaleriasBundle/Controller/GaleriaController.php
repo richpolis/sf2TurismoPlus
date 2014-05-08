@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\GaleriasBundle\Entity\Galeria;
 use Richpolis\GaleriasBundle\Form\GaleriaType;
+use Richpolis\GaleriasBundle\Form\GaleriaLinkVideoType;
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 /**
  * Galeria controller.
@@ -69,14 +71,21 @@ class GaleriaController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Galeria $entity)
+    private function createCreateForm(Galeria $entity, $tipo = "imagen")
     {
-        $form = $this->createForm(new GaleriaType(), $entity, array(
-            'action' => $this->generateUrl('galerias_create'),
-            'method' => 'POST',
-        ));
+        if($tipo == "imagen"){
+            $form = $this->createForm(new GaleriaType(), $entity, array(
+                'action' => $this->generateUrl('galerias_create'),
+                'method' => 'POST',
+            ));
+        }else if($tipo=="link_video"){
+            $form = $this->createForm(new GaleriaLinkVideoType(), $entity, array(
+                'action' => "#",
+                'method' => 'POST',
+            ));
+        }
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -86,17 +95,36 @@ class GaleriaController extends Controller
      *
      * @Route("/new", name="galerias_new")
      * @Method("GET")
-     * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $entity = new Galeria();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        $tipo = "imagen";
+        if($request->query->has('tipo')){
+            $tipo = $request->query->get('tipo');
+            if($tipo == "link_video"){
+                $entity->setTipoArchivo(RpsStms::TIPO_ARCHIVO_LINK);
+            }
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
+        if($max == null){
+            $max=0;
+        }
+        $entity->setPosition($max+1);
+        $form   = $this->createCreateForm($entity, $tipo);
+        
+        if($request->isXmlHttpRequest()){
+            return $this->render("GaleriasBundle:Galeria:form.html.twig",array(
+               'form' => $form->createView() 
+            ));
+        }else{
+            return $this->render('GaleriasBundle:Galeria:new.html.twig' ,array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            ));
+        }
     }
 
     /**
@@ -165,7 +193,7 @@ class GaleriaController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -220,21 +248,20 @@ class GaleriaController extends Controller
             throw $this->createNotFoundException('Unable to find Galeria entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->submit($request->request->all(), 'PATCH' !== $request->getMethod());
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('galerias_edit', array('id' => $id)));
+           $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+           $response->setData(array("ok"=>true));
+           return $response;
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData(array("ok"=>false));
+        return $response;
     }
     
     /**

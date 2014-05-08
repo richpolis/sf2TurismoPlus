@@ -15,28 +15,14 @@ class GaleriaLinkVideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo','text',array('label'=>'Titulo','attr'=>array(
-                'class'=>'validate[required] form-control placeholder',
-                'placeholder'=>'Titulo',
-                'data-bind'=>'value: titulo'
-             )))
-            ->add('descripcion',null,array(
-                'label'=>'Descripcion',
-                'required'=>false,
-                'attr'=>array(
-                    'class'=>'cleditor form-control placeholder',
-                    )
-                ))
             ->add('archivo','text',array('label'=>'Link Video','attr'=>array(
                 'class'=>'validate[required] form-control placeholder',
                 'placeholder'=>'Link Video',
                 'data-bind'=>'value: link video'
              )))
-            ->add('isActive',null,array('label'=>'Activo?','attr'=>array(
-                'class'=>'checkbox-inline',
-                'placeholder'=>'Es activo',
-                'data-bind'=>'value: isActive'
-                )))
+            ->add('isActive','hidden')
+            ->add('titulo','hidden')
+            ->add('descripcion','hidden')
             ->add('tipoArchivo','hidden')    
             ->add('position','hidden')    
             ->add('thumbnail','hidden')
