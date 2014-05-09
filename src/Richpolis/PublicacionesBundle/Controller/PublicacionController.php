@@ -19,6 +19,56 @@ use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
  */
 class PublicacionController extends Controller
 {
+	private $categorias = null;
+    protected function getFilters()
+    {
+        return $this->get('session')->get('filters', array());
+    }
+	
+	protected function setFilters($filtros)
+    {
+        $this->get('session')->set('filters', $filtros);
+    }
+
+    protected function getCategoriaDefault(){
+        $filters = $this->getFilters();
+		$cat = null;
+        if(isset($filters['categorias'])){
+			$categorias = $this->getCategoriasPublicacion();
+            foreach($categorias as $categoria){
+				if($categoria->getId()==$filters['categorias']){
+					$cat = $categoria;
+					break;
+				}
+			}
+        }else{
+			$categorias = $this->getCategoriasPublicacion();
+			$this->setFilters(array('categorias'=>$categorias[0]->getId()));
+            $cat = $categorias[0];
+        }
+		return $cat;
+    }
+
+    protected function getCategoriasPublicacion(){
+        $em = $this->getDoctrine()->getManager();
+        if($this->categorias == null){
+            $this->categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                                   ->findAll();
+        }
+        return $this->categorias;
+    }
+
+    protected function getCategoriaActual($categoriaId){
+        $categorias= $this->getCategoriasPublicacion();
+        $categoriaActual=null;
+        foreach($categorias as $categoria){
+            if($categoria->getId()==$categoriaId){
+                $categoriaActual=$categoria;
+                break;
+            }
+        }
+        return $categoriaActual;
+    }	
 
     /**
      * Lists all Publicacion entities.
@@ -31,12 +81,45 @@ class PublicacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PublicacionesBundle:Publicacion')->findAll();
-
+		$categoria  = $this->getCategoriaDefault();
+		
+        		
         return array(
-            'entities' => $entities,
+			'categoria'=>$categoria,
+            'entities' => $categoria->getPublicaciones(),
         );
     }
+	
+	/**
+     * Lists all Publicacion entities for eventos.
+     *
+     * @Route("/categoria/{slug}", name="publicaciones_categoria")
+     * @Method("GET")
+     * @Template("PublicacionesBundle:Publicacion:index.html.twig")
+     */
+    public function categoriaAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoria = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+						->findOneBy(array('slug'=>$slug));
+		
+		if (!$categoria) {
+            throw $this->createNotFoundException('Unable to find CategoriaPublicacion entity.');
+        }
+		
+		$filters = $this->getFilters();
+		$filters['categorias']=$categoria->getId();
+		$this->setFilters($filters);
+		
+		return array(
+			'categoria'=> $categoria,
+            'entities' => $categoria->getPublicaciones(),
+        );
+    }
+	
+	
+	
     /**
      * Creates a new Publicacion entity.
      *
@@ -47,6 +130,8 @@ class PublicacionController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Publicacion();
+		$user = $this->getUser();
+        $entity->setUsuario($user);
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -59,6 +144,7 @@ class PublicacionController extends Controller
         }
 
         return array(
+			'categoria'=>$thi
             'entity' => $entity,
             'form'   => $form->createView(),
             'errores' => RpsStms::getErrorMessages($form)
@@ -93,20 +179,22 @@ class PublicacionController extends Controller
      */
     public function newAction()
     {
-        $entity = new Publicacion();
+        $publicacion = new Publicacion();
         $max=$this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
                 ->getMaxPosicion();
         
         if(!is_null($max)){
-            $entity->setPosition($max +1);
+            $publicacion->setPosition($max +1);
         }else{
-            $entity->setPosition(1);
+            $publicacion->setPosition(1);
         }
         
-        $form   = $this->createCreateForm($entity);
+	    $publicacion->setCategoria($this->getCategoriaDefault());
+        
+        $form   = $this->createCreateForm($publicacion);
 
         return array(
-            'entity' => $entity,
+            'entity' => $publicacion,
             'form'   => $form->createView(),
             'errores' => RpsStms::getErrorMessages($form)
         );
