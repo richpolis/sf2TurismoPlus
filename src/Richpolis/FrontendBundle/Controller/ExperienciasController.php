@@ -94,8 +94,13 @@ class ExperienciasController extends Controller
     public function newAction()
     {
         $entity = new Experiencias();
+        $em = $this->getDoctrine()->getManager();
+        $max = $em->getRepository('FrontendBundle:Experiencias')->getMaxPosicion();
+        if($max == null){
+            $max=0;
+        }
+        $entity->setPosition($max+1);
         $form   = $this->createCreateForm($entity);
-
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),

@@ -18,91 +18,139 @@
 {% endblock %}
 
 {% block contenido %}
+
+    {% if error is not defined %}
+        {% set error=false %}
+    {% endif %}
+    {% if ok is not defined %}
+        {% set ok=false %}
+    {% endif %}
+    {% if mensaje is not defined %}
+        {% set mensaje="" %}
+    {% endif %}
+    
     <article class="cotizador">
-        <h3>Cotizador en linea</h3>
+        <h3>{{"Cotizador en linea"|trans}}</h3>
         <hr>
         <form action="#" class="form-horizontal" role="form"  method="post" >
             <div class="form-group">
-                <label class="col-lg-2 control-label">Nombre</label>
+                <label class="col-lg-2 control-label">{{"nombre"|trans}}</label>
                 <div class="col-lg-8">
-                    <input type="text" name="nombre" class="form-control" placeholder="Input Box">
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control','placeholder':'nombre'|trans }}) }}
+                    <span class="errores"> 
+                        {{ form_errors(form.name) }}
+                    </span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Telefono</label>
+                <label class="col-lg-2 control-label">{{"telefono"|trans}}</label>
                 <div class="col-lg-8">
-                    <input type="text" name="telefono" class="form-control" placeholder="Input Box">
+                    {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'telefono'|trans }}) }}
+                    <span class="errores"> 
+                        {{ form_errors(form.telefono) }}
+                    </span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Email</label>
+                <label class="col-lg-2 control-label">{{"email"|trans}}</label>
                 <div class="col-lg-8">
-                    <input type="text" name="email" class="form-control" placeholder="Input Box">
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control','placeholder':'email'|trans }}) }}
+                    <span class="errores"> 
+                        {{ form_errors(form.email) }}
+                    </span>
                 </div>
-            </div>
+            </div>        
             <hr/>
             <fieldset>
-                <legend>Origen</legend>
+                <legend>{{"Origen"|trans}}</legend>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Salida</label>
+                    <label class="col-lg-2 control-label">{{"salida"|trans}}</label>
                     <div class="col-lg-8">
-                        <input type="text" class="form-control placeholder" id="origen" name="origen" placeholder="Origen de salida" data-bind="value: origen" />
+                        {{ form_widget(form.salida, {'attr': {'class': 'form-control','placeholder':'salida'|trans }}) }}
+                        <span class="errores"> 
+                            {{ form_errors(form.salida) }}
+                        </span>
                     </div>
                 </div>
-                 <div class="form-group">
-                     <label class="col-lg-2 control-label">Fecha</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">{{"fecha"|trans}}</label>
                     <div class="fecha-salida input-append col-lg-4">
-                        <input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker">
+                        {{ form_widget(form.fechaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
                         <span class="add-on">
                             <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
                         </span>
+                        <span class="errores"> 
+                            {{ form_errors(form.fechaSalida) }}
+                        </span>
                     </div>
-
+                </div>        
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">{{"hora"|trans}}</label>
+                    <div class="hora-salida input-append col-lg-4">
+                        {{ form_widget(form.horaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm:ss"}}) }}
+                        <span class="add-on">
+                            <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                        </span>
+                        <span class="errores"> 
+                            {{ form_errors(form.horaSalida) }}
+                        </span>
+                    </div>
                 </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Hora</label>
-                            <div class="hora-salida input-append col-lg-4">
-                                <input data-format="hh:mm:ss" class="form-control dtpicker" type="text">
-                                <span class="add-on">
-                                  <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
-                                </span>
-                              </div>
-
-                        </div>
             </fieldset>
             <fieldset>
-                <legend>Regreso</legend>
+                <legend>{{"Regreso"|trans}}</legend>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Fecha</label>
-                            <div class="fecha-regreso input-append col-lg-4">
-                                <input data-format="yyyy-MM-dd" type="text" class="form-control dtpicker">
+                            <label class="col-lg-2 control-label">{{"fecha"|trans}}</label>
+                            <div class="fecha-salida input-append col-lg-4">
+                                {{ form_widget(form.fechaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
                                 <span class="add-on">
-                                  <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                    <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
                                 </span>
-                              </div>
-
-                        </div>
+                                <span class="errores"> 
+                                    {{ form_errors(form.fechaRegreso) }}
+                                </span>
+                            </div>
+                        </div>        
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Hora</label>
-                            <div class="hora-regreso input-append col-lg-4">
-                                <input data-format="hh:mm:ss" class="form-control dtpicker" type="text">
+                            <label class="col-lg-2 control-label">{{"hora"|trans}}</label>
+                            <div class="hora-salida input-append col-lg-4">
+                                {{ form_widget(form.horaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm:ss"}}) }}
                                 <span class="add-on">
-                                  <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                    <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
                                 </span>
-                              </div>
-
+                                <span class="errores"> 
+                                    {{ form_errors(form.horaRegreso) }}
+                                </span>
+                            </div>
                         </div>
             </fieldset>
             <hr/>
             <div class="form-group">
-                <label class="col-lg-2 control-label">Comentarios</label>
+                <label class="col-lg-2 control-label">{{"comentarios"|trans}}</label>
                 <div class="col-lg-8">
-                    <textarea name="comentarios" class="form-control" rows="4" cols="50"></textarea>
+                    {{ form_widget(form.comentarios, {'attr': {'class': 'form-control','placeholder':'comentarios'|trans }}) }}
+                    <span class="errores"> 
+                        {{ form_errors(form.comentarios) }}
+                    </span>
                 </div>
             </div>
             <div class="form-group">
-                <input type="button" class="btn btn-info" style="padding: 5px 40px; float: right; margin-right: 200px; font-size: 18px;" value="Enviar"/>
+                <input type="button" class="btn btn-info" style="padding: 5px 40px; float: right; margin-right: 200px; font-size: 18px;" value="{{"Enviar"|trans}}"/>
             </div>
+            {% if ok == true and error == false%}    
+            <div class="form-response-output form-mail-sent-ok">
+                {{mensaje}}
+            </div>
+            {% elseif ok == false and error == true %}
+            <div class="form-response-output form-mail-sent-ng form-validation-errors">
+                {{mensaje}}{{form_errors(form)}}
+            </div>    
+            {% else %}
+            <div class="form-response-output">
+                {{mensaje}}
+            </div>    
+            {% endif %}    
+            {{ form_rest(form) }} 
         </form>    
     </article>
 {% endblock %}
@@ -118,7 +166,7 @@ $(function() {
     $('.hora-salida, .hora-regreso').datetimepicker({
         pickDate: false
     });
+    iniciarlizarFormCotizador();
 });
 </script>
-
 {% endblock %}

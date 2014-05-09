@@ -19,17 +19,17 @@
             <div class="cotizador-promociones">
                 <div class="cotizador-linea">
                     <a href="{{path('frontend_cotizador')}}" style="color: white;">
-                        Visite nuestro cotizador en linea
+                        {{"Visite nuestro cotizador en linea"|trans}}
                     </a>
                 </div>
                 <div class="newsletter">
-                    Reciba ofertas y promociones en su correo
+                    {{"Reciba ofertas y promociones en su correo"|trans}}
                     <span class="newsletter-correo"></span>
                 </div>
             </div>
             <article class="destinos-eventos">
                 <div class="destinos">
-                    <span class="titulo">DESTINOS</span>
+                    <span class="titulo">{{"destinos"|trans}}</span>
                     <ul class="sliderDestinos">
                         {% for number in range(1,3) %}
                         <li>
@@ -39,7 +39,7 @@
                     </ul>
                 </div>
                 <div class="eventos">
-                    <span class="titulo">EVENTOS</span>
+                    <span class="titulo">{{"eventos"|trans}}</span>
                     <ul class="sliderEventos">
                         {% for number in range(1,3) %}
                         <li>
@@ -50,25 +50,9 @@
                 </div>
             </article>
             <article class="twitters">
-                <ul class="twitter-feed">
-                    {% for number in range(1,10) %}
-                    <li class="twit">
-                        <figure class="logo-twit">
-                            <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt=""/>
-                        </figure>
-                        <h3 class="titulo-twit">TurismoPlusMG</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae itaque quasi error totam commodi aperiam libero temporibus ut animi recusandae vitae cumque pariatur ipsum! Eos est ab magnam cupiditate illum.
-                            <a href="#">#Trabajo</a>
-                        </p>
-                        <span class="time-twit">
-                            <i class="fa fa-twitter"></i>{{number}} Hours ago
-                        </span>
-                    </li>
-                    {% endfor %}
-                </ul>
+                {% render(controller("FrontendBundle:Default:lastTweets",{'username': 'TurismoPlusMG'})) %}
                 <div class="experiencias">
-                    <span class="titulo-experiencias">Experiencias MG</span>
+                    <span class="titulo-experiencias">{{"Experiencias MG"|trans}}</span>
                     <div class="contenedor-experiencias">
                         {% for number in range(1,3) %}
                         <div class="experiencia {% if number == 1 %} active {% endif %}">

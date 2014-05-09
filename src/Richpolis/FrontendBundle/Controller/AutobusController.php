@@ -11,6 +11,7 @@ use Richpolis\FrontendBundle\Entity\Autobus;
 use Richpolis\FrontendBundle\Form\AutobusType;
 
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+use Richpolis\BackendBundle\Utils\qqFileUploader;
 
 /**
  * Autobus controller.
@@ -253,5 +254,112 @@ class AutobusController extends Controller
             )))*/
             ->getForm()
         ;
+    }
+    
+    /**
+     * Lists all Autobus galerias entities.
+     *
+     * @Route("/{id}/galerias", name="autobuses_galerias")
+     * @Method("GET")
+     */
+    public function galeriasAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $autobus = $em->getRepository('FrontendBundle:Pagina')->find($id);
+        
+        $galerias = $autobus->getGalerias();
+        $get_galerias = $this->generateUrl('autobuses_galerias',array('id'=>$autobus->getId()));
+        $post_galerias = $this->generateUrl('autobuses_galerias_upload', array('id'=>$autobus->getId()));
+        $url_delete = $this->generateUrl('autobuses_galerias_delete',array('id'=>$autobus->getId(),'idGaleria'=>'0'));
+        
+        return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
+            'galerias'=>$galerias,
+            'get_galerias' =>$get_galerias,
+            'post_galerias' =>$post_galerias,
+            'url_delete' => $url_delete,
+        ));
+    }
+    
+    /**
+     * Crea una galeria de una autobus.
+     *
+     * @Route("/{id}/galerias", name="autobuses_galerias_upload")
+     * @Method("POST")
+     */
+    public function galeriasUploadAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('FrontendBundle:Pagina')->find($id);
+       
+        if(!$request->request->has('tipoArchivo')){ 
+            // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+            $allowedExtensions = array("jpeg","png","gif","jpg");
+            // max file size in bytes
+            $sizeLimit = 6 * 1024 * 1024;
+            $uploader = new qqFileUploader($allowedExtensions, $sizeLimit,$request->server);
+            $uploads= $this->container->getParameter('richpolis.uploads');
+            $result = $uploader->handleUpload($uploads."/galerias/");
+            // to pass data through iframe you will need to encode all html tags
+            /*****************************************************************/
+            //$file = $request->getParameter("qqfile");
+            $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
+            if($max == null){
+                $max=0;
+            }
+            if(isset($result["success"])){
+                $registro = new Galeria();
+                $registro->setArchivo($result["filename"]);
+                $registro->setThumbnail($result["filename"]);
+                $registro->setTitulo($result["titulo"]);
+                $registro->setIsActive(true);
+                $registro->setPosition($max+1);
+                $registro->setTipoArchivo(RpsStms::TIPO_ARCHIVO_IMAGEN);
+                //unset($result["filename"],$result['original'],$result['titulo'],$result['contenido']);
+                $em->persist($registro);
+                $registro->crearThumbnail();
+                $autobus->getGalerias()->add($registro);
+                $em->flush();
+            }
+        }else{
+            $result = $request->request->all(); 
+            $registro = new Galeria();
+            $registro->setArchivo($result["archivo"]);
+            $registro->setIsActive($result['isActive']);
+            $registro->setPosition($result['position']);
+            $registro->setTipoArchivo($result['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($result);
+        return $response;
+    }
+    
+    /**
+     * Deletes una Galeria entity de una Pagina.
+     *
+     * @Route("/{id}/galerias/{idGaleria}", name="autobuses_galerias_delete")
+     * @Method("DELETE")
+     */
+    public function deleteGaleriaAction(Request $request, $id, $idGaleria)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $autobus = $em->getRepository('FrontendBundle:Pagina')->find($id);
+            $galeria = $em->getRepository('GaleriasBundle:Galeria')->find(intval($idGaleria));
+
+            if (!$autobus) {
+                throw $this->createNotFoundException('Unable to find Pagina entity.');
+            }
+            
+            $autobus->getGalerias()->removeElement($galeria);
+            $em->remove($galeria);
+            $em->flush();
+        
+
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData(array("ok"=>true));
+        return $response;
     }
 }

@@ -71,6 +71,10 @@ class Experiencias
      */
     private $createdAt;
 
+    public function __construct() {
+        $this->isActive = true;
+    }
+    
     /**
      * Get id
      *
@@ -276,4 +280,20 @@ class Experiencias
     {
         return $this->contenidoFr;
     }
+    
+    /*
+     * Timestable
+     */
+    
+    /**
+     ** @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+          $this->createdAt = new \DateTime();
+        }
+    }
+
 }

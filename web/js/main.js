@@ -22,3 +22,14 @@
     $("#dropdownMenu1").dropdown();
 
   });
+
+var selectLanguage = function(){
+    var lenguaje = $("#selectLanguage").val();
+    if(lenguaje === "es"){
+        location.href = window.api.espanol;
+    }else if(lenguaje === "en"){
+        location.href = window.api.ingles;
+    }else{
+        location.href = window.api.frances;
+    }
+}

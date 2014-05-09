@@ -5,7 +5,11 @@
 {% set urlAbsolutaFoto = 'http://'
                              ~ app.request.server.get('SERVER_NAME')
                              ~ asset('images/keyarts/inicio/logomenu.png') %}
-
+                             
+{% set locale = app.request.locale %}
+    
+{% set route = app.request.get('_route') %}    
+                             
 {% block stylesheets %}
     
     {% block redes_sociales %}
@@ -72,11 +76,11 @@
                     <span class="email"></span>
                 </div>
                 <div class="lenguajes">
-                  <label for="selectLanguage">Select language</label>  
-                  <select name="selectLanguage">
-                      <option value="es">Español</option>
-                      <option value="en">Ingles</option>
-                      <option value="fr">Frances</option>
+                  <label for="selectLanguage" style="font-size: normal;">{% trans %}Seleccionar idioma{% endtrans %}</label>  
+                  <select name="selectLanguage" id="selectLanguage" onchange="selectLanguage()">
+                      <option value="es" {% if locale == "es" %}selected{% endif %}>{% trans %}Español{% endtrans %}</option>
+                      <option value="en" {% if locale == "en" %}selected{% endif %}>{% trans %}Ingles{% endtrans %}</option>
+                      <option value="fr" {% if locale == "fr" %}selected{% endif %}>{% trans %}Frances{% endtrans %}</option>
                   </select>
                 </div>
             </div>
@@ -86,38 +90,38 @@
                 </figure>
                 <ul class="menu">
                     <li>
-                        <a href="{{path('homepage')}}">
-                            <span data-hover="inicio">inicio</span>
+                        <a href="{{path('homepage')}}"  {% if route == 'homepage' %}class="active"{% endif %}>
+                            <span data-hover="{{"inicio"|trans}}">{{"inicio"|trans}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{path('frontend_nosotros')}}">
-                            <span data-hover="nosotros">nosotros</span>
+                        <a href="{{path('frontend_nosotros',{'_locale':locale})}}"  {% if route == 'frontend_nosotros' %}class="active"{% endif %}>
+                            <span data-hover="{{"nosotros"|trans}}">{{"nosotros"|trans}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{path('frontend_autobuses')}}">
-                            <span data-hover="autobuses">autobuses</span>
+                        <a href="{{path('frontend_autobuses',{'_locale':locale})}}"  {% if route == 'frontend_autobuses' %}class="active"{% endif %}>
+                            <span data-hover="{{"autobuses"|trans}}">{{"autobuses"|trans}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{path('frontend_servicios')}}">
-                            <span data-hover="servicios">servicios</span>
+                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  {% if route == 'frontend_servicios' %}class="active"{% endif %}>
+                            <span data-hover="{{"servicios"|trans}}">{{"servicios"|trans}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{path('frontend_cotizador')}}">
-                            <span data-hover="cotizador">cotizador</span>
+                        <a href="{{path('frontend_cotizador',{'_locale':locale})}}"  {% if route == 'frontend_cotizador' %}class="active"{% endif %}>
+                            <span data-hover="{{"cotizador"|trans}}">{{"cotizador"|trans}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{path('frontend_tours')}}">
-                            <span data-hover="tours">tours</span>
+                        <a href="{{path('frontend_tours',{'_locale':locale})}}"  {% if route == 'frontend_tours' %}class="active"{% endif %}>
+                            <span data-hover="{{"tours"|trans}}">{{"tours"|trans}}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{path('frontend_contacto')}}">
-                            <span data-hover="contacto">contacto</span>
+                        <a href="{{path('frontend_contacto',{'_locale':locale})}}"  {% if route == 'frontend_contacto' %}class="active"{% endif %}>
+                            <span data-hover="{{"contacto"|trans}}">{{"contacto"|trans}}</span>
                         </a>
                     </li>
                 </ul>
@@ -149,4 +153,10 @@
     <script src="{{asset('js/backbone-min.js')}}"></script>
     <script src="{{asset('js/swig.js')}}"></script>
     <script src="{{asset('js/bootstrap.js')}}"></script>
+    <script>
+        window.api = {};
+        window.api.espanol = '{{path(route,{'_locale':'es'})}}';
+        window.api.ingles = '{{path(route,{'_locale':'en'})}}';
+        window.api.frances = '{{path(route,{'_locale':'fr'})}}';
+    </script>    
 {% endblock %}

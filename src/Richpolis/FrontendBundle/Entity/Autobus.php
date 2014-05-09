@@ -139,21 +139,6 @@ class Autobus
     /**
      * @var integer
      *
-     * @ORM\ManyToMany(targetEntity="Richpolis\GaleriasBundle\Entity\Galeria")
-     * @ORM\JoinTable(name="logos_galeria")
-     * @ORM\OrderBy({"position" = "ASC"})
-     * 
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("ArrayCollection<Richpolis\GaleriasBundle\Entity\Galeria>")
-     * @Serializer\MaxDepth(1)
-     * @Serializer\Groups({"details"})
-     */
-    private $logos;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="position", type="integer")
      * 
      * @Serializer\Expose
@@ -213,7 +198,6 @@ class Autobus
     public function __construct()
     {
         $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->logos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
     }
     
@@ -497,38 +481,7 @@ class Autobus
         return $this->galerias;
     }
 
-    /**
-     * Add logos
-     *
-     * @param \Richpolis\GaleriasBundle\Entity\Galeria $logos
-     * @return Autobus
-     */
-    public function addLogo(\Richpolis\GaleriasBundle\Entity\Galeria $logos)
-    {
-        $this->logos[] = $logos;
-
-        return $this;
-    }
-
-    /**
-     * Remove logos
-     *
-     * @param \Richpolis\GaleriasBundle\Entity\Galeria $logos
-     */
-    public function removeLogo(\Richpolis\GaleriasBundle\Entity\Galeria $logos)
-    {
-        $this->logos->removeElement($logos);
-    }
-
-    /**
-     * Get logos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getLogos()
-    {
-        return $this->logos;
-    }
+    
     
     /*
      * Timestable

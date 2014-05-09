@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class AutobusRepository extends EntityRepository
 {
+    public function getMaxPosicion(){
+        $em=$this->getEntityManager();
+       
+        $query=$em->createQuery('
+            SELECT MAX(a.position) as value 
+            FROM FrontendBundle:Autobus a 
+            ORDER BY a.position ASC
+        ');
+        
+        $max=$query->getResult();
+        return $max[0]['value'];
+    }
 }

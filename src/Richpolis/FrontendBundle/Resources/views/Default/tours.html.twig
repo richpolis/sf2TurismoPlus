@@ -7,7 +7,7 @@
 
 {% block contenido %}
         <article class="destinos-eventos-tours">
-            <h2>destinos</h2>
+            <h2>{{"destinos"|trans}}</h2>
             <div class="destinos row">
                 {% for number in range(1,3) %}
                     <div class="destino col-lg-4">
@@ -29,7 +29,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <h2>eventos</h2>
+            <h2>{{"eventos"|trans}}</h2>
             <div class="eventos row">
                 {% for number in range(1,3) %}
                     <div class="evento col-lg-4">
@@ -49,7 +49,7 @@
                     </div>
                 {% endfor %}
             </div>
-             <h2>tours</h2>
+             <h2>{{"tours"|trans}}</h2>
             <div class="tours row">
                 {% for number in range(1,3) %}
                     <div class="tour col-lg-4">

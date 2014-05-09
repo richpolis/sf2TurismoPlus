@@ -7,6 +7,8 @@
     <parameters>
         <parameter key="richpolis_backend.usuario.handler.class">Richpolis\BackendBundle\Handler\UsuarioHandler</parameter>
         <parameter key="richpolis_backend.usuario.class">Richpolis\BackendBundle\Entity\Usuario</parameter>
+        <parameter key="richpolis.isactive.extension.class">Richpolis\BackendBundle\Twig\IsActiveExtension</parameter>
+        <parameter key="richpolis.twitterTime.extension.class">Richpolis\BackendBundle\Twig\TwitterTimeExtension</parameter>
     </parameters>
 
     <services>
@@ -16,6 +18,18 @@
             <argument type="service" id="form.factory"></argument>
             <argument type="service" id="security.encoder_factory"></argument>
         </service>
+        
+        <!-- "isActive" twig.extension -->
+        <service id="richpolis.twig.is_active_extension" class="%richpolis.isactive.extension.class%">
+            <tag name="twig.extension" />
+        </service>
+
+		<!-- "twitterTime" twig.extension -->
+        <service id="richpolis.twig.twitter_time_extension" class="%richpolis.twitterTime.extension.class%">
+            <tag name="twig.extension" />
+        </service>
+        
+        
     </services>
 
 </container>

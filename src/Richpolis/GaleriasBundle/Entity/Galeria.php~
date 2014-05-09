@@ -124,6 +124,10 @@ class Galeria
         $this->isActive = true;
     }
     
+    public function __toString(){
+        return $this->getTitulo();
+    }
+    
     /**
      * Get id
      *
@@ -384,6 +388,17 @@ class Galeria
             $this->archivo = 'initial';
         }
     }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+    
     
     /**
     * @ORM\PrePersist

@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExperienciasRepository extends EntityRepository
 {
+    public function getMaxPosicion(){
+        $em=$this->getEntityManager();
+       
+        $query=$em->createQuery('
+            SELECT MAX(e.position) as value 
+            FROM FrontendBundle:Experiencias e 
+            ORDER BY e.position ASC
+        ');
+        
+        $max=$query->getResult();
+        return $max[0]['value'];
+    }
 }

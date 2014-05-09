@@ -15,11 +15,37 @@ class ExperienciasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenido')
-            ->add('autor')
-            ->add('position')
-            ->add('isActive')
-            ->add('createdAt')
+            ->add('contenidoEs',null,array(
+                'label'=>'Contenido español',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('contenidoEn',null,array(
+                'label'=>'Contenido ingles',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('contenidoFr',null,array(
+                'label'=>'Contenido frances',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))    
+            ->add('autor','text',array('label'=>'Autor','attr'=>array(
+                'class'=>'validate[required] form-control placeholder',
+                'placeholder'=>'Autor',
+                'data-bind'=>'value: autor'
+             )))
+            ->add('position','hidden')
+            ->add('isActive','hidden')
         ;
     }
     
