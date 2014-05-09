@@ -144,7 +144,7 @@ class PublicacionController extends Controller
         }
 
         return array(
-			'categoria'=>$thi
+			'categoria'=>$this->getCategoriaDefault(),
             'entity' => $entity,
             'form'   => $form->createView(),
             'errores' => RpsStms::getErrorMessages($form)
@@ -194,6 +194,7 @@ class PublicacionController extends Controller
         $form   = $this->createCreateForm($publicacion);
 
         return array(
+            'categoria'=>$this->getCategoriaDefault(),
             'entity' => $publicacion,
             'form'   => $form->createView(),
             'errores' => RpsStms::getErrorMessages($form)
@@ -220,6 +221,7 @@ class PublicacionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
+            'categoria'=>$this->getCategoriaDefault(),
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
@@ -246,6 +248,7 @@ class PublicacionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
+            'categoria'=>$entity->getCategoria(),
             'entity'      => $entity,
             'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -300,6 +303,7 @@ class PublicacionController extends Controller
         }
 
         return array(
+            'categoria'      => $entity->getCategoria(),
             'entity'      => $entity,
             'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

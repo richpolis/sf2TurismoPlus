@@ -11,7 +11,9 @@ use Richpolis\FrontendBundle\Entity\Autobus;
 use Richpolis\FrontendBundle\Form\AutobusType;
 
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+
 use Richpolis\BackendBundle\Utils\qqFileUploader;
+use Richpolis\GaleriasBundle\Entity\Galeria;
 
 /**
  * Autobus controller.
@@ -126,6 +128,9 @@ class AutobusController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'get_galerias' =>$this->generateUrl('autobuses_galerias',array('id'=>$entity->getId())),
+            'post_galerias' =>$this->generateUrl('autobuses_galerias_upload', array('id'=>$entity->getId())),
+            'url_delete' => $this->generateUrl('autobuses_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0')),
         );
     }
 

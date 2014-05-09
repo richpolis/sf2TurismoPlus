@@ -74,7 +74,25 @@
                             <div class="padd">
                                 <!-- Form starts.  -->
                                 <form action="{{ path('autobuses_create') }}" class="validate" id="formAutobuss" method="post" {{ form_enctype(form)}}>
-                                    {{form_widget(form)}}
+                                    <fieldset>
+										<legend>Español:</legend>
+										{{form_row(form.descripcionEs)}}
+										{{form_row(form.detallesEs)}}
+									</fieldset>
+									<fieldset>
+										<legend>Ingles:</legend>
+										{{form_row(form.descripcionEn)}}
+										{{form_row(form.detallesEn)}}
+									</fieldset>
+									<fieldset>
+										<legend>Frances:</legend>
+										{{form_row(form.descripcionFr)}}
+										{{form_row(form.detallesFr)}}
+									</fieldset>
+									<fieldset>
+										<legend>Generales:</legend>
+										{{form_rest(form)}}
+									</fieldset>
                                 </form>
                             </div>
                         </div>
