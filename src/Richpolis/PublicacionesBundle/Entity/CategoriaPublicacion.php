@@ -9,7 +9,7 @@ use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Categoria
+ * CategoriaPublicacion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Richpolis\PublicacionesBundle\Repository\CategoriaPublicacionRepository")

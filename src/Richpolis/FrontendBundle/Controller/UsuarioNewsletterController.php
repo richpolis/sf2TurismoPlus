@@ -145,7 +145,7 @@ class UsuarioNewsletterController extends Controller
             throw $this->createNotFoundException('Unable to find UsuarioNewsletter entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($entity,true);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -163,11 +163,12 @@ class UsuarioNewsletterController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(UsuarioNewsletter $entity)
+    private function createEditForm(UsuarioNewsletter $entity,$csrf_protection=true)
     {
         $form = $this->createForm(new UsuarioNewsletterType(), $entity, array(
             'action' => $this->generateUrl('users_newsletter_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'csrf_protection' => $csrf_protection,
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));
@@ -208,6 +209,35 @@ class UsuarioNewsletterController extends Controller
             'errores'     => RpsStms::getErrorMessages($editForm)
         );
     }
+    
+    /**
+     * Edits an existing UsuarioNewsletter entity.
+     *
+     * @Route("/{id}", name="users_newsletter_actualizar")
+     * @Method("PATCH")
+     * @Template("FrontendBundle:UsuarioNewsletter:item.html.twig")
+     */
+    public function actualizarAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('FrontendBundle:UsuarioNewsletter')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find UsuarioNewsletter entity.');
+        }
+        $editForm = $this->createEditForm($entity, false);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+        }
+
+        return array(
+            'entity'      => $entity,
+        );
+    }
+    
     /**
      * Deletes a UsuarioNewsletter entity.
      *

@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\PublicacionesBundle\Entity\Publicacion;
 use Richpolis\PublicacionesBundle\Form\PublicacionType;
-
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 /**
@@ -17,58 +16,57 @@ use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
  *
  * @Route("/publicaciones")
  */
-class PublicacionController extends Controller
-{
-	private $categorias = null;
-    protected function getFilters()
-    {
+class PublicacionController extends Controller {
+
+    private $categorias = null;
+
+    protected function getFilters() {
         return $this->get('session')->get('filters', array());
     }
-	
-	protected function setFilters($filtros)
-    {
+
+    protected function setFilters($filtros) {
         $this->get('session')->set('filters', $filtros);
     }
 
-    protected function getCategoriaDefault(){
+    protected function getCategoriaDefault() {
         $filters = $this->getFilters();
-		$cat = null;
-        if(isset($filters['categorias'])){
-			$categorias = $this->getCategoriasPublicacion();
-            foreach($categorias as $categoria){
-				if($categoria->getId()==$filters['categorias']){
-					$cat = $categoria;
-					break;
-				}
-			}
-        }else{
-			$categorias = $this->getCategoriasPublicacion();
-			$this->setFilters(array('categorias'=>$categorias[0]->getId()));
+        $cat = null;
+        if (isset($filters['categorias'])) {
+            $categorias = $this->getCategoriasPublicacion();
+            foreach ($categorias as $categoria) {
+                if ($categoria->getId() == $filters['categorias']) {
+                    $cat = $categoria;
+                    break;
+                }
+            }
+        } else {
+            $categorias = $this->getCategoriasPublicacion();
+            $this->setFilters(array('categorias' => $categorias[0]->getId()));
             $cat = $categorias[0];
         }
-		return $cat;
+        return $cat;
     }
 
-    protected function getCategoriasPublicacion(){
+    protected function getCategoriasPublicacion() {
         $em = $this->getDoctrine()->getManager();
-        if($this->categorias == null){
+        if ($this->categorias == null) {
             $this->categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
-                                   ->findAll();
+                    ->findAll();
         }
         return $this->categorias;
     }
 
-    protected function getCategoriaActual($categoriaId){
-        $categorias= $this->getCategoriasPublicacion();
-        $categoriaActual=null;
-        foreach($categorias as $categoria){
-            if($categoria->getId()==$categoriaId){
-                $categoriaActual=$categoria;
+    protected function getCategoriaActual($categoriaId) {
+        $categorias = $this->getCategoriasPublicacion();
+        $categoriaActual = null;
+        foreach ($categorias as $categoria) {
+            if ($categoria->getId() == $categoriaId) {
+                $categoriaActual = $categoria;
                 break;
             }
         }
         return $categoriaActual;
-    }	
+    }
 
     /**
      * Lists all Publicacion entities.
@@ -77,49 +75,45 @@ class PublicacionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-		$categoria  = $this->getCategoriaDefault();
-		
-        		
+        $categoria = $this->getCategoriaDefault();
+
+
         return array(
-			'categoria'=>$categoria,
+            'categoria' => $categoria,
             'entities' => $categoria->getPublicaciones(),
         );
     }
-	
-	/**
+
+    /**
      * Lists all Publicacion entities for eventos.
      *
      * @Route("/categoria/{slug}", name="publicaciones_categoria")
      * @Method("GET")
      * @Template("PublicacionesBundle:Publicacion:index.html.twig")
      */
-    public function categoriaAction($slug)
-    {
+    public function categoriaAction($slug) {
         $em = $this->getDoctrine()->getManager();
 
         $categoria = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
-						->findOneBy(array('slug'=>$slug));
-		
-		if (!$categoria) {
+                ->findOneBy(array('slug' => $slug));
+
+        if (!$categoria) {
             throw $this->createNotFoundException('Unable to find CategoriaPublicacion entity.');
         }
-		
-		$filters = $this->getFilters();
-		$filters['categorias']=$categoria->getId();
-		$this->setFilters($filters);
-		
-		return array(
-			'categoria'=> $categoria,
+
+        $filters = $this->getFilters();
+        $filters['categorias'] = $categoria->getId();
+        $this->setFilters($filters);
+
+        return array(
+            'categoria' => $categoria,
             'entities' => $categoria->getPublicaciones(),
         );
     }
-	
-	
-	
+
     /**
      * Creates a new Publicacion entity.
      *
@@ -127,11 +121,9 @@ class PublicacionController extends Controller
      * @Method("POST")
      * @Template("PublicacionesBundle:Publicacion:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
+        $parameters = $request->request->all();
         $entity = new Publicacion();
-		$user = $this->getUser();
-        $entity->setUsuario($user);
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -144,22 +136,21 @@ class PublicacionController extends Controller
         }
 
         return array(
-			'categoria'=>$this->getCategoriaDefault(),
+            'categoria' => $this->getCategoriaDefault(),
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
     /**
-    * Creates a form to create a Publicacion entity.
-    *
-    * @param Publicacion $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Publicacion $entity)
-    {
+     * Creates a form to create a Publicacion entity.
+     *
+     * @param Publicacion $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Publicacion $entity) {
         $form = $this->createForm(new PublicacionType(), $entity, array(
             'action' => $this->generateUrl('publicaciones_create'),
             'method' => 'POST',
@@ -177,26 +168,27 @@ class PublicacionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $publicacion = new Publicacion();
-        $max=$this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
+        $max = $this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
                 ->getMaxPosicion();
-        
-        if(!is_null($max)){
-            $publicacion->setPosition($max +1);
-        }else{
+
+        if (!is_null($max)) {
+            $publicacion->setPosition($max + 1);
+        } else {
             $publicacion->setPosition(1);
         }
+
+        $publicacion->setCategoria($this->getCategoriaDefault());
         
-	    $publicacion->setCategoria($this->getCategoriaDefault());
-        
-        $form   = $this->createCreateForm($publicacion);
+        $publicacion->setUsuario($this->getUser());
+
+        $form = $this->createCreateForm($publicacion);
 
         return array(
-            'categoria'=>$this->getCategoriaDefault(),
+            'categoria' => $this->getCategoriaDefault(),
             'entity' => $publicacion,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'errores' => RpsStms::getErrorMessages($form)
         );
     }
@@ -208,8 +200,7 @@ class PublicacionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
@@ -221,8 +212,8 @@ class PublicacionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'categoria'=>$this->getCategoriaDefault(),
-            'entity'      => $entity,
+            'categoria' => $this->getCategoriaDefault(),
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -234,8 +225,7 @@ class PublicacionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
@@ -248,23 +238,22 @@ class PublicacionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'categoria'=>$entity->getCategoria(),
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'categoria' => $entity->getCategoria(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
 
     /**
-    * Creates a form to edit a Publicacion entity.
-    *
-    * @param Publicacion $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Publicacion $entity)
-    {
+     * Creates a form to edit a Publicacion entity.
+     *
+     * @param Publicacion $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Publicacion $entity) {
         $form = $this->createForm(new PublicacionType(), $entity, array(
             'action' => $this->generateUrl('publicaciones_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -274,7 +263,7 @@ class PublicacionController extends Controller
 
         return $form;
     }
-    
+
     /**
      * Edits an existing Publicacion entity.
      *
@@ -282,8 +271,7 @@ class PublicacionController extends Controller
      * @Method("PUT")
      * @Template("PublicacionesBundle:Publicacion:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
@@ -299,26 +287,25 @@ class PublicacionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('publicaciones_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('publicaciones_show', array('id' => $id)));
         }
 
         return array(
-            'categoria'      => $entity->getCategoria(),
-            'entity'      => $entity,
-            'form'        => $editForm->createView(),
+            'categoria' => $entity->getCategoria(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'errores'     => RpsStms::getErrorMessages($editForm)
+            'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
-    
+
     /**
      * Deletes a Publicacion entity.
      *
      * @Route("/{id}", name="publicaciones_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -344,17 +331,17 @@ class PublicacionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('publicaciones_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            /*->add('submit', 'submit', array(
-                'label' => 'Eliminar',
-                'attr'=>array(
-                    'class'=>'btn btn-danger'
-            )))*/
-            ->getForm()
+                        ->setAction($this->generateUrl('publicaciones_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        /* ->add('submit', 'submit', array(
+                          'label' => 'Eliminar',
+                          'attr'=>array(
+                          'class'=>'btn btn-danger'
+                          ))) */
+                        ->getForm()
         ;
     }
+
 }

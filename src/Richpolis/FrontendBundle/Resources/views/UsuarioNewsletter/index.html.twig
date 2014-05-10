@@ -48,7 +48,9 @@
           <Divider>
           <span class="divider">/</span> 
           <a href="{{path('users_newsletter')}}" class="bread-current">Usuarios Newsletter</a>
-          <a href="{{path('users_newsletter_new')}}" class="btn btn-info pull-right">Crear autobus</a>
+          {% if is_granted('ROLE_ADMIN') %}
+          <a href="{{path('users_newsletter_new')}}" class="btn btn-info pull-right">Crear usuario</a>
+          {% endif %}
         </div>
         
         <div class="clearfix"></div>
@@ -92,22 +94,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                      {% for entity in entities %}
+                        {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
-                                <td><a href="{{ path('users_newsletter_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                                <td>{{ entity.nombre }}</td>
-                                <td>{{ entity.email }}</td>
-                                <td>
-                                    {% if entity.isActive %}
-                                        <i class="fa fa-check-circle"></i>
-                                    {% else %}
-                                        <i class="fa fa-circle"></i>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <button onclick="javascript:editarRegistro('{{ path('users_newsletter_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
-                                    <button onclick="javascript:editarRegistro('{{ path('users_newsletter_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-danger"><i class="fa fa-folder-open"></i> </button>
-                                </td>
+                                {% include 'FrontendBundle:UsuarioNewsletter:item.html.twig' with {'entity': entity} %}
                             </tr>
                         {% endfor %}
 
@@ -178,6 +167,48 @@
 <script>
 var editarRegistro = function(url){
         location.href=url;
+};
+
+var activarRegistro = function(url,id){
+  $.ajax({
+     url: url,
+     type: 'PATCH',
+     data: {isActive: true},
+     dataType: 'html',
+     success: function(data){
+         $(id).html(data);
+         noty({
+            text: 'Activación realizada',
+            layout:'topRight',
+            type:'success',
+            timeout:2000
+        });
+     },
+     error: function(data){
+         console.log(data);
+     },
+  });  
+};
+
+var inactivarRegistro = function(url,id){
+  $.ajax({
+     url: url,
+     type: 'PATCH',
+     data: {isActive: false},
+     dataType: 'html',
+     success: function(data){
+         $(id).html(data);
+         noty({
+            text: 'Inactivación realizada',
+            layout:'topRight',
+            type:'success',
+            timeout:2000
+        });
+     },
+     error: function(data){
+         console.log(data);
+     },
+  });  
 };
 
 $(document).ready(function() {

@@ -86,6 +86,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Categoria</th>
+                            <th>Imagen</th>
                             <th>Titulo</th>
                             <th>Descripcion</th>
                             <th>Activo?</th>
@@ -97,6 +98,13 @@
                             <tr id="registro-{{entity.id}}">
                                 <td><a href="{{ path('publicaciones_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                                 <td>{{ entity.categoria }}</td>
+                                <td>
+                                {% if entity.imagen | length > 0 %}
+                                    <img src="{{entity.webPath}}" style="max-width: 100px;"/>
+                                {% else  %}
+                                    sin imagen 
+                                {% endif %}
+                                </td>
                                 <td>{{ entity.tituloEs }}</td>
                                 <td>{{ entity.descripcionEs | raw }}</td>
                                 <td>
@@ -108,7 +116,7 @@
                                 </td>
                                 <td>
                                     <button onclick="javascript:editarRegistro('{{ path('publicaciones_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
-                                    <button onclick="javascript:editarRegistro('{{ path('publicaciones_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-danger"><i class="fa fa-folder-open"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('publicaciones_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
                                 </td>
                                 
                             </tr>

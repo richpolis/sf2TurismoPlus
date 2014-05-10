@@ -15,18 +15,18 @@ class UsuarioNewsletterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email','email',array(
-                'label'=>'Email','required'=>true,'attr'=>array(
-                    'class'=>'form-control placeholder',
-                    'placeholder'=>'Email',
-                    'data-bind'=>'value: email'
-                    )
-                ))
             ->add('nombre','text',array(
                 'label'=>'Nombre','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Nombre',
                     'data-bind'=>'value: nombre'
+                    )
+                ))
+            ->add('email','email',array(
+                'label'=>'Email','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Email',
+                    'data-bind'=>'value: email'
                     )
                 ))
             ->add('isActive','hidden')

@@ -304,15 +304,7 @@ class Publicacion
      */
     private $updatedAt;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->isActive = true;
-		$this->inCarrusel = true;
-    }
+    
     
     public function __toString(){
         return $this->getTitulo();
@@ -495,52 +487,6 @@ class Publicacion
     }
     
     /**
-     * Set usuario
-     *
-     * @param \Richpolis\BackendBundle\Entity\Usuario $usuario
-     * @return Publicacion
-     */
-    public function setUsuario(\Richpolis\BackendBundle\Entity\Usuario $usuario = null)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \Richpolis\BackendBundle\Entity\Usuario 
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-    
-    /**
-     * Set categoria
-     *
-     * @param \Richpolis\PublicacionesBundle\Entity\Categoria $categoria
-     * @return Publicacion
-     */
-    public function setCategoria(\Richpolis\PublicacionesBundle\Entity\Categoria $categoria = null)
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return \Richpolis\PublicacionesBundle\Entity\Categoria 
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
-    }
-    
-    /**
      * Set position
      *
      * @param integer $position
@@ -657,38 +603,7 @@ class Publicacion
         return $this->inCarrusel;
     }
 
-    /**
-     * Add galerias
-     *
-     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
-     * @return Publicacion
-     */
-    public function addGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
-    {
-        $this->galerias[] = $galerias;
-
-        return $this;
-    }
-
-    /**
-     * Remove galerias
-     *
-     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
-     */
-    public function removeGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
-    {
-        $this->galerias->removeElement($galerias);
-    }
-
-    /**
-     * Get galerias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getGalerias()
-    {
-        return $this->galerias;
-    }
+   
     
     /*
      * Timestable
@@ -1117,4 +1032,27 @@ class Publicacion
         return RpsStms::cut_string2(RpsStms::strip_html_tags($this->getContenidoEs()),250);
     }
 	
+
+    /**
+     * Set imagen
+     *
+     * @param string $imagen
+     * @return Publicacion
+     */
+    public function setImagen($imagen)
+    {
+        $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * Get imagen
+     *
+     * @return string 
+     */
+    public function getImagen()
+    {
+        return $this->imagen;
+    }
 }

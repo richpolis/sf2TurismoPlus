@@ -11,7 +11,7 @@ use Richpolis\PublicacionesBundle\Repository\CategoriaPublicacionRepository;
 
 class PublicacionType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -19,9 +19,9 @@ class PublicacionType extends AbstractType
     {
         $builder
             ->add('tituloEs','text',array(
-                'label'=>'Titulo español','required'=>true,'attr'=>array(
+                'label'=>'Titulo','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Titulo en español',
+                    'placeholder'=>'Titulo',
                     'data-bind'=>'value: titulo'
                     )
                 ))    
@@ -36,15 +36,19 @@ class PublicacionType extends AbstractType
             ->add('paqueteEs','text',array(
                 'label'=>'Paquete español','required'=>false,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'El paquete del tour en español',
+                    'placeholder'=>'Paquete',
                     'data-bind'=>'value: paquete'
                     )
                 ))
-            ->add('precioEs',null,array(
-                'label'=>'Precio español','required'=>false,'attr'=>array(
+            ->add('precioEs','money',array(
+                'label'=>'Precio pesos',
+                'required'=>false,
+                'currency'=>'MXN',
+                'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Precio del tour en español',
-                    'data-bind'=>'value: precio'
+                    'placeholder'=>'Precio',
+                    'data-bind'=>'value: precio',
+                    'style'=>'width:250px;'
                     )
                 ))
             ->add('tituloEn','text',array(
@@ -69,11 +73,15 @@ class PublicacionType extends AbstractType
                     'data-bind'=>'value: paquete'
                     )
                 ))
-            ->add('precioEn',null,array(
-                'label'=>'Precio ingles','required'=>false,'attr'=>array(
+            ->add('precioEn','money',array(
+                'label'=>'Precio dolares',
+                'required'=>false,
+                'currency'=>'USN',
+                'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Precio',
-                    'data-bind'=>'value: precio'
+                    'data-bind'=>'value: precio',
+                    'style'=>'width:250px;'
                     )
                 ))
             ->add('tituloFr','text',array(
@@ -98,28 +106,43 @@ class PublicacionType extends AbstractType
                     'data-bind'=>'value: paquete'
                     )
                 ))
-            ->add('precioFr',null,array(
-                'label'=>'Precio frances','required'=>false,'attr'=>array(
+            ->add('precioFr','money',array(
+                'label'=>'Precio euros',
+                'required'=>false,
+                'currency'=>'EUR',
+                'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Precio',
-                    'data-bind'=>'value: precio'
+                    'data-bind'=>'value: precio',
+                    'style'=>'width:250px;'
                     )
                 ))     
             ->add('categoria',null,array(
                 'label'=>'Categoria',
                 'required'=>true,
+                'read_only'=>true,
                 'attr'=>array(
                     'class'=>'validate[required] form-control placeholder',
                     'placeholder'=>'Categoria',
-                    'data-bind'=>'value: categoria'
+                    'data-bind'=>'value: categoria',
                     )
                 ))
-			->add('file','file',array('label'=>'Imagen','attr'=>array(
+            ->add('usuario',null,array(
+                'label'=>'Usuario',
+                'required'=>true,
+                'read_only'=>true,                
+                'attr'=>array(
+                    'class'=>'validate[required] form-control placeholder',
+                    'placeholder'=>'Usuario',
+                    'data-bind'=>'value: usuario',
+                    )
+                ))
+            ->add('file','file',array('label'=>'Imagen','attr'=>array(
                 'class'=>'form-control placeholder',
                 'placeholder'=>'Imagen pagina',
                 'data-bind'=>'value: imagen pagina'
              )))
-			->add('isActive',null,array('label'=>'Activo?','attr'=>array(
+            ->add('isActive',null,array('label'=>'Activo?','attr'=>array(
                 'class'=>'checkbox-inline',
                 'placeholder'=>'Es activo',
                 'data-bind'=>'value: isActive'
@@ -131,7 +154,8 @@ class PublicacionType extends AbstractType
                 )))
             ->add('imagen','hidden')
             ->add('position','hidden')
-			->add('usuario','hidden')
+            ->add('slug','hidden')
+            //->add('galerias','hidden')    
         ;
     }
     
@@ -141,8 +165,7 @@ class PublicacionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Richpolis\PublicacionesBundle\Entity\Publicacion',
-            'csrf_protection' => true
+            'data_class' => 'Richpolis\PublicacionesBundle\Entity\Publicacion'
         ));
     }
 
