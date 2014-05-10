@@ -58,7 +58,7 @@ class UsuariosController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('users', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('users_show', array('id' => $entity->getId())));
         }
 
         return array(

@@ -1,7 +1,7 @@
 [editor]
 ;Font size.
 ; Type: int 
-font_size = 14
+font_size = 12
 
 ;Use tabs for indentation.
 ; Type: boolean 
