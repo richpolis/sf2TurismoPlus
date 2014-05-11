@@ -138,7 +138,7 @@ class UsuariosController extends Controller
      * @Method("GET")
      * @Template("BackendBundle:Usuario:edit.html.twig")
      */
-    public function editAction($id)
+    public function editAction($id) 
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -152,8 +152,8 @@ class UsuariosController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'errores' => RpsStms::getErrorMessages($editForm)
         );
@@ -170,7 +170,7 @@ class UsuariosController extends Controller
     {
         $form = $this->createForm(new UsuarioType(), $entity, array(
             'action' => $this->generateUrl('users_update', array('id' => $entity->getId())),
-            'method' => 'POST',
+            'method' => 'PUT'
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));

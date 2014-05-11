@@ -75,9 +75,12 @@ class UsuarioType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        /*$resolver->setDefaults(array(
             'data_class' => 'Richpolis\BackendBundle\Entity\Usuario',
             'csrf_protection' => true
+        ));*/
+        $resolver->setDefaults(array(
+            'data_class' => 'Richpolis\BackendBundle\Entity\Usuario'
         ));
     }
 
@@ -86,7 +89,7 @@ class UsuarioType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'richpolis_backendbundle_usuariotype';
     }
 }
 

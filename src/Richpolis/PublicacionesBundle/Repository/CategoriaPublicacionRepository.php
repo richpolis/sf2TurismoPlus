@@ -74,7 +74,7 @@ class CategoriaPublicacionRepository extends EntityRepository
                SELECT c,p,g 
                FROM PublicacionesBundle:CategoriaPublicacion c 
                JOIN c.publicaciones p 
-               JOIN p.galerias c 
+               JOIN p.galerias g 
                WHERE c.id = :categoria 
                AND g.isActive = :active 
                ORDER BY p.position, g.position ASC
@@ -86,6 +86,34 @@ class CategoriaPublicacionRepository extends EntityRepository
         }else{
             return null;
         }
+    }
+    
+    public function getCategoriaPublicacionEnCarrusel(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+               SELECT c,p 
+               FROM PublicacionesBundle:CategoriaPublicacion c 
+               JOIN c.publicaciones p 
+               WHERE p.inCarrusel = :enCarrusel 
+               ORDER BY p.createdAt DESC
+        ')->setParameters(array('enCarrusel'=>true));
+        
+        $categorias=$query->getResult();
+        return $categorias;
+    }
+    
+    public function getCategoriaPublicacionActivas(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+               SELECT c,p 
+               FROM PublicacionesBundle:CategoriaPublicacion c 
+               JOIN c.publicaciones p 
+               WHERE p.isActive = :active 
+               ORDER BY p.createdAt DESC
+        ')->setParameters(array('active'=>true));
+        
+        $categorias=$query->getResult();
+        return $categorias;
     }
       
     public function getQueryCategoriasActivas($categoria_id = 0, $categoria_slug = "",$activas=false,$conObjs = true){

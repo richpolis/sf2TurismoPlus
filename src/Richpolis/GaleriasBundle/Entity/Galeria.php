@@ -5,6 +5,8 @@ namespace Richpolis\GaleriasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use JMS\Serializer\Annotation as Serializer;
 
 /**

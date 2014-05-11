@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{  parent()  }}
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
     <style>
     .bx-wrapper .bx-viewport{
         padding: 0px;
@@ -23,13 +24,28 @@
         <article class="servicios">
             <div class="galeria">
                 <ul class="galeriaContenedor">
-                    {% for galeria in range(1,7) %}
-                    <li><a href="#"><img src="http://placehold.it/310x197&text=Galeria{{galeria}}" alt=""></a></li>
-                    {% endfor %}
+                    {% if servicios is null %}
+                        {% for galeria in range(1,7) %}
+                        <li><a href="#"><img src="http://placehold.it/310x197&text=Galeria{{galeria}}" alt=""></a></li>
+                        {% endfor %}
+                    {%else %}
+                        {% for galeria in servicios.galerias %}
+                        <li>
+                            {% if galeria.isImagen == true %}
+                            <a href="{{galeria.webPath}}" class="fancybox" >
+                            {% else %}
+                            <a href="{{galeria.archivo}}" class="fancybox-media iframe">
+                            {% endif %}   
+                            <img src="{{galeria.webPath  | apply_filter('publicaciones')}}" alt="{{galeria.titulo(locale)}}">
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
                 <span id="slider-prev"></span>
                 <span id="slider-next"></span>
             </div>
+            {% if servicios is null %}    
             <h3>Tipo de logistica</h3>
             <div class="logistica">
                 <h4>Viaje Sencillo:</h4>
@@ -60,6 +76,11 @@
                 <li>Viajes Receptivos (Nacionales y Extranjeros)</li>
             </ul>
             <img src="{{asset('images/keyarts/servicios/servicios.jpg')}}" alt="Turismo Plus MG"/>
+            {% else %}
+                {{ servicios.contenido(locale)|raw }}
+                <img src="{{servicios.webPath}}" alt="Turismo Plus MG"/>
+            {% endif %}    
+            
         </article>
 {% endblock %}
 {% block javascripts %}
@@ -81,4 +102,23 @@
       });
     });
 </script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $("a.fancybox").fancybox();
+                
+                $("a.fancybox-media").fancybox({
+                    helpers : {
+                        media: true
+                    },
+                    youtube : {
+                        autoplay: 0
+                    }
+                });
+                
+                $.iniciarCircle();
+            });
+
+    </script>
 {% endblock %}

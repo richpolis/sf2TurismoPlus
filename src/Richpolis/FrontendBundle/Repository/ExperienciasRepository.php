@@ -24,4 +24,14 @@ class ExperienciasRepository extends EntityRepository
         $max=$query->getResult();
         return $max[0]['value'];
     }
+    public function getExperienciasActivas(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+               SELECT e 
+               FROM FrontendBundle:Experiencias e 
+               WHERE e.isActive = :active
+               ORDER BY e.position ASC
+        ')->setParameters(array('active'=>true));
+        return $query->getResult();
+    }
 }

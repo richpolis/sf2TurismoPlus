@@ -35,7 +35,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $categoriasPublicacion = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->
+                        getCategoriaPublicacionEnCarrusel();
+        $experiencias = $em->getRepository('FrontendBundle:Experiencias')
+                ->getExperienciasActivas();
+        shuffle($experiencias);
+        return array(
+            'categoriasPublicacion'=>$categoriasPublicacion,
+            'experiencias'=>$experiencias,
+        );
     }
     
     /**
@@ -44,7 +53,12 @@ class DefaultController extends Controller
      */
     public function nosotrosAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $nosotros = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'nosotros'));
+        return array(
+            'nosotros'=>$nosotros
+        );
     }
     
     /**
@@ -53,7 +67,12 @@ class DefaultController extends Controller
      */
     public function autobusesAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $autobuses = $em->getRepository('FrontendBundle:Autobus')
+                ->findActivos();
+        return array(
+            'autobuses'=>$autobuses,
+        );
     }
     
     /**
@@ -62,7 +81,12 @@ class DefaultController extends Controller
      */
     public function serviciosAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $servicios = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'servicios'));
+        return array(
+            'servicios'=>$servicios
+        );
     }
     
     
@@ -72,7 +96,37 @@ class DefaultController extends Controller
      */
     public function toursAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $categoriasPublicacion = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->
+                        getCategoriaPublicacionActivas();
+        $categorias = $this->getPublicacionesPorFilas($categoriasPublicacion);
+        return array(
+          'categorias'=>$categorias,  
+        );
+    }
+    
+    private function getPublicacionesPorFilas($categorias){
+        $arreglo = array();
+        $largo = 0;
+        $paginas = 0;
+        $contPagina = 0;
+        $cont=0;
+        foreach($categorias as $categoria){
+            $arreglo[$categoria->getSlug()]=array();
+            $largo = count($categoria->getPublicaciones());
+            $paginas = ceil($largo/3);
+            $contPagina = 0;
+            $arreglo[$categoria->getSlug()][$contPagina]=array();
+            $cont=0;
+            foreach($categoria->getPublicaciones() as $publicacion){
+                $arreglo[$categoria->getSlug()][$contPagina][$cont++]=$publicacion;
+                if($cont==3){
+                    $cont=0;
+                    $contPagina++;
+                }
+            }
+        }
+        return $arreglo;
     }
     
     /**
@@ -202,5 +256,7 @@ class DefaultController extends Controller
 
         return $response;
     }
+    
+    
     
 }

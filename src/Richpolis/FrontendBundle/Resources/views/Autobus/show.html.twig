@@ -48,150 +48,145 @@
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
-                    <Divider>
-                        <span class="divider">/</span> 
-                        <a href="{{path('autobuses')}}" class="bread-current">Autobuses</a>
-                        <a href="{{path('autobuses_new')}}" class="btn btn-info pull-right">Crear pagina</a>
-                        </div>
+                <Divider/>
+                <span class="divider">/</span> 
+                <a href="{{path('autobuses')}}" class="bread-current">Autobuses</a>
+                <a href="{{path('autobuses_new')}}" class="btn btn-info pull-right">Crear autobus</a>
+            </div>
 
-                        <div class="clearfix"></div>
+            <div class="clearfix"></div>
 
-                        </div>
-                        <!-- Page heading ends -->
+        </div>
+        <!-- Page heading ends -->
+        <!-- Matter -->
+        <div class="matter">
+            <div class="container" id="contenidoPagina">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="widget">
+                                <div class="widget-head">
+                                    <div class="pull-left">{{entity.nombre}}</div>
+                                    <div class="clearfix"></div>
+                                </div>
 
-                        <!-- Matter -->
+                                <div class="widget-content">
+                                    <div class="padd">
+                                        <div class="tabbable" style="margin-bottom: 18px;">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#sistema" data-toggle="tab">Sistema</a></li>
+                                                <li><a href="#galeria" data-toggle="tab">Imagenes</a></li>
+                                            </ul>
+                                            <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
+                                                <div class="tab-pane active" id="sistema">
+                                                    <table>
+                                                        <tbody><tr>
+                                                                <td>Id:</td>
+                                                                <td>{{entity.id}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Autobus:</td>
+                                                                <td>{{entity.nombre}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Descripcion Español:</td>
+                                                                <td>{{ entity.descripcionEs | raw }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Descripcion Ingles:</td>
+                                                                <td>{{ entity.descripcionEn | raw }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Descripcion Frances:</td>
+                                                                <td>{{ entity.descripcionFr | raw }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Detalles Español:</td>
+                                                                <td>{{ entity.detallesEs | raw }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Detalles Ingles:</td>
+                                                                <td>{{ entity.detallesEn | raw }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Detalles Frances:</td>
+                                                                <td>{{ entity.detallesFr | raw }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Imagen:</td>
+                                                                <td>
+                                                                    {% if entity.imagen | length > 0 %}
+                                                                        <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
+                                                                    {% else %}    
+                                                                        sin imagen
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Activo?:</td>
+                                                                <td>
+                                                                    {% if entity.isActive %}
+                                                                        <i class="fa fa-check-circle"></i>
+                                                                    {% else %}
+                                                                        <i class="fa fa-circle"></i>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
 
-                        <div class="matter">
-                            <div class="container" id="contenidoPagina">
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="widget">
-                                                <div class="widget-head">
-                                                    <div class="pull-left">{{entity.nombre}}</div>
-                                                    <div class="clearfix"></div>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-
-                                                <div class="widget-content">
-                                                    <div class="padd">
-                                                        <div class="tabbable" style="margin-bottom: 18px;">
-                                                            <ul class="nav nav-tabs">
-                                                                <li class="active"><a href="#sistema" data-toggle="tab">Sistema</a></li>
-                                                                <li><a href="#galeria" data-toggle="tab">Imagenes</a></li>
-                                                            </ul>
-                                                            <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
-                                                                <div class="tab-pane active" id="sistema">
-                                                                    <table>
-                                                            <tbody><tr>
-                                                                    <td>Id:</td>
-                                                                    <td>{{entity.id}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Autobus:</td>
-                                                                    <td>{{entity.nombre}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Descripcion Español:</td>
-                                                                    <td>{{ entity.descripcionEs | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Descripcion Ingles:</td>
-                                                                    <td>{{ entity.descripcionEn | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Descripcion Frances:</td>
-                                                                    <td>{{ entity.descripcionFr | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Detalles Español:</td>
-                                                                    <td>{{ entity.detallesEs | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Detalles Ingles:</td>
-                                                                    <td>{{ entity.detallesEn | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Detalles Frances:</td>
-                                                                    <td>{{ entity.detallesFr | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Imagen:</td>
-                                                                    <td>
-                                                                        {% if entity.imagen | length > 0 %}
-                                                                            <img src="{{ entity.webPath }}" style="max-width: 100px;"/>
-                                                                        {% else %}    
-                                                                            sin imagen
-                                                                        {% endif %}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Activo?:</td>
-                                                                    <td>
-                                                                        {% if entity.isActive %}
-                                                                            <i class="fa fa-check-circle"></i>
-                                                                        {% else %}
-                                                                            <i class="fa fa-circle"></i>
-                                                                        {% endif %}
-                                                                    </td>
-                                                                </tr>
-                                                                
-                                                            </tbody>
-                                                        </table>    
-                                                                </div>
-                                                                <div class="tab-pane" id="galeria">
-                                                                    <div class="container-galeria">    
-                                                                            {# seccion de codigo html #}
-                                                                            <div id="lista_imagenes" style=" min-height: 400px; overflow: hidden;">
-                                                                                {% include 'GaleriasBundle:Galeria:galerias.html.twig' with {'galerias': entity.galerias, 'url_delete': url_delete } %}
-                                                                            </div>
-                                                                            <table style="width: 99%; margin: 0 auto;">
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div id="upload"></div>
-                                                                                        Extenciones disponibles:   "jpeg","png","gif","jpg"
-                                                                                        <!--List Files-->
-                                                                                        <ul id="files" ></ul>
-                                                                                        <div class="clear"></div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <button onclick="javascript:crearVideoLink()" class="botonUploadVideoLink">Crear Video Link</button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>  
+                                                <div class="tab-pane" id="galeria">
+                                                    <div class="container-galeria">    
+                                                        {# seccion de codigo html #}
+                                                        <div id="lista_imagenes" style=" min-height: 400px; overflow: hidden;">
+                                                            {% include 'GaleriasBundle:Galeria:galerias.html.twig' with {'galerias': entity.galerias, 'url_delete': url_delete } %}
+                                                        </div>
+                                                        <table style="width: 99%; margin: 0 auto;">
+                                                            <tr>
+                                                                <td>
+                                                                    <div id="upload"></div>
+                                                                    Extenciones disponibles:   "jpeg","png","gif","jpg"
+                                                                    <!--List Files-->
+                                                                    <ul id="files" ></ul>
+                                                                    <div class="clear"></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button onclick="javascript:crearVideoLink()" class="botonUploadVideoLink">Crear Video Link</button>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                                <div class="widget-foot">
-                                                    <button id="botonRegresar" class="btn btn-default" onclick="javascript:regresar('{{path('autobuses')}}')">Regresar</button>
-                                                    <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('autobuses_edit',{id: entity.id})}}')">Editar</button>
-                                                    <div style="float: left; margin-right: 3px;">
-                                                        <form id="formEliminar" action="{{ path('autobuses_delete', { 'id': entity.id }) }}" method="post">
-                                                            {{ form_widget(delete_form) }}
-                                                            <button class="btn btn-danger " onclick="eliminarRegistro();">Eliminar</button>
-                                                        </form>
-                                                    </div>        
-                                                </div>
-                                            </div>  
-                                        </div>    
+                                            </div>
+                                        </div>  
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="widget-foot">
+                                    <button id="botonRegresar" class="btn btn-default" onclick="javascript:regresar('{{path('autobuses')}}')">Regresar</button>
+                                    <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('autobuses_edit',{id: entity.id})}}')">Editar</button>
+                                    <div style="float: left; margin-right: 3px;">
+                                        <form id="formEliminar" action="{{ path('autobuses_delete', { 'id': entity.id }) }}" method="post">
+                                            {{ form_widget(delete_form) }}
+                                            <button class="btn btn-danger " onclick="eliminarRegistro();">Eliminar</button>
+                                        </form>
+                                    </div>        
+                                </div>
+                            </div>  
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
 
                         <!-- Matter ends -->
 
-                        </div>
+    </div>
 
-                        <!-- Mainbar ends -->        
-                        <div class="clearfix"></div>
+    <!-- Mainbar ends -->        
+    <div class="clearfix"></div>
 
 {% include 'GaleriasBundle:Galeria:formulariosGaleria.html.twig' %}
 

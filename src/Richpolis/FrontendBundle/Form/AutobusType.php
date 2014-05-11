@@ -80,7 +80,6 @@ class AutobusType extends AbstractType
                 'placeholder'=>'Es activo',
                 'data-bind'=>'value: isActive'
                 )))    
-            ->add('galerias')
             ->add('imagen','hidden')
             ->add('position','hidden')
             ->add('slug','hidden')

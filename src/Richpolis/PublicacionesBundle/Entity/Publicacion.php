@@ -619,7 +619,7 @@ class Publicacion
      */
     
     /**
-     ** @ORM\PrePersist
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {

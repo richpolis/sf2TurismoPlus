@@ -175,7 +175,7 @@ class PaginaController extends Controller
     {
         $form = $this->createForm(new PaginaType(), $entity, array(
             'action' => $this->generateUrl('paginas_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'PATCH',
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));
@@ -186,7 +186,7 @@ class PaginaController extends Controller
      * Edits an existing Pagina entity.
      *
      * @Route("/{id}", name="paginas_update")
-     * @Method("PUT")
+     * @Method({"PUT","PATCH"})
      * @Template("PaginasBundle:Pagina:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -206,7 +206,7 @@ class PaginaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('paginas_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('paginas_show', array('id' => $id)));
         }
 
         return array(

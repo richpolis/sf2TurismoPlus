@@ -22,18 +22,16 @@
 {% block contenido %}
         <article class="autobuses">
             <div class="lista">
-                {% for number in range(1,7) %}
+                {% for autobus in autobuses %}
                     <div class="item">
                         <figure>
-                            <img src="http://placehold.it/330X210&text=Destino{{number}}" alt="{{"Titulo de la imagen " ~ number }}">
+                            <img src="{{ autobus.galerias[0].webPath | apply_filter('autobuses')  }}" title="{{ autobus.nombre}}">
                             <span class="lupa"></span>
                             <div class="descripcion-autobus">
                                 <h3>
-                                    titulo del autobus
+                                    {{autobus.nombre}}
                                 </h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, amet, possimus autem harum veritatis recusandae voluptatem corporis illum similique deleniti debitis neque excepturi ipsam vel esse! Magnam ea veritatis dignissimos!
-                                </p>
+                                {{ autobus.descripcion(locale)|raw }}
                             </div>
                         </figure>
                     </div>

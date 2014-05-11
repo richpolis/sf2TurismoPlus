@@ -49,7 +49,6 @@ class PaginaType extends AbstractType
                 'placeholder'=>'Imagen pagina',
                 'data-bind'=>'value: imagen pagina'
              )))  
-            ->add('galerias')
             ->add('imagen','hidden')
         ;
     }

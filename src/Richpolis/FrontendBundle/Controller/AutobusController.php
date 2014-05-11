@@ -97,6 +97,15 @@ class AutobusController extends Controller
     public function newAction()
     {
         $entity = new Autobus();
+        $max = $this->getDoctrine()->getRepository('FrontendBundle:Autobus')
+                ->getMaxPosicion();
+
+        if (!is_null($max)) {
+            $entity->setPosition($max + 1);
+        } else {
+            $entity->setPosition(1);
+        }
+        
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -173,7 +182,7 @@ class AutobusController extends Controller
     {
         $form = $this->createForm(new AutobusType(), $entity, array(
             'action' => $this->generateUrl('autobuses_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'PATCH',
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));
@@ -184,7 +193,7 @@ class AutobusController extends Controller
      * Edits an existing Autobus entity.
      *
      * @Route("/{id}", name="autobuses_update")
-     * @Method("PUT")
+     * @Method({"PUT","PATCH"})
      * @Template("FrontendBundle:Autobus:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -271,7 +280,7 @@ class AutobusController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $autobus = $em->getRepository('FrontendBundle:Pagina')->find($id);
+        $autobus = $em->getRepository('FrontendBundle:Autobus')->find($id);
         
         $galerias = $autobus->getGalerias();
         $get_galerias = $this->generateUrl('autobuses_galerias',array('id'=>$autobus->getId()));
@@ -294,7 +303,7 @@ class AutobusController extends Controller
      */
     public function galeriasUploadAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
-        $autobus=$em->getRepository('FrontendBundle:Pagina')->find($id);
+        $autobus=$em->getRepository('FrontendBundle:Autobus')->find($id);
        
         if(!$request->request->has('tipoArchivo')){ 
             // list of valid extensions, ex. array("jpeg", "xml", "bmp")
@@ -343,7 +352,7 @@ class AutobusController extends Controller
     }
     
     /**
-     * Deletes una Galeria entity de una Pagina.
+     * Deletes una Galeria entity de una Autobus.
      *
      * @Route("/{id}/galerias/{idGaleria}", name="autobuses_galerias_delete")
      * @Method("DELETE")
@@ -351,11 +360,11 @@ class AutobusController extends Controller
     public function deleteGaleriaAction(Request $request, $id, $idGaleria)
     {
             $em = $this->getDoctrine()->getManager();
-            $autobus = $em->getRepository('FrontendBundle:Pagina')->find($id);
+            $autobus = $em->getRepository('FrontendBundle:Autobus')->find($id);
             $galeria = $em->getRepository('GaleriasBundle:Galeria')->find(intval($idGaleria));
 
             if (!$autobus) {
-                throw $this->createNotFoundException('Unable to find Pagina entity.');
+                throw $this->createNotFoundException('Unable to find Autobus entity.');
             }
             
             $autobus->getGalerias()->removeElement($galeria);
