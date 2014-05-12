@@ -376,4 +376,42 @@ class AutobusController extends Controller
         $response->setData(array("ok"=>true));
         return $response;
     }
+	
+	/**
+     * Ordenar las posiciones de los autobuses.
+     *
+     * @Route("/ordenar", name="autobuses_ordenar")
+     * @Method("POST")
+     */
+	public function ordenarRegistrosAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $registro_order = $request->query->get('registro');
+            $em=$this->getDoctrine()->getManager();
+            $result['ok']=true;
+            foreach($registro_order as $order=>$id)
+            {
+                $registro=$em->getRepository('FrontendBundle:Autobus')->find($id);
+                if($registro->getPosition()!=($order+1)){
+                    try{
+                        $registro->setPosition($order+1);
+                        $em->flush();
+                    }catch(Exception $e){
+                        $result['mensaje']=$e->getMessage();
+						$result['ok']=false;
+                    }    
+                }
+            }
+            
+			$response = new \Symfony\Component\HttpFoundation\JsonResponse();
+			$response->setData($result);
+			return $response;
+           
+        }
+        else {
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+			$response->setData(array('ok'=>false));
+			return $response;
+        }
+    }
 }

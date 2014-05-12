@@ -92,7 +92,7 @@
                             <th>Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="cuerpoTabla">
                       {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
                                 <td><a href="{{ path('autobuses_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
@@ -190,14 +190,50 @@ var editarRegistro = function(url){
 };
 
 $(document).ready(function() {
-    $('#datatable').dataTable({
+    /*$('#datatable').dataTable({
         "sPaginationType": "full_numbers",
         "sNext":"Siguiente",
         "sLast":"Ultimo",
         "sFirst":"Primero",
         "sPrevious": "Anterior",
-    });
+    });*/
+	iniciarlizarSorteable();
 });
+function iniciarlizarSorteable(){
+    $("#cuerpoTabla").sortable({
+        items: "tr",
+        cursor: 'move',
+        opacity: 0.6,
+        update: function() {
+            sendOrderToServer();
+        }
+    });
+    $("#cuerpoTabla").disableSelection();
+}
+
+function sendOrderToServer() {
+    debugger;
+    $('#image-loader').show();
+    var order = $("#cuerpoTabla").sortable('serialize');
+    $.ajax({
+       url: '{{path('autobuses_ordenar')}}?' + order,
+       type: 'PATCH',
+       data: order,
+       dataType: 'html',
+       success: function(data){
+          debugger;
+          window.views.table.listUpdate();
+          console.log(data);
+          $('#image-loader').hide();
+       },
+       error: function(data){
+           debugger;
+           console.log(data);
+           $('#image-loader').hide();
+       },
+    });
+            
+}
 </script>
 
     

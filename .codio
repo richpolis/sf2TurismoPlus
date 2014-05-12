@@ -23,6 +23,7 @@
         "Backend URL": "http://{{domain}}:3000/app_dev.php/backend",
         "Config URL": "http://{{domain}}:3000/config.php",
         "PhpMyAdmin URL": "http://{{domain}}:3000/phpmyadmin",
+	    "Adminer URL": "http://{{domain}}:3000/adminer",
         "Box URL SSL": "https://{{domain}}:9500/"
   }
 }
