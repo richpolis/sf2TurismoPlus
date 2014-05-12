@@ -13,7 +13,14 @@ class ConfiguracionesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('configuracion')
+            ->add('configuracion','text',array(
+                'label'=>'Configuracion',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'validate[required] form-control placeholder',
+                    'placeholder'=>'Configuracion',
+                    'data-bind'=>'value: configuracion'
+             )))
             ->add('file','file',array(
                 'label'=>'Archivo',
                 'required'=>false,

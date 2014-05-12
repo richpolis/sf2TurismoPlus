@@ -18,8 +18,9 @@
                 {% for publicacion in fila %}
                     <div class="destino col-lg-4">
                         <figure>
-                            <a href="{{publicacion.webPath}}" class="fancybox" >
-                            <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                            <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                                <span class="lupa"></span>
                             </a>
                             <span class="lupa"></span>
                             {% if publicacion.precio(locale) > 0 %}
@@ -45,8 +46,9 @@
                 {% for publicacion in fila %}
                     <div class="destino col-lg-4">
                         <figure>
-                            <a href="{{publicacion.webPath}}" class="fancybox" >
-                            <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                            <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                                <span class="lupa"></span>
                             </a>
                             <span class="lupa"></span>
                             {% if publicacion.precio(locale) > 0 %}
@@ -72,8 +74,9 @@
                 {% for publicacion in fila %}
                     <div class="destino col-lg-4">
                         <figure>
-                            <a href="{{publicacion.webPath}}" class="fancybox" >
-                            <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                            <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                                <span class="lupa"></span>
                             </a>
                             <span class="lupa"></span>
                             {% if publicacion.precio(locale) > 0 %}

@@ -2,6 +2,8 @@
 
 namespace Richpolis\FrontendBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -41,9 +43,12 @@ class DefaultController extends Controller
         $experiencias = $em->getRepository('FrontendBundle:Experiencias')
                 ->getExperienciasActivas();
         shuffle($experiencias);
+        $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
+        $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
         return array(
             'categoriasPublicacion'=>$categoriasPublicacion,
             'experiencias'=>$experiencias,
+            'form'=>$form->createView()
         );
     }
     
@@ -132,9 +137,8 @@ class DefaultController extends Controller
     /**
      * @Route("/{_locale}/contacto", name="frontend_contacto", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
      * @Method({"GET", "POST"})
-     * @Template("FrontendBundle:Default:contacto.html.twig")
      */
-    public function contactoAction() {
+    public function contactoAction(Request $request) {
         $contacto = new Contacto();
         $form = $this->createForm(new ContactoType(), $contacto);
         $request = $this->getRequest();
@@ -160,6 +164,8 @@ class DefaultController extends Controller
                 $mensaje="Se ha enviado el mensaje";
                 $contacto = new Contacto();
                 $form = $this->createForm(new ContactoType(), $contacto);
+                
+                
             }else{
                 $ok=false;
                 $error=true;
@@ -171,12 +177,21 @@ class DefaultController extends Controller
             $mensaje="";
         }
         
-        return array(
+        if($request->isXmlHttpRequest()){
+            return $this->render('FrontendBundle:Default:formContacto.html.twig',array(
+                'form' => $form->createView(),
+                'ok'=>$ok,
+                'error'=>$error,
+                'mensaje'=>$mensaje,
+            ));
+        }
+        
+        return $this->render('FrontendBundle:Default:contacto.html.twig',array(
               'form' => $form->createView(),
               'ok'=>$ok,
               'error'=>$error,
               'mensaje'=>$mensaje,
-        );
+        ));
     }
 
     /**
@@ -230,6 +245,57 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/{_locale}/form/newsletter", name="frontend_form_newsletter", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Method({"GET", "POST"})
+     * @Template("FrontendBundle:Default:formNewsletter.html.twig")
+     */
+    public function newsletterAction() {
+        $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
+        $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
+        $request = $this->getRequest();
+        
+        if ($request->getMethod() == 'POST') {
+            
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $datos=$form->getData();
+                
+                $em = $this->getDoctrine()->getManager();
+                $usuario = $em->getRepository('FrontendBundle:UsuarioNewsletter')->findOneBy(array(
+                    'email'=>$datos['email'] 
+                ));
+                
+                if(!$usuario){
+                    $em->persist($data);
+                    $em->flush();
+                }
+               
+                $ok=true;
+                $error=false;
+                $mensaje="Se ha enviado el mensaje";
+                $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
+                $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
+            }else{
+                $ok=false;
+                $error=true;
+                $mensaje="El mensaje no se ha podido enviar";
+            }
+        }else{
+            $ok=false;
+            $error=false;
+            $mensaje="";
+        }
+        
+        return array(
+              'form' => $form->createView(),
+              'ok'=>$ok,
+              'error'=>$error,
+              'mensaje'=>$mensaje,
+        );
+    }
+    
+    /**
      * Lista los ultimos tweets.
      *
      * @Route("/last-tweets/{username}/", name="last_tweets")
@@ -257,6 +323,80 @@ class DefaultController extends Controller
         return $response;
     }
     
+    /**
+     * @Route("/api/{_locale}/autobuses", name="get_autobuses", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Method({"GET"})
+     */
+    public function getAutobusesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $autobuses = $em->getRepository('FrontendBundle:Autobus')
+                ->findActivos();
+        $locale = $request->getLocale();
+        
+        $resultados = $this->decodeAutobuses($locale,$autobuses);
+        
+        $response = new JsonResponse();
+        $response->setData($resultados);
+        return $response;
+    }
     
+    /**
+     * @Route("/api/{_locale}/autobuses/{id}", name="get_autobus", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Method({"GET"})
+     */
+    public function getAutobusAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $autobus = $em->getRepository('FrontendBundle:Autobus')
+                ->find($id);
+        
+        $locale = $request->getRequestFormat();
+        
+        $resultados = $this->decodeAutobuses($locale,array($autobus));
+        
+        $response = new JsonResponse();
+        $response->setData($resultados[0]);
+        return $response;
+    }
     
+    private function decodeAutobuses($locale,$autobuses){
+        $arreglo = array();
+        $cont = 0;
+        $largo = count($autobuses);
+        $avalancheService = $this->get('imagine.cache.path.resolver');
+        foreach($autobuses as $autobus){
+            $item = array(
+              'id'=>$autobus->getId(),
+              'nombre'=>$autobus->getNombre(),
+              'descripcion'=>$autobus->getDescripcion($locale),
+              'detalles'=>$autobus->getDetalles($locale),
+              'imagen'=>$autobus->getWebPath(),
+              'galerias'=>array(),
+            );
+            $contGaleria =0;
+            $galerias = array();
+            foreach($autobus->getGalerias() as $galeria){
+                $galerias[$contGaleria++]=array(
+                  'titulo'=>$galeria->getTitulo(),
+                  'descripcion'=>$galeria->getDescripcion(),
+                  'archivo'=>$galeria->getWebPath(),
+                  'isImagen'=>$galeria->getIsImagen(),  
+                  'thumbnail'=>($galeria->getIsImagen()?$avalancheService->getBrowserPath($galeria->getWebPath(), 'publicaciones'):$galeria->getThumbnailWebPath()),
+                  'logo'=>($galeria->getTitulo()=="logo"?true:false),  
+                );
+            }
+            if(isset($autobuses[$cont+1])){
+                $item['siguiente']=$autobuses[$cont+1]->getId();
+                $item['siguienteNombre']=$autobuses[$cont+1]->getNombre();
+            }
+            if($cont>0){
+                $item['anterior']=$autobuses[$cont-1]->getId();
+                $item['anteriorNombre']=$autobuses[$cont-1]->getNombre();
+            }
+            $item['galerias']=$galerias;
+            $arreglo[$cont++]= $item;
+        }
+        return $arreglo;
+    }
 }

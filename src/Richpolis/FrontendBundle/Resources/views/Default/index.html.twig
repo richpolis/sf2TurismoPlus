@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{  parent()  }}
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
     <style>
     .bx-wrapper .bx-viewport{
         padding: 0px;
@@ -24,7 +25,10 @@
                 </div>
                 <div class="newsletter">
                     {{"Reciba ofertas y promociones en su correo"|trans}}
-                    <span class="newsletter-correo"></span>
+                    <span class="newsletter-correo">
+                        <a href="#" data-toggle="modal" data-target="#formNewsletter" class="newsletter">   
+                        </a>    
+                    </span>
                 </div>
             </div>
             <article class="destinos-eventos">
@@ -33,8 +37,11 @@
                     <ul class="sliderDestinos">
                         {% for categoria in categoriasPublicacion if categoria.slug == "destinos" %}
                             {% for publicacion in categoria.publicaciones %}
-                            <li>
-                                <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="{{ publicacion.titulo(locale)}}">
+                            <li class="image-large">
+                                <a href="{{publicacion.webPath}}" class="fancybox image-wrap">
+                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="{{ publicacion.titulo(locale)}}">
+                                    <span class="lupa"></span>
+                                </a>
                             </li>
                             {% endfor %}
                         {% endfor %}
@@ -45,8 +52,11 @@
                     <ul class="sliderEventos">
                         {% for categoria in categoriasPublicacion if categoria.slug == "eventos" %}
                             {% for publicacion in categoria.publicaciones %}
-                            <li>
-                                <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="{{ publicacion.titulo(locale  )}}">
+                            <li class="image-large">
+                                <a href="{{publicacion.webPath}}" class="fancybox image-wrap">
+                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="{{ publicacion.titulo(locale  )}}">
+                                    <span class="lupa"></span>
+                                </a>
                             </li>
                             {% endfor %}
                         {% endfor %}
@@ -71,32 +81,49 @@
                     </div>
                 </div>
             </article>
+<!-- Modal -->
+<div class="modal fade" id="formNewsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        {% include 'FrontendBundle:Default:formNewsletter.html.twig' with {'form': form}%}
+    </div>    
+</div>                                
+                                
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
 <script src="{{asset('js/jquery.bxslider.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
 <script>
-    $(document).on("ready",function(){
+$(document).on("ready",function(){
         setTimeout(function(){
             iniciarCircle();
         },6000);
 
         $('.sliderDestinos,.sliderEventos').bxSlider({
-            mode: 'fade',
             captions: true,
             randomStart: false,
             pager: false,
             auto: true,
             controls: false,
-            speed: 4000,
+            speed: 1000,
         });
         
-        
+        $("a.fancybox").fancybox();
+                
+        $("a.fancybox-media").fancybox({
+            helpers : {
+                media: true
+            },
+            youtube : {
+                autoplay: 0
+            }
+        });
+        iniciarlizarFormNewsletter();
 
-
-    });
-    var iniciarCircle=function(){
+});
+var iniciarCircle=function(){
         $('ul.twitter-feed li:first-child').slideUp("slow",function(){
             $('ul.twitter-feed').append($(this).slideDown("fast"));
         });
@@ -105,7 +132,29 @@
             iniciarCircle();
         },6000);
                     
-    }
+}
+function iniciarlizarFormNewsletter(){
+    $("input.form-submit").click( function() {
+        debugger;
+        $('img.ajax-loader').css({visibility: 'visible'});
+        $("img.ajax-loader").fadeIn("fast",function(){
+            $.post("{{path('frontend_form_newsletter')}}",
+            $("form.form-newsletter").serialize(),
+            function(data){
+                actualizaFormularioNewsletter(data);
+                setTimeout(function(){
+                    $("#formulario_newsletter").find(".form-response-output").fadeOut("fast");
+                },2000);
+                
+            });    
+        });
+    });
+}
+
+function actualizaFormularioNewsletter(data){
+  $("#formulario_newsletter").parent().html(data);
+  iniciarlizarFormNewsletter();
+}
     
 </script>
 {% endblock %}

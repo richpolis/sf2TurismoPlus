@@ -16,10 +16,10 @@ class CotizadorType extends AbstractType
             ->add('telefono','text')
             ->add('salida','text')
             ->add('fechaSalida','text')
-            ->add('horaSalida','text')
-            ->add('fechaRegreso','text')
-            ->add('horaRegreso','text')
-            ->add('comentarios','textarea')
+            ->add('horaSalida','text',array('required'=>false))
+            ->add('fechaRegreso','text',array('required'=>false))
+            ->add('horaRegreso','text',array('required'=>false))
+            ->add('comentarios','textarea',array('required'=>false))
 
         ;
     }

@@ -13,11 +13,22 @@ class ConfiguracionesStringType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('configuracion')
+            ->add('configuracion','text',array(
+                'label'=>'Configuracion',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'validate[required] form-control placeholder',
+                    'placeholder'=>'Configuracion',
+                    'data-bind'=>'value: configuracion'
+             )))
             ->add('texto','text',array(
                 'label'=>'Valor',
                 'required'=>true,
-            ))
+                'attr'=>array(
+                    'class'=>'validate[required] form-control placeholder',
+                    'placeholder'=>'Valor',
+                    'data-bind'=>'value: valor'
+             )))
             ->add('slug','hidden')
             ->add('tipoConfiguracion','hidden')    
         ;

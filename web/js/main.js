@@ -33,3 +33,4 @@ var selectLanguage = function(){
         location.href = window.api.frances;
     }
 }
+

@@ -505,7 +505,7 @@ class Galeria
     
     /**
      * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("webPathThumbnail")
+     * @Serializer\SerializedName("thumbnailWebPath")
      * 
      */
     public function getThumbnailWebPath()
@@ -524,7 +524,7 @@ class Galeria
     
     /**
      * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("webPathMedium")
+     * @Serializer\SerializedName("mediumWebPath")
      * 
      */
     public function getMediumWebPath()
@@ -543,7 +543,7 @@ class Galeria
     
     /**
      * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("webPathLarge")
+     * @Serializer\SerializedName("largeWebPath")
      * 
      */
     public function getLargeWebPath()

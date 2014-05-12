@@ -32,11 +32,13 @@
                         {% for galeria in servicios.galerias %}
                         <li>
                             {% if galeria.isImagen == true %}
-                            <a href="{{galeria.webPath}}" class="fancybox" >
+                            <a href="{{galeria.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{galeria.webPath  | apply_filter('publicaciones')}}" alt="{{galeria.titulo}}">
                             {% else %}
-                            <a href="{{galeria.archivo}}" class="fancybox-media iframe">
+                            <a href="{{galeria.archivo}}" class="fancybox-media iframe video-wrap">
+                                <img src="{{galeria.thumbnailWebPath}}" alt="{{galeria.titulo}}">
                             {% endif %}   
-                            <img src="{{galeria.webPath  | apply_filter('publicaciones')}}" alt="{{galeria.titulo(locale)}}">
+                            <span class="lupa"></span>   
                             </a>
                         </li>
                         {% endfor %}
@@ -104,21 +106,18 @@
 </script>
 <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
-        <script>
-            $(document).ready(function() {
-                $("a.fancybox").fancybox();
+<script>
+    $(document).ready(function() {
+        $("a.fancybox").fancybox();
                 
-                $("a.fancybox-media").fancybox({
-                    helpers : {
-                        media: true
-                    },
-                    youtube : {
-                        autoplay: 0
-                    }
-                });
-                
-                $.iniciarCircle();
-            });
-
-    </script>
+        $("a.fancybox-media").fancybox({
+            helpers : {
+                media: true
+            },
+            youtube : {
+                autoplay: 0
+            }
+        });
+    });
+</script>
 {% endblock %}

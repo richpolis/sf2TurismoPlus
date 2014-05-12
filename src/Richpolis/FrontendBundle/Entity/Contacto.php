@@ -15,6 +15,7 @@ class Contacto
 
     /**
      * @Assert\Email(message="Email no es valido.")
+     * @Assert\NotBlank(message="El email no puede estar vacio.")
      */
     protected $email;
 
@@ -29,6 +30,7 @@ class Contacto
      *     min=3,
      *     minMessage="El mensaje debe tener como minimo {{ limit }} caracteres."
      * )
+     * @Assert\NotBlank(message="El mensaje no puede estar vacio.")
      */
     protected $body;
     
