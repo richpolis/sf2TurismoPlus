@@ -73,7 +73,9 @@
                     <span class="facebook"></span>
                     </a>
                     <span class="youtube"></span>
+                    <a href="#" data-toggle="modal" data-target="#formMensajeSitio">
                     <span class="email"></span>
+                    </a>
                 </div>
                 <div class="lenguajes">
                   <label for="selectLanguage" style="font-size: normal;">{% trans %}Seleccionar idioma{% endtrans %}</label>  
@@ -137,12 +139,19 @@
         <section>
             {% block contenido %} 
             {% endblock %}
+            <div class="modal fade" id="formMensajeSitio" tabindex="-1" role="dialog" aria-labelledby="myMensajeSitio" aria-hidden="true">
+                <div class="modal-dialog">
+                     {{ render(controller("FrontendBundle:Default:getMensajeSitio",{'_locale': locale })) }}
+                </div>    
+            </div>
         </section>
         <footer>
             <p class="col-lg-12">Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999</p>
         </footer>
         <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
         <div class="loader"></div>
+
+                
     </div>
 {% endblock %}
 

@@ -222,8 +222,8 @@ class DefaultController extends Controller
                 // reenvíe el formulario si actualiza la página
                 $ok=true;
                 $error=false;
-                $mensaje="Se ha enviado el mensaje";
-                $contacto = new Cotizador();
+                $mensaje="La solicitud de cotización se ha enviado";
+                $cotizador = new Cotizador();
                 $form = $this->createForm(new CotizadorType(), $cotizador);
             }else{
                 $ok=false;
@@ -351,7 +351,7 @@ class DefaultController extends Controller
         $autobus = $em->getRepository('FrontendBundle:Autobus')
                 ->find($id);
         
-        $locale = $request->getRequestFormat();
+        $locale = $request->getLocale();
         
         $resultados = $this->decodeAutobuses($locale,array($autobus));
         
@@ -398,5 +398,21 @@ class DefaultController extends Controller
             $arreglo[$cont++]= $item;
         }
         return $arreglo;
+    }
+    
+    /**
+     * @Route("/{_locale}/mensaje/sitio", name="get_mensaje_sitio", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Method({"GET"})
+     * @Template("FrontendBundle:Default:mensaje.html.twig")
+     */
+    public function getMensajeSitioAction(Request $request)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        $locale = $request->getLocale();
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                ->findOneBy(array('slug'=>'aviso-'.$locale));
+        
+        return array('mensaje'=>$configuracion->getTexto());
     }
 }

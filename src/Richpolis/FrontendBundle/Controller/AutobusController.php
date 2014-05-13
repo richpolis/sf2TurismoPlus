@@ -34,7 +34,7 @@ class AutobusController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FrontendBundle:Autobus')->findAll();
+        $entities = $em->getRepository('FrontendBundle:Autobus')->findActivos();
 
         return array(
             'entities' => $entities,
@@ -377,41 +377,38 @@ class AutobusController extends Controller
         return $response;
     }
 	
-	/**
+    /**
      * Ordenar las posiciones de los autobuses.
      *
-     * @Route("/ordenar", name="autobuses_ordenar")
-     * @Method("POST")
+     * @Route("/ordenar/registros", name="autobuses_ordenar")
+     * @Method("PATCH")
      */
-	public function ordenarRegistrosAction(Request $request)
-    {
+    public function ordenarRegistrosAction(Request $request) {
         if ($request->isXmlHttpRequest()) {
             $registro_order = $request->query->get('registro');
-            $em=$this->getDoctrine()->getManager();
-            $result['ok']=true;
-            foreach($registro_order as $order=>$id)
-            {
-                $registro=$em->getRepository('FrontendBundle:Autobus')->find($id);
-                if($registro->getPosition()!=($order+1)){
-                    try{
-                        $registro->setPosition($order+1);
+            $em = $this->getDoctrine()->getManager();
+            $result['ok'] = true;
+            foreach ($registro_order as $order => $id) {
+                $registro = $em->getRepository('FrontendBundle:Autobus')->find($id);
+                if ($registro->getPosition() != ($order + 1)) {
+                    try {
+                        $registro->setPosition($order + 1);
                         $em->flush();
-                    }catch(Exception $e){
-                        $result['mensaje']=$e->getMessage();
-						$result['ok']=false;
-                    }    
+                    } catch (Exception $e) {
+                        $result['mensaje'] = $e->getMessage();
+                        $result['ok'] = false;
+                    }
                 }
             }
-            
-			$response = new \Symfony\Component\HttpFoundation\JsonResponse();
-			$response->setData($result);
-			return $response;
-           
-        }
-        else {
+
             $response = new \Symfony\Component\HttpFoundation\JsonResponse();
-			$response->setData(array('ok'=>false));
-			return $response;
+            $response->setData($result);
+            return $response;
+        } else {
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData(array('ok' => false));
+            return $response;
         }
     }
+
 }

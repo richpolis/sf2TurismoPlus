@@ -826,7 +826,7 @@ li.image-large a.image-wrap:hover .lupa{
     opacity: 1;
 }
 
-#formulario_newsletter {
+#formulario_newsletter,#mensaje_sitio {
   background-color: #fff;
   text-align: left;
   padding: 40px;

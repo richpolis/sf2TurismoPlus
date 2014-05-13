@@ -109,6 +109,12 @@ Autobuses.Routers.App = Backbone.Router.extend({
     show: function(id) {
         debugger;
         if(!window.api.accion.show){
+            if(window.views.show){
+                window.views.show.remove();
+                var article = $("<article>");
+                article.className('autobus');
+                $(".autobuses").after(article);
+            }
             var model = window.collections.autobuses.get(id);
             window.views.show = new  Autobuses.Views.Show({model: model});
             views.show.render();

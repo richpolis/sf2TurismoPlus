@@ -207,23 +207,34 @@ function iniciarlizarSorteable(){
 
 function sendOrderToServer() {
     debugger;
-    $('#image-loader').show();
+    $(".loader").fadeIn();
     var order = $("#cuerpoTabla").sortable('serialize');
     $.ajax({
        url: '{{path('experiencias_ordenar')}}?' + order,
-       type: 'POST',
+       type: 'PATCH',
        data: order,
-       dataType: 'html',
+       dataType: 'json',
        success: function(data){
           debugger;
-          window.views.table.listUpdate();
+          noty({
+                text: 'Actualizacion realizada',
+                layout:'topRight',
+                type:'success',
+                timeout:2000
+          });
           console.log(data);
-          $('#image-loader').hide();
+          $(".loader").fadeOut();
        },
        error: function(data){
            debugger;
+           noty({
+                text: 'Error de actualizacion',
+                layout:'topRight',
+                type:'error',
+                timeout:2000
+            });
            console.log(data);
-           $('#image-loader').hide();
+           $(".loader").fadeOut();
        },
     });
             

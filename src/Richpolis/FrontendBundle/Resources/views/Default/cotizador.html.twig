@@ -32,6 +32,19 @@
     <article class="cotizador">
         <h3>{{"Cotizador en linea"|trans}}</h3>
         <hr>
+        {% if ok == true and error == false%}    
+            <div class="form-response-output form-mail-sent-ok" style="color: green;">
+                {{mensaje}}
+            </div>
+        {% elseif ok == false and error == true %}
+            <div class="form-response-output form-mail-sent-ng form-validation-errors" style="color: red;">
+                {{mensaje}}{{form_errors(form)}}
+            </div>    
+        {% else %}
+            <div class="form-response-output">
+                {{mensaje}}
+            </div>    
+        {% endif %} 
         <form action="{{path('frontend_cotizador')}}" class="form-horizontal" role="form"  method="post" >
             <div class="form-group">
                 <label class="col-lg-2 control-label">{{"nombre"|trans}}</label>
@@ -137,19 +150,7 @@
             <div class="form-group">
                 <input type="submit" class="btn btn-info" style="padding: 5px 40px; float: right; margin-right: 200px; font-size: 18px;" value="{{"Enviar"|trans}}"/>
             </div>
-            {% if ok == true and error == false%}    
-            <div class="form-response-output form-mail-sent-ok">
-                {{mensaje}}
-            </div>
-            {% elseif ok == false and error == true %}
-            <div class="form-response-output form-mail-sent-ng form-validation-errors">
-                {{mensaje}}{{form_errors(form)}}
-            </div>    
-            {% else %}
-            <div class="form-response-output">
-                {{mensaje}}
-            </div>    
-            {% endif %}    
+               
             {{ form_rest(form) }} 
         </form>    
     </article>
@@ -166,7 +167,12 @@ $(function() {
     $('.hora-salida, .hora-regreso').datetimepicker({
         pickDate: false
     });
-    iniciarlizarFormCotizador();
+    
+    $(".form-response-output").fadeIn("fast");
+    setInterval(function(){
+        $(".form-response-output").fadeOut("slow");
+    },3000);
+    
 });
 </script>
 {% endblock %}

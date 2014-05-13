@@ -55,6 +55,7 @@
 			{{datos.horaSalida|date('h:m:s')}}
 		<td>
 	</tr>
+        {% if datos.fechaRegreso | length > 0 %}
         <tr>
 		<td style="background-color: gray;color: white;">
 			Fecha regreso:
@@ -63,6 +64,8 @@
 			{{datos.fechaRegreso|date('d/m/Y')}}
 		<td>
 	</tr>
+        {% endif %}
+        {% if datos.horaRegreso | length > 0 %}
         <tr>
 		<td style="background-color: gray;color: white;">
 			Hora regreso:
@@ -71,6 +74,7 @@
 			{{datos.horaRegreso|date('h:m:s')}}
 		<td>
 	</tr>
+        {% endif %}
 	<tr>
 		<td style="background-color: gray;color: white;">
 			Comentarios:

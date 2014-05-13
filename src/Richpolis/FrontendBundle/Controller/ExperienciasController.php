@@ -260,43 +260,38 @@ class ExperienciasController extends Controller
         ;
     }
 	
-	/**
+    /**
      * Ordenar las posiciones de los autobuses.
      *
-     * @Route("/ordenar", name="experiencias_ordenar")
+     * @Route("/ordenar/registros", name="experiencias_ordenar")
      * @Method("PATCH")
      */
-	public function ordenarRegistrosAction()
-    {
-        $request=$this->getRequest();
+    public function ordenarRegistrosAction(Request $request) {
         if ($request->isXmlHttpRequest()) {
             $registro_order = $request->query->get('registro');
-            $em=$this->getDoctrine()->getManager();
-            $result['ok']=true;
-            foreach($registro_order as $order=>$id)
-            {
-                $registro=$em->getRepository('FrontendBundle:Experiencias')->find($id);
-                if($registro->getPosition()!=($order+1)){
-                    try{
-                        $registro->setPosition($order+1);
+            $em = $this->getDoctrine()->getManager();
+            $result['ok'] = true;
+            foreach ($registro_order as $order => $id) {
+                $registro = $em->getRepository('FrontendBundle:Experiencias')->find($id);
+                if ($registro->getPosition() != ($order + 1)) {
+                    try {
+                        $registro->setPosition($order + 1);
                         $em->flush();
-                    }catch(Exception $e){
-                        $result['mensaje']=$e->getMessage();
-						$result['ok']=false;
-                    }    
+                    } catch (Exception $e) {
+                        $result['mensaje'] = $e->getMessage();
+                        $result['ok'] = false;
+                    }
                 }
             }
-            
-			$response = new \Symfony\Component\HttpFoundation\JsonResponse();
-			$response->setData($result);
-			return $response;
-           
-        }
-        else {
+
             $response = new \Symfony\Component\HttpFoundation\JsonResponse();
-			$response->setData(array('ok'=>false));
-			return $response;
+            $response->setData($result);
+            return $response;
+        } else {
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData(array('ok' => false));
+            return $response;
         }
     }
-	
+
 }
