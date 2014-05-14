@@ -56,9 +56,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">{{"telefono"|trans}}</label>
+                <label class="col-lg-2 control-label">{{"teléfono"|trans}}</label>
                 <div class="col-lg-8">
-                    {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'telefono'|trans }}) }}
+                    {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'teléfono'|trans }}) }}
                     <span class="errores"> 
                         {{ form_errors(form.telefono) }}
                     </span>
@@ -72,14 +72,22 @@
                         {{ form_errors(form.email) }}
                     </span>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">{{"pais"|trans}}</label>
+                <div class="col-lg-8">
+                    {{ form_widget(form.pais, {'attr': {'class': 'form-control','placeholder':'pais'|trans }}) }}
+                    <span class="errores"> 
+                        {{ form_errors(form.pais) }}
+                    </span>
+                </div>
             </div>        
-            <hr/>
             <fieldset>
                 <legend>{{"Origen"|trans}}</legend>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"salida"|trans}}</label>
+                    <label class="col-lg-2 control-label">{{"origen"|trans}}</label>
                     <div class="col-lg-8">
-                        {{ form_widget(form.salida, {'attr': {'class': 'form-control','placeholder':'salida'|trans }}) }}
+                        {{ form_widget(form.salida, {'attr': {'class': 'form-control','placeholder':'origen'|trans }}) }}
                         <span class="errores"> 
                             {{ form_errors(form.salida) }}
                         </span>

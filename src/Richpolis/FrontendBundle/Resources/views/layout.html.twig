@@ -78,11 +78,11 @@
                     </a>
                 </div>
                 <div class="lenguajes">
-                  <label for="selectLanguage" style="font-size: normal;">{% trans %}Seleccionar idioma{% endtrans %}</label>  
+                  <label for="selectLanguage" style="font-weight: normal;">{% trans %}Select language{% endtrans %}</label>  
                   <select name="selectLanguage" id="selectLanguage" onchange="selectLanguage()">
                       <option value="es" {% if locale == "es" %}selected{% endif %}>{% trans %}Español{% endtrans %}</option>
-                      <option value="en" {% if locale == "en" %}selected{% endif %}>{% trans %}Ingles{% endtrans %}</option>
-                      <option value="fr" {% if locale == "fr" %}selected{% endif %}>{% trans %}Frances{% endtrans %}</option>
+                      <option value="en" {% if locale == "en" %}selected{% endif %}>{% trans %}English{% endtrans %}</option>
+                      <!--option value="fr" {% if locale == "fr" %}selected{% endif %}>{% trans %}Français{% endtrans %}</option-->
                   </select>
                 </div>
             </div>
@@ -163,9 +163,9 @@
     <script src="{{asset('js/swig.js')}}"></script>
     <script src="{{asset('js/bootstrap.js')}}"></script>
     <script>
-        window.api = {};
-        window.api.espanol = '{{path(route,{'_locale':'es'})}}';
-        window.api.ingles = '{{path(route,{'_locale':'en'})}}';
-        window.api.frances = '{{path(route,{'_locale':'fr'})}}';
+        window.lenguajes = {};
+        window.lenguajes.espanol = '{{url(route,{'_locale':'es'})}}';
+        window.lenguajes.ingles = '{{url(route,{'_locale':'en'})}}';
+        window.lenguajes.frances = '{{url(route,{'_locale':'fr'})}}';
     </script>    
 {% endblock %}

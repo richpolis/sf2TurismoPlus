@@ -208,15 +208,15 @@
                 {{ render(controller("FrontendBundle:Default:lastTweets",{'username': 'TurismoPlusMG'})) }}
                 <div class="experiencias">
                     <span class="titulo-experiencias">{{"Experiencias MG"|trans}}</span>
-                    <div class="contenedor-experiencias">
+                    <div class="contenedor-experiencias carousel-inner">
                         {% for experiencia in experiencias %}
-                        <div class="experiencia  active ">
+                        <div class="experiencia item {% if loop.index == 1%}active{% endif %}">
                                 {{experiencia.contenido(locale) | raw }}
                             <span class="autor-experiencia">
                                 -{{experiencia.autor}}
                             </span>
                         </div>
-						{% endfor %}	
+                        {% endfor %}	
                     </div>
                 </div>
             </article>
@@ -246,16 +246,16 @@ $(document).on("ready",function(){
             auto: true,
             controls: false,
             speed: 1000,
-			autoHover: true,
+            autoHover: true,
         });
 		
-		$('.sliderEventos').bxSlider({
+        $('.sliderEventos').bxSlider({
             randomStart: false,
             pager: false,
             auto: true,
             controls: false,
             speed: 1000,
-			autoHover: true,
+            autoHover: true,
         });
 
         
@@ -270,6 +270,11 @@ $(document).on("ready",function(){
             }
         });
         iniciarlizarFormNewsletter();
+        
+        $('.experiencias').carousel({
+            interval: 5000,
+            pause: "hover",
+        })
 
 });
 var iniciarCircle=function(){
@@ -290,8 +295,13 @@ function iniciarlizarFormNewsletter(){
             $.post("{{path('frontend_form_newsletter')}}",
             $("form.form-newsletter").serialize(),
             function(data){
-                actualizaFormularioNewsletter(data);
-                setTimeout(function(){
+                actualizaFormularioNewsletter(data.vista);
+                if(data.ok){
+                    setInterval(function(){
+                        $( "#formNewsletter" ).modal( "hide" );
+                    },2000);
+                }
+                setInterval(function(){
                     $("#formulario_newsletter").find(".form-response-output").fadeOut("fast");
                 },2000);
                 

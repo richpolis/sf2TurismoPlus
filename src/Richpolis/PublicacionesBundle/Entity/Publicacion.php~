@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -63,8 +65,7 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="paquete_es", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="paquete_es", type="string", length=255, nullable=true)
      *  
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -102,8 +103,7 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="paquete_en", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="paquete_en", type="string", length=255, nullable=true)
      *  
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -141,8 +141,7 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="paquete_fr", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="paquete_fr", type="string", length=255,nullable=true)
      *  
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -220,8 +219,7 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="slug", type="string", length=255,nullable=true)
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -244,7 +242,7 @@ class Publicacion
     private $usuario;
     
     /**
-     * @var \Categoria
+     * @var \CategoriaPublicacion
      *
      * @ORM\ManyToOne(targetEntity="CategoriaPublicacion", inversedBy="publicaciones")
      * @ORM\JoinColumns({
@@ -304,7 +302,18 @@ class Publicacion
      */
     private $updatedAt;
 
-    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+        $this->inCarrusel = true;
+        $this->precioEn = 0;
+        $this->precioEs = 0;
+        $this->precioFr = 0;
+    }
     
     public function __toString(){
         return $this->getTitulo();
@@ -610,7 +619,7 @@ class Publicacion
      */
     
     /**
-     ** @ORM\PrePersist
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -642,7 +651,7 @@ class Publicacion
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getTitulo());
+        $this->slug = RpsStms::slugify($this->getTituloEs());
     }
 
     
@@ -925,7 +934,7 @@ class Publicacion
 	/*** uploads ***/
     
     /**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="2M",maxSizeMessage="El archivo es demasiado grande. El tamaño máximo permitido es {{ limit }}")
      */
     public $file;
     
@@ -1054,5 +1063,86 @@ class Publicacion
     public function getImagen()
     {
         return $this->imagen;
+    }
+    
+    
+
+    /**
+     * Set usuario
+     *
+     * @param \Richpolis\BackendBundle\Entity\Usuario $usuario
+     * @return Publicacion
+     */
+    public function setUsuario(\Richpolis\BackendBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \Richpolis\BackendBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set categoria
+     *
+     * @param \Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion $categoria
+     * @return Publicacion
+     */
+    public function setCategoria(\Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion $categoria = null)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion 
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Add galerias
+     *
+     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
+     * @return Publicacion
+     */
+    public function addGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
+    {
+        $this->galerias[] = $galerias;
+
+        return $this;
+    }
+
+    /**
+     * Remove galerias
+     *
+     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
+     */
+    public function removeGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
+    {
+        $this->galerias->removeElement($galerias);
+    }
+
+    /**
+     * Get galerias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGalerias()
+    {
+        return $this->galerias;
     }
 }

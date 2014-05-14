@@ -11,15 +11,19 @@ class CotizadorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name','text')
-            ->add('email','email')
-            ->add('telefono','text')
-            ->add('salida','text')
-            ->add('fechaSalida','text')
-            ->add('horaSalida','text',array('required'=>false))
-            ->add('fechaRegreso','text',array('required'=>false))
-            ->add('horaRegreso','text',array('required'=>false))
-            ->add('comentarios','textarea',array('required'=>false))
+            ->add('name','text',array('required'=>true))
+            ->add('email','email',array('required'=>true))
+            ->add('telefono','text',array('required'=>true))
+            ->add('pais','text',array('required'=>false))                
+            ->add('salida','text',array('required'=>true))
+            ->add('fechaSalida','text',array('required'=>true))
+            ->add('horaSalida','text',array('required'=>true))
+            ->add('destino','text',array('required'=>true))
+            ->add('pasajeros','number',array('required'=>true))
+            ->add('autobus','number',array('required'=>true))    
+            ->add('fechaRegreso','text',array('required'=>true))
+            ->add('horaRegreso','text',array('required'=>true))
+            ->add('comentarios','textarea',array('required'=>true))
 
         ;
     }

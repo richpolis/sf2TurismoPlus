@@ -1,45 +1,47 @@
 {% if error is not defined %}
     {% set error=false %}
 {% endif %}
+    
 {% if ok is not defined %}
     {% set ok=false %}
 {% endif %}
+    
 {% if mensaje is not defined %}
     {% set mensaje="" %}
 {% endif %}
 
 <div id="formulario_contacto">
-     <form onsubmit="return false;" action="{{path('frontend_contacto')}}" method="post" class="form-contacto {%if error == true%}invalid{%endif%} {%if ok == true%}sent{%endif%}" novalidate="novalidate" role="form">
+     <form onsubmit="return false;" action="{{path('frontend_contacto')}}" method="post" class="form-contacto {% if error == true %}invalid{% endif %} {% if ok == true %}sent{% endif %}" novalidate="novalidate" role="form">
           <div class="form-group">
-             {{ form_label(form.name) }}
+             <label for="contacto_name">{{"nombre"|trans}}</label>
              {{ form_widget(form.name, {'attr': {'class': 'form-control','placeholder':'nombre'|trans }}) }}
              <span class="errores"> 
                  {{ form_errors(form.name) }}
              </span>
          </div>
          <div class="form-group">
-             {{ form_label(form.email) }}
+             <label for="contacto_email">{{"email"|trans}}</label>
                  {{ form_widget(form.email, {'attr': {'class': 'form-control','placeholder':'email'|trans}}) }}
              <span class="errores"> 
                  {{ form_errors(form.email) }}
              </span>
          </div>
           <div class="form-group">
-             {{ form_label(form.subject) }}
+             <label for="contacto_subject">{{"asunto"|trans}}</label>
                  {{ form_widget(form.subject, {'attr': {'class': 'form-control','placeholder':'asunto'|trans }}) }}
              <span class="errores"> 
                  {{ form_errors(form.subject) }}
              </span>
          </div>
          <div class="form-group">
-             {{ form_label(form.telefono) }}
-                 {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'telefono'|trans }}) }}
+             <label for="contacto_telefono">{{"teléfono"|trans}}</label>
+                 {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'teléfono'|trans }}) }}
              <span class="errores"> 
                  {{ form_errors(form.telefono) }}
              </span>
          </div>    
          <div class="form-group">
-             {{ form_label(form.body) }}
+             <label for="contacto_body">{{"mensaje"|trans}}</label>
                  {{ form_widget(form.body, {'attr': {'class': 'form-control','placeholder':'mensaje'|trans }}) }}
              <span class="errores"> 
                  {{ form_errors(form.body) }}

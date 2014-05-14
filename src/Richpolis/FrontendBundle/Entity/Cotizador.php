@@ -9,22 +9,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Cotizador
 {
     /**
-     * @Assert\NotBlank(message="El nombre no puede estar vacio.")
+     * @Assert\NotBlank(message = "name.not_blank")
      */
     protected $name;
 
     /**
-     * @Assert\Email(message="Email no es valido.")
+     * @Assert\Email(message="email.not_valid")
      */
     protected $email;
 
-
+    /**
+     * @Assert\NotBlank(message="telephone.not_blank")
+     */
     protected $telefono;
+    
+    protected $pais;
     
     /**
      * @Assert\Length(
      *     min=3,
-     *     minMessage="El mensaje debe tener como minimo {{ limit }} caracteres."
+     *     minMessage="message.length_min_tres"
      * )
      */
     protected $salida;
@@ -40,6 +44,24 @@ class Cotizador
      * @Assert\Time()
      */
     protected $horaSalida;
+    
+    /**
+     * @Assert\Length(
+     *     min=3,
+     *     minMessage="message.length_min_tres"
+     * )
+     */
+    protected $destino;
+    
+    /**
+     * @Assert\Min(limit = "1", message = "pasajeros.min_length")
+     */
+    protected $pasajeros;
+    
+    /**
+     * @Assert\NotBlank(message="autobus.not_blank")
+     */
+    protected $autobus;
     
     /**
      * @Assert\Date()
@@ -84,7 +106,48 @@ class Cotizador
     {
         $this->telefono = $telefono;
     }
+    
+    public function getPais()
+    {
+        return $this->pais;
+    }
 
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+    }
+    
+    public function getDestino()
+    {
+        return $this->destino;
+    }
+
+    public function setDestino($destino)
+    {
+        $this->destino = $destino;
+    }
+    
+    public function getPasajeros()
+    {
+        return $this->pasajeros;
+    }
+
+    public function setPasajeros($pasajeros)
+    {
+        $this->pasajeros = $pasajeros;
+    }
+    
+        
+    public function getAutobus()
+    {
+        return $this->autobus;
+    }
+
+    public function setAutobus($autobus)
+    {
+        $this->autobus = $autobus;
+    }
+    
     public function getSalida()
     {
         return $this->salida;

@@ -108,19 +108,16 @@ Autobuses.Routers.App = Backbone.Router.extend({
     },
     show: function(id) {
         debugger;
+        var model = window.collections.autobuses.get(id);
         if(!window.api.accion.show){
-            if(window.views.show){
-                window.views.show.remove();
-                var article = $("<article>");
-                article.className('autobus');
-                $(".autobuses").after(article);
+            if(!window.views.show){
+                window.views.show = new  Autobuses.Views.Show({model: model});
+            }else{
+                window.views.show.model= model;
             }
-            var model = window.collections.autobuses.get(id);
-            window.views.show = new  Autobuses.Views.Show({model: model});
             views.show.render();
             views.show.mostrar();
         }else{
-            var model = window.collections.autobuses.get(id);
             window.views.show.model= model;
             views.show.render().$el.fadeIn("fast");
             window.views.show.iniciarComponentes();

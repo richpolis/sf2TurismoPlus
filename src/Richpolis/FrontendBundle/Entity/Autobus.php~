@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use JMS\Serializer\Annotation as Serializer;
 
 
@@ -37,6 +39,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -48,6 +51,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="descripcion_es", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -59,6 +63,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="descripcion_en", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -70,6 +75,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="descripcion_fr", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -81,6 +87,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="detalles_es", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -92,6 +99,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="detalles_en", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -103,6 +111,7 @@ class Autobus
      * @var string
      *
      * @ORM\Column(name="detalles_fr", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -114,7 +123,7 @@ class Autobus
     /**
      * @var string
      *
-     * @ORM\Column(name="imagen", type="string", length=255)
+     * @ORM\Column(name="imagen", type="string", length=255, nullable=true)
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -161,8 +170,7 @@ class Autobus
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -173,7 +181,7 @@ class Autobus
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      * 
      * @Serializer\Expose
      * @Serializer\Type("datetime")
@@ -184,13 +192,13 @@ class Autobus
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updateAt", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      * 
      * @Serializer\Expose
      * @Serializer\Type("datetime")
      * @Serializer\Groups({"list", "details"})
      */
-    private $updateAt;
+    private $updatedAt;
     
     /**
      * Constructor
@@ -407,9 +415,9 @@ class Autobus
      * @param \DateTime $updateAt
      * @return Autobus
      */
-    public function setUpdateAt($updateAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -419,9 +427,9 @@ class Autobus
      *
      * @return \DateTime 
      */
-    public function getUpdateAt()
+    public function getUpdatedAt()
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
     
     
@@ -488,7 +496,7 @@ class Autobus
      */
     
     /**
-     ** @ORM\PrePersist
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -543,6 +551,16 @@ class Autobus
         } else {
             $this->imagen = 'initial';
         }
+    }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
     
     /**
@@ -613,11 +631,7 @@ class Autobus
      */
     public function getWebPath()
     {
-        if($this->getTipoArchivo()==RpsStms::TIPO_ARCHIVO_IMAGEN){
-            return null === $this->imagen ? null : $this->getUploadDir().'/'.$this->imagen;
-        }else if($this->getTipoArchivo()==RpsStms::TIPO_ARCHIVO_LINK){
-            return $this->getArchivo();
-        }
+        return null === $this->imagen ? null : $this->getUploadDir().'/'.$this->imagen;
     }
     
     public function getAbsolutePath()

@@ -16,7 +16,8 @@ use Richpolis\FrontendBundle\Form\ContactoType;
 use Richpolis\FrontendBundle\Entity\Cotizador;
 use Richpolis\FrontendBundle\Form\CotizadorType;
 
-
+use \Richpolis\FrontendBundle\Entity\UsuarioNewsletter;
+use \Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
 
 class DefaultController extends Controller
 {
@@ -43,8 +44,8 @@ class DefaultController extends Controller
         $experiencias = $em->getRepository('FrontendBundle:Experiencias')
                 ->getExperienciasActivas();
         shuffle($experiencias);
-        $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
-        $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
+        $newsletter = new UsuarioNewsletter();
+        $form = $this->createForm(new UsuarioNewsletterType(), $newsletter);
         
         $inicio = $em->getRepository('PaginasBundle:Pagina')
                 ->findOneBy(array('pagina'=>'inicio'));
@@ -155,10 +156,14 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $datos=$form->getData();
                 
+                $em = $this->getDoctrine()->getManager();
+                $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                                ->findOneBy(array('slug'=>'email-contacto'));
+                
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Contacto desde pagina')
                         ->setFrom($datos->getEmail())
-                        ->setTo($this->container->getParameter('richpolis.emails.to_email'))
+                        ->setTo($configuracion->getTexto())
                         ->setBody($this->renderView('FrontendBundle:Default:contactoEmail.html.twig', array('datos' => $datos)), 'text/html');
                 $this->get('mailer')->send($message);
 
@@ -216,10 +221,14 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $datos=$form->getData();
                 
+                $em = $this->getDoctrine()->getManager();
+                $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                                ->findOneBy(array('slug'=>'email-cotizador'));
+                
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Solicitud de cotización')
                         ->setFrom($datos->getEmail())
-                        ->setTo($this->container->getParameter('richpolis.emails.to_email'))
+                        ->setTo($configuracion->getTexto())
                         ->setBody($this->renderView('FrontendBundle:Default:cotizadorEmail.html.twig', array('datos' => $datos)), 'text/html');
                 $this->get('mailer')->send($message);
 
@@ -252,11 +261,10 @@ class DefaultController extends Controller
     /**
      * @Route("/{_locale}/form/newsletter", name="frontend_form_newsletter", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
      * @Method({"GET", "POST"})
-     * @Template("FrontendBundle:Default:formNewsletter.html.twig")
      */
     public function newsletterAction() {
-        $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
-        $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
+        $newsletter = new UsuarioNewsletter();
+        $form = $this->createForm(new UsuarioNewsletterType(), $newsletter);
         $request = $this->getRequest();
         
         if ($request->getMethod() == 'POST') {
@@ -264,23 +272,24 @@ class DefaultController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $datos=$form->getData();
+                $nuevo=$form->getData();
                 
                 $em = $this->getDoctrine()->getManager();
                 $usuario = $em->getRepository('FrontendBundle:UsuarioNewsletter')->findOneBy(array(
-                    'email'=>$datos->getEmail() 
+                    'email'=>$nuevo->getEmail() 
                 ));
                 
                 if(!$usuario){
-                    $em->persist($data);
+                    $em->persist($nuevo);
                     $em->flush();
                 }
                
                 $ok=true;
                 $error=false;
-                $mensaje="Se ha enviado el mensaje";
-                $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
-                $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
+                $mensaje="Gracias se ha guardado el registro";
+                $newsletter = new UsuarioNewsletter();
+                $form = $this->createForm(new UsuarioNewsletterType(), $newsletter);
+                
             }else{
                 $ok=false;
                 $error=true;
@@ -292,12 +301,22 @@ class DefaultController extends Controller
             $mensaje="";
         }
         
-        return array(
+        if($request->isXmlHttpRequest()){
+            $vista = $this->renderView('FrontendBundle:Default:formNewsletter.html.twig',array(
+                'form' => $form->createView(),'ok'=>$ok,'error'=>$error,'mensaje'=>$mensaje,
+            ));
+            $arreglo = array('vista'=>$vista,'ok'=>$ok,'error'=>$error,'mensaje'=>$mensaje);
+            $response = new JsonResponse();
+            $response->setData($arreglo);
+            return $response;
+        }
+        
+        return $this->render("FrontendBundle:Default:formNewsletter.html.twig",array(
               'form' => $form->createView(),
               'ok'=>$ok,
               'error'=>$error,
               'mensaje'=>$mensaje,
-        );
+        ));
     }
     
     /**

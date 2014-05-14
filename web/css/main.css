@@ -876,3 +876,6 @@ li.image-large a.image-wrap:hover .lupa{
   z-index: 9999;
 }
 
+label{
+    text-transform: capitalize;
+}
