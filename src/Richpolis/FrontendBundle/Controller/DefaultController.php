@@ -45,10 +45,15 @@ class DefaultController extends Controller
         shuffle($experiencias);
         $newsletter = new \Richpolis\FrontendBundle\Entity\UsuarioNewsletter();
         $form = $this->createForm(new \Richpolis\FrontendBundle\Form\UsuarioNewsletterType(), $newsletter);
+        
+        $inicio = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'inicio'));
+        
         return array(
             'categoriasPublicacion'=>$categoriasPublicacion,
             'experiencias'=>$experiencias,
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'pagina'=>$inicio,
         );
     }
     
