@@ -74,7 +74,7 @@
                                 <div class="padd">
                                     <!-- Form starts.  -->
                                     <form action="{{ path('autobuses_update', { 'id': entity.id }) }}" class="validate" id="formautobuss"  method="post" {{ form_enctype(form)}}>
-                                        <input name="_method" value="patch" type="hidden"/>
+                                        <input name="_method" value="put" type="hidden"/>
                                         <fieldset>
                                             <legend>Español:</legend>
                                             {{form_row(form.descripcionEs)}}

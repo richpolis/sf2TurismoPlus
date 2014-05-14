@@ -218,17 +218,50 @@ body {
   margin: 0;
   padding: 0;
 }
-.container .destinos-eventos .destinos ul li div.bx-caption,
-.container .destinos-eventos .eventos ul li div.bx-caption {
-  width: 80%;
+.container .destinos-eventos .destinos li .descripcion-publicacion,
+.container .destinos-eventos .eventos li .descripcion-publicacion {
+  position: absolute;
+  bottom: -150px;
+  left: 0px;
+  height: 150px;
+  background-color: rgba(0, 23, 42,0.8);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
-.container .destinos-eventos .destinos ul li div.bx-caption span,
-.container .destinos-eventos .eventos ul li div.bx-caption span {
-  background-color: rgba(11,80,140,0.6);
-  text-align: left;
+.container .destinos-eventos .destinos li .descripcion-publicacion h3,
+.container .destinos-eventos .eventos li .descripcion-publicacion h3 {
+  position: absolute;
+  left: 0px;
+  top: -45px;
+  background: rgba(11, 47, 75,0.8);
   color: #fff;
-  text-transform: uppercase;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 3px 10px;
+  font-size: 18px;
+  width: 80%;
+	text-align: left;
 }
+
+.container .destinos-eventos .destinos li .descripcion-publicacion p,
+.container .destinos-eventos .eventos li .descripcion-publicacion p{
+   color: #fff;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0px 10px;
+}
+
+.container .destinos-eventos .destinos li:hover .descripcion-publicacion,
+.container .destinos-eventos .eventos li:hover .descripcion-publicacion
+{
+	bottom: -10px;
+}
+
 .container .destinos-eventos .destinos {
   float: left;
 }
@@ -755,7 +788,7 @@ figrue a.image-wrap{
 li a.image-wrap .lupa, figure a.image-wrap .lupa {
     display:block;
     position:absolute;
-    top:-150px;
+    top:-5px;
     width:310px;
     height:200px;
     background:url(../images/keyarts/autobuses/zoom.png) 50% 50% no-repeat;
@@ -774,7 +807,7 @@ li a.image-wrap:hover .lupa,figure a.image-wrap:hover .lupa {
 li a.video-wrap .lupa, figure a.video-wrap .lupa {
     display:block;
     position:absolute;
-    top:-150px;
+    top:-5px;
     width:310px;
     height:200px;
     background:url(../images/keyarts/autobuses/play.png) 50% 50% no-repeat;
