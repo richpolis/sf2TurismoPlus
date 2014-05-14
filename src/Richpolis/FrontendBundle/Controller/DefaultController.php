@@ -268,7 +268,7 @@ class DefaultController extends Controller
                 
                 $em = $this->getDoctrine()->getManager();
                 $usuario = $em->getRepository('FrontendBundle:UsuarioNewsletter')->findOneBy(array(
-                    'email'=>$datos['email'] 
+                    'email'=>$datos->getEmail() 
                 ));
                 
                 if(!$usuario){

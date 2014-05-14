@@ -16,7 +16,7 @@
             {% for fila in categorias['destinos'] %}
             <div class="destinos row">
                 {% for publicacion in fila %}
-                    <div class="destino col-lg-4">
+                    <div class="destino col-lg-4" id="destino-{{publicacion.slug}}">
                         <figure>
                             <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
                                 <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
@@ -44,7 +44,7 @@
             {% for fila in categorias['eventos'] %}
             <div class="destinos row">
                 {% for publicacion in fila %}
-                    <div class="destino col-lg-4">
+                    <div class="destino col-lg-4"  id="evento-{{publicacion.slug}}">
                         <figure>
                             <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
                                 <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
@@ -72,7 +72,7 @@
             {% for fila in categorias['tours'] %}
             <div class="destinos row">
                 {% for publicacion in fila %}
-                    <div class="destino col-lg-4">
+                    <div class="destino col-lg-4"  id="tour-{{publicacion.slug}}">
                         <figure>
                             <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
                                 <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">

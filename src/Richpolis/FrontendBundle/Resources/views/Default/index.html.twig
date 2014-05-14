@@ -168,10 +168,15 @@
                     <ul class="sliderDestinos">
                         {% for categoria in categoriasPublicacion if categoria.slug == "destinos" %}
                             {% for publicacion in categoria.publicaciones %}
-                            <li class="image-large">
-                                <a href="{{publicacion.webPath}}" class="fancybox image-wrap">
-                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="{{ publicacion.titulo(locale)}}">
-                                    <span class="lupa"></span>
+                            <li>
+                                <a href="{{path('frontend_tours')}}#destino-{{publicacion.slug}}">
+                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="">
+                                    <div class="descripcion-publicacion" style="width: 100%;">
+										<h3>
+											{{publicacion.titulo(locale)}}
+										</h3>
+										{{ publicacion.descripcion(locale)|raw }}
+									</div>
                                 </a>
                             </li>
                             {% endfor %}
@@ -183,10 +188,15 @@
                     <ul class="sliderEventos">
                         {% for categoria in categoriasPublicacion if categoria.slug == "eventos" %}
                             {% for publicacion in categoria.publicaciones %}
-                            <li class="image-large">
-                                <a href="{{publicacion.webPath}}" class="fancybox image-wrap">
-                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="{{ publicacion.titulo(locale  )}}">
-                                    <span class="lupa"></span>
+                            <li>
+                                <a href="{{path('frontend_tours')}}#evento-{{publicacion.slug}}">
+                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="">
+                                    <div class="descripcion-publicacion" style="width: 100%;">
+										<h3>
+											{{publicacion.titulo(locale)}}
+										</h3>
+										{{ publicacion.descripcion(locale)|raw }}
+									</div>
                                 </a>
                             </li>
                             {% endfor %}
@@ -199,16 +209,14 @@
                 <div class="experiencias">
                     <span class="titulo-experiencias">{{"Experiencias MG"|trans}}</span>
                     <div class="contenedor-experiencias">
-                        {% set experiencia = experiencias[0] %}
+                        {% for experiencia in experiencias %}
                         <div class="experiencia  active ">
-                            <!--p class="contenido-experiencia"-->
                                 {{experiencia.contenido(locale) | raw }}
-                            <!--/p-->
                             <span class="autor-experiencia">
                                 -{{experiencia.autor}}
                             </span>
                         </div>
-
+						{% endfor %}	
                     </div>
                 </div>
             </article>
@@ -232,14 +240,24 @@ $(document).on("ready",function(){
             iniciarCircle();
         },6000);
 
-        $('.sliderDestinos,.sliderEventos').bxSlider({
-            captions: true,
+        $('.sliderDestinos').bxSlider({
             randomStart: false,
             pager: false,
             auto: true,
             controls: false,
             speed: 1000,
+			autoHover: true,
         });
+		
+		$('.sliderEventos').bxSlider({
+            randomStart: false,
+            pager: false,
+            auto: true,
+            controls: false,
+            speed: 1000,
+			autoHover: true,
+        });
+
         
         $("a.fancybox").fancybox();
                 
