@@ -20,7 +20,13 @@ class CotizadorType extends AbstractType
             ->add('horaSalida','text',array('required'=>true))
             ->add('destino','text',array('required'=>true))
             ->add('pasajeros','number',array('required'=>true))
-            ->add('autobus','number',array('required'=>true))    
+            ->add('autobus', 'entity', array(
+                    'class' => 'FrontendBundle:Autobus',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                            ->orderBy('u.nombre', 'ASC');
+                    },
+                ))    
             ->add('fechaRegreso','text',array('required'=>true))
             ->add('horaRegreso','text',array('required'=>true))
             ->add('comentarios','textarea',array('required'=>true))

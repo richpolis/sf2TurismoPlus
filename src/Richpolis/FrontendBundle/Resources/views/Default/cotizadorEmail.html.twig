@@ -4,8 +4,8 @@
 
 {% block body %}
 <table>
-	<tr colspan="2">
-		<th>Desde TurismoPlusMG.com</th>
+	<tr>
+		<th  colspan="2">Desde TurismoPlusMG.com</th>
 	</tr>	
 	<tr>
 		<td style="background-color: gray;color: white;">
@@ -23,7 +23,7 @@
 			{{datos.email}}
 		<td>
 	</tr>
-        <tr>
+    <tr>
 		<td style="background-color: gray;color: white;">
 			Telefono:
 		<td>
@@ -31,9 +31,17 @@
 			{{datos.telefono}}
 		<td>
 	</tr>
-        <tr>
+	 <tr>
 		<td style="background-color: gray;color: white;">
-			Salida:
+			Pais:
+		<td>
+		<td>
+			{{datos.pais}}
+		<td>
+	</tr>
+    <tr>
+		<td style="background-color: gray;color: white;">
+			Origen:
 		<td>
 		<td>
 			{{datos.salida}}
@@ -53,6 +61,30 @@
 		<td>
 		<td>
 			{{datos.horaSalida|date('h:m:s')}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Destino:
+		<td>
+		<td>
+			{{datos.destino}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Pasajeros:
+		<td>
+		<td>
+			{{datos.pasajeros}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Autobus:
+		<td>
+		<td>
+			{{datos.autobus}}
 		<td>
 	</tr>
         {% if datos.fechaRegreso | length > 0 %}
