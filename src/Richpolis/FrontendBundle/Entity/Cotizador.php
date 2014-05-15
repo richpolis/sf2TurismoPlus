@@ -54,7 +54,9 @@ class Cotizador
     protected $destino;
     
     /**
-     * @Assert\Min(limit = "1", message = "pasajeros.min_length")
+     * @Assert\GreaterThanOrEqual(
+     *     value = 1, message="pasajeros.mayor_o_igual"
+     * )
      */
     protected $pasajeros;
     

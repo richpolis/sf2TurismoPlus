@@ -182,7 +182,7 @@ class AutobusController extends Controller
     {
         $form = $this->createForm(new AutobusType(), $entity, array(
             'action' => $this->generateUrl('autobuses_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'PATCH',
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));
