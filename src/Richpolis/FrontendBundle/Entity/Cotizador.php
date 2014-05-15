@@ -24,6 +24,8 @@ class Cotizador
     protected $telefono;
     
     protected $pais;
+
+    protected $cuidad;
     
     /**
      * @Assert\Length(
@@ -76,7 +78,9 @@ class Cotizador
     protected $horaRegreso;
 
 
-    protected $comentarios;
+    protected $itinerario;
+
+    protected $comentarios;    
 
 
     public function getName()
@@ -209,6 +213,26 @@ class Cotizador
     public function setHoraRegreso($horaRegreso)
     {
         $this->horaRegreso = $horaRegreso;
+    }
+
+    public function getItinerario()
+    {
+        return $this->itinerario;
+    }
+
+    public function setItinerario($itinerario)
+    {
+        $this->itinerario = $itinerario;
+    }
+
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
     }
 
 }

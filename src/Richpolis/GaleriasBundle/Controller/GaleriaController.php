@@ -12,6 +12,8 @@ use Richpolis\GaleriasBundle\Form\GaleriaType;
 use Richpolis\GaleriasBundle\Form\GaleriaLinkVideoType;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 /**
  * Galeria controller.
  *
@@ -254,12 +256,12 @@ class GaleriaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-           $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+           $response = new JsonResponse();
            $response->setData(array("ok"=>true));
            return $response;
         }
 
-        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response = new JsonResponse();
         $response->setData(array("ok"=>false));
         return $response;
     }

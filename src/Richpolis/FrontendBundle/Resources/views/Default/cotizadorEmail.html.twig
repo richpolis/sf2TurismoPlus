@@ -39,6 +39,14 @@
 			{{datos.pais}}
 		<td>
 	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Ciudad:
+		<td>
+		<td>
+			{{datos.ciudad}}
+		<td>
+	</tr>
     <tr>
 		<td style="background-color: gray;color: white;">
 			Origen:
@@ -73,7 +81,7 @@
 	</tr>
 	<tr>
 		<td style="background-color: gray;color: white;">
-			Pasajeros:
+			No. de pasajeros:
 		<td>
 		<td>
 			{{datos.pasajeros}}
@@ -81,10 +89,18 @@
 	</tr>
 	<tr>
 		<td style="background-color: gray;color: white;">
-			Autobus:
+			Tipo unidad:
 		<td>
 		<td>
 			{{datos.autobus}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Itinerario:
+		<td>
+		<td>
+			{{datos.itinerario}}
 		<td>
 	</tr>
         {% if datos.fechaRegreso | length > 0 %}

@@ -97,7 +97,7 @@ body {
 .container header.encabezado nav figure.logo {
   position: absolute;
   top: 0px;
-  left: 0px;
+  left: 30px;
 }
 .container header.encabezado nav ul {
   float: right;

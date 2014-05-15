@@ -81,6 +81,15 @@
                         {{ form_errors(form.pais) }}
                     </span>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">{{"ciudad"|trans}}</label>
+                <div class="col-lg-8">
+                    {{ form_widget(form.ciudad, {'attr': {'class': 'form-control','placeholder':'ciudad'|trans }}) }}
+                    <span class="errores"> 
+                        {{ form_errors(form.ciudad) }}
+                    </span>
+                </div>
             </div>        
             <fieldset>
                 <legend>{{"Origen"|trans}}</legend>
@@ -127,23 +136,33 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"pasajeros"|trans}}</label>
+                    <label class="col-lg-2 control-label">{{"no. de pasajeros"|trans}}</label>
                     <div class="col-lg-8">
-                        {{ form_widget(form.pasajeros, {'attr': {'class': 'form-control','placeholder':'pasajeros'|trans }}) }}
+                        {{ form_widget(form.pasajeros, {'attr': {'class': 'form-control','placeholder':'no. de pasajeros'|trans }}) }}
                         <span class="errores"> 
                             {{ form_errors(form.pasajeros) }}
                         </span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"autobus"|trans}}</label>
+                    <label class="col-lg-2 control-label">{{"tipo unidad"|trans}}</label>
                     <div class="col-lg-8">
-                        {{ form_widget(form.autobus, {'attr': {'class': 'form-control','placeholder':'autobus'|trans }}) }}
+                        {{ form_widget(form.autobus, {'attr': {'class': 'form-control','placeholder':'tipo unidad'|trans }}) }}
                         <span class="errores"> 
                             {{ form_errors(form.autobus) }}
                         </span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">{{"itinerario"|trans}}</label>
+                    <div class="col-lg-8">
+                        {{ form_widget(form.itinerario, {'attr': {'class': 'form-control','placeholder':'itinerario'|trans }}) }}
+                        <span class="errores"> 
+                            {{ form_errors(form.itinerario) }}
+                        </span>
+                    </div>
+                </div>
+
             </fieldset>
             <fieldset>
                 <legend>{{"Regreso"|trans}}</legend>
@@ -174,7 +193,7 @@
             </fieldset>
             <hr/>
             <div class="form-group">
-                <label class="col-lg-2 control-label">{{"Comentarios / Necesidades especiales"|trans}}</label>
+                <label class="col-lg-2 control-label">{{"comentarios / necesidades especiales"|trans}}</label>
                 <div class="col-lg-8">
                     {{ form_widget(form.comentarios, {'attr': {'class': 'form-control','placeholder':'comentarios'|trans }}) }}
                     <span class="errores"> 
