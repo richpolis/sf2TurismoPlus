@@ -8,7 +8,7 @@
     var uploader = new qq.FileUploader({
             element: document.getElementById('upload'),
             template: '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop archivos aqui para cargar</span></div><div class="qq-upload-button"><span id="status" ></span>Agregar archivos</div><ul class="qq-upload-list"></ul></div>',
-            action: '{{ post_galerias }}',
+            action: '{{ post_galerias | raw }}',
             params: { },
             onComplete: function(id, file, responseJson){
                     refrescarGaleria();             },
@@ -28,7 +28,7 @@
      */
     function refrescarGaleria(){
         $.ajax({
-            url: '{{ get_galerias }}',
+            url: '{{ get_galerias | raw }}',
             type: 'GET',
             dataType: 'html',
             success: function(data){
@@ -120,7 +120,7 @@
     function crearRegistroGaleriaVideoLink(){
         debugger;
         $('#image-loader').show();
-        var url='{{ post_galerias }}';
+        var url='{{ post_galerias | raw }}';
         $.ajax({
            url: url,
            type: 'POST',
@@ -143,7 +143,7 @@
     function crearVideoLink(){
         $('#image-loader').show();
         $.ajax({
-            url: '{{path('galerias_new')}}',
+            url: '{{url('galerias_new')}}',
             type: 'GET',
             data: {tipo: 'link_video'},
             dataType: 'html',
@@ -255,7 +255,7 @@
                     $('#image-loader').show();
                     var order = $gallery.sortable('serialize');
                     $.ajax({
-                       url: '{{path('galerias_ordenar')}}?' + order,
+                       url: '{{url('galerias_ordenar')}}?' + order,
                        type: 'POST',
                        data: order,
                        dataType: 'json',
@@ -304,6 +304,14 @@
                     cambiarArchivoCategoria(ui.draggable,$tipo);
                 }
            }); 
+        });*/
+
+        /*$.ajax({
+        'url': $("#contenidoVideoLink form").attr('action'),
+        'data': $("#contenidoVideoLink form").serialize(),
+        'type':'POST',
+        success: function(data){console.log(data)},
+        error:function(data){console.log("error"); console.log(data);}
         });*/
     }
 </script>

@@ -48,7 +48,7 @@ class GaleriaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Richpolis\GaleriasBundle\Entity\Galeria',
-            'csrf_protection' => false
+            'csrf_protection' => true
         ));
     }
 

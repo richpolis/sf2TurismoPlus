@@ -130,9 +130,9 @@ class PaginaController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'get_galerias' =>$this->generateUrl('paginas_galerias',array('id'=>$entity->getId())),
-            'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId())),
-            'url_delete' => $this->generateUrl('paginas_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0')),
+            'get_galerias' =>$this->generateUrl('paginas_galerias',array('id'=>$entity->getId()),true),
+            'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId()),true),
+            'url_delete' => $this->generateUrl('paginas_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0'),true),
         );
     }
 
@@ -277,9 +277,9 @@ class PaginaController extends Controller
         $pagina = $em->getRepository('PaginasBundle:Pagina')->find($id);
         
         $galerias = $pagina->getGalerias();
-        $get_galerias = $this->generateUrl('paginas_galerias',array('id'=>$pagina->getId()));
-        $post_galerias = $this->generateUrl('paginas_galerias_upload', array('id'=>$pagina->getId()));
-        $url_delete = $this->generateUrl('paginas_galerias_delete',array('id'=>$pagina->getId(),'idGaleria'=>'0'));
+        $get_galerias = $this->generateUrl('paginas_galerias',array('id'=>$pagina->getId()),true);
+        $post_galerias = $this->generateUrl('paginas_galerias_upload', array('id'=>$pagina->getId()),true);
+        $url_delete = $this->generateUrl('paginas_galerias_delete',array('id'=>$pagina->getId(),'idGaleria'=>'0'),true);
         
         return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
             'galerias'=>$galerias,

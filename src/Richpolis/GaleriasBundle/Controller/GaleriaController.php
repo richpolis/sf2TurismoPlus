@@ -83,7 +83,7 @@ class GaleriaController extends Controller
             ));
         }else if($tipo=="link_video"){
             $form = $this->createForm(new GaleriaLinkVideoType(), $entity, array(
-                'action' => "#",
+                'action' => $this->generateUrl('galerias_create'),
                 'method' => 'POST',
             ));
         }
@@ -107,6 +107,9 @@ class GaleriaController extends Controller
             $tipo = $request->query->get('tipo');
             if($tipo == "link_video"){
                 $entity->setTipoArchivo(RpsStms::TIPO_ARCHIVO_LINK);
+                $clase = $request->query->get('clase');
+                $idClase = $request->query->get('idClase');
+                
             }
         }
         
