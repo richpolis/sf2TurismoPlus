@@ -25,7 +25,7 @@ class Cotizador
     
     protected $pais;
 
-    protected $cuidad;
+    protected $ciudad;
     
     /**
      * @Assert\Length(

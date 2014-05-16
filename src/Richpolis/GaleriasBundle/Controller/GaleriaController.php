@@ -7,11 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Richpolis\GaleriasBundle\Entity\Galeria;
 use Richpolis\GaleriasBundle\Form\GaleriaType;
 use Richpolis\GaleriasBundle\Form\GaleriaLinkVideoType;
-use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

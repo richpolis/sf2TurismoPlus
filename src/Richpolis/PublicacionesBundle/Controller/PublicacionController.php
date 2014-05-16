@@ -7,9 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+
 use Richpolis\PublicacionesBundle\Entity\Publicacion;
 use Richpolis\PublicacionesBundle\Form\PublicacionType;
+
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Publicacion controller.
@@ -129,7 +133,15 @@ class PublicacionController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+			$entity->setPosition(1);
+			$categoria = $entity->getCategoria();
             $em->persist($entity);
+			
+			$cont=2;
+			foreach($categoria->getPublicaciones() as $publicacion){
+				$publicacion->setPosition($cont++);
+			}
+			
             $em->flush();
 
             return $this->redirect($this->generateUrl('publicaciones_show', array('id' => $entity->getId())));
@@ -342,6 +354,94 @@ class PublicacionController extends Controller {
                           ))) */
                         ->getForm()
         ;
+    }
+	
+	/**
+     * Up registro.
+     *
+     * @Route("/{id}/up", name="publicaciones_up")
+     * @Method("PATCH")
+     */
+    public function upAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $registroUp = $this->findOr404($id);
+        
+        if ($registroUp) {
+            $registroDown=$em->getRepository('PublicacionesBundle:Publicacion')
+                    ->getRegistroUpOrDown($registroUp,true);
+            if ($registroDown) {
+                $posicion=$registroUp->getPosition();
+                $registroUp->setPosition($registroDown->getPosition());
+                $registroDown->setPosition($posicion);
+                $em->flush();
+            }
+        }
+        
+        $response = new JsonResponse();
+        $response->setData(array("ok"=>true));
+        return $response;
+    }
+    
+    /**
+     * Down registro.
+     *
+     * @Route("/{id}/down", name="publicaciones_down")
+     * @Method("PATCH")
+     */
+    public function downAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $registroDown = $this->findOr404($id);
+        
+        if ($registroDown) {
+            $registroUp=$em->getRepository('PublicacionesBundle:Publicacion')
+                    ->getRegistroUpOrDown($registroDown,false);
+            if ($registroUp) {
+                $posicion=$registroUp->getPosition();
+                $registroUp->setPosition($registroDown->getPosition());
+                $registroDown->setPosition($posicion);
+                $em->flush();
+            }
+        }
+        
+        $response = new JsonResponse();
+        $response->setData(array("ok"=>true));
+        return $response;
+    }
+	
+	/**
+     * Ordenar las posiciones de los autobuses.
+     *
+     * @Route("/ordenar/registros", name="publicaciones_ordenar")
+     * @Method("PATCH")
+     */
+    public function ordenarRegistrosAction(Request $request) {
+        if ($request->isXmlHttpRequest()) {
+            $registro_order = $request->query->get('registro');
+            $em = $this->getDoctrine()->getManager();
+            $result['ok'] = true;
+            foreach ($registro_order as $order => $id) {
+                $registro = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+                if ($registro->getPosition() != ($order + 1)) {
+                    try {
+                        $registro->setPosition($order + 1);
+                        $em->flush();
+                    } catch (Exception $e) {
+                        $result['mensaje'] = $e->getMessage();
+                        $result['ok'] = false;
+                    }
+                }
+            }
+
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData($result);
+            return $response;
+        } else {
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData(array('ok' => false));
+            return $response;
+        }
     }
 
 }
