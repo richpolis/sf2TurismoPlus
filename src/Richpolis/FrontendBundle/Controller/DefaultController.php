@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Richpolis\BackendBundle\Utils\Youtube;
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 use Richpolis\FrontendBundle\Entity\Contacto;
 use Richpolis\FrontendBundle\Form\ContactoType;
@@ -438,5 +440,18 @@ class DefaultController extends Controller
                 ->findOneBy(array('slug'=>'aviso-'.$locale));
         
         return array('mensaje'=>$configuracion->getTexto());
+    }
+	
+	/**
+     * @Route("/{_locale}/prueba", name="homepage_prueba", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     */
+    public function pruebaAction()
+    {
+		$youtube = RpsStms::getTitleAndImageVideoYoutube('http://www.youtube.com/watch?v=59PyU_7iqaU');
+		
+
+        $response = new JsonResponse();
+        $response->setData($result);
+        return $response;
     }
 }

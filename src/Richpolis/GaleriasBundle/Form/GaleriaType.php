@@ -57,6 +57,6 @@ class GaleriaType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'galeria';
     }
 }

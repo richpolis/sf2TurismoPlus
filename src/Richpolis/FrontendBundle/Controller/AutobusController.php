@@ -352,6 +352,34 @@ class AutobusController extends Controller
     }
     
     /**
+     * Crea una galeria link video de una autobus.
+     *
+     * @Route("/{id}/galerias/link/video", name="autobuses_galerias_link_video")
+     * @Method({"POST","GET"})
+     */
+    public function galeriasLinkVideoAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('FrontendBundle:Autobus')->find($id);
+        $result = array();
+        var_dump($request->request->all());
+        var_dump($request->query->all());
+        if($request->request->has('tipoArchivo') || $request->query->has('tipoArchivo')){ 
+            $result = $request->request->all(); 
+            $registro = new Galeria();
+            $registro->setArchivo($result["archivo"]);
+            $registro->setIsActive($result['isActive']);
+            $registro->setPosition($result['position']);
+            $registro->setTipoArchivo($result['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($result);
+        return $response;
+    }
+    
+    /**
      * Deletes una Galeria entity de una Autobus.
      *
      * @Route("/{id}/galerias/{idGaleria}", name="autobuses_galerias_delete")

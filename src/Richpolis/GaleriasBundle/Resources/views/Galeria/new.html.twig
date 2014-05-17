@@ -144,19 +144,10 @@ $(document).ready(function(){
   });
   
   $("#botonGuardar").on("click",function(){
-    $("#formGalerias").submit();
+    $("form").submit();
   });
   
-  {% if errores | length > 0 %}
-    {% for error in errores %}
-       noty({
-          text: '{{ error }}',
-          layout:'topRight',
-          type:'error',
-          timeout:2000
-      }); 
-    {% endfor %}    
-  {% endif %}
+
   
 });
 

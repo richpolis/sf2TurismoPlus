@@ -22,6 +22,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GaleriaController extends Controller
 {
+	
+	
+    protected function getFilters() {
+        return $this->get('session')->get('galerias', array());
+    }
+
+    protected function setFilters($filtros) {
+        $this->get('session')->set('galerias', $filtros);
+    }	
+	
 
     /**
      * Lists all Galeria entities.
@@ -56,9 +66,27 @@ class GaleriaController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('galerias_show', array('id' => $entity->getId())));
+            $filtro = $this->getFilters();
+            if(isset($filtro['clase'])){
+            	if($filtro['clase']=='autobus'){
+            	    $autobus = $em->getRepository('FrontendBundle:Autobus')->find($filtro['id']);
+            	    $autobus->getGalerias()->add($entity);
+                    $em->flush();
+                    $return = $filtro['return'];
+                    $this->setFilters(array());
+            	    return $this->redirect($return);    
+            	}elseif($filtro['clase']=='pagina'){
+            	    $autobus = $em->getRepository('PaginasBundle:Pagina')->find($filtro['id']);
+            	    $autobus->getGalerias()->add($entity);
+                    $em->flush();
+                    $return = $filtro['return'];
+                    $this->setFilters(array());
+            	    return $this->redirect($return);
+            	}
+            }else{
+            	$em->flush();
+            	return $this->redirect($this->generateUrl('galerias_show', array('id' => $entity->getId())));
+            }
         }
 
         return array(
@@ -80,7 +108,7 @@ class GaleriaController extends Controller
             $form = $this->createForm(new GaleriaType(), $entity, array(
                 'action' => $this->generateUrl('galerias_create'),
                 'method' => 'POST',
-            ));
+             ));
         }else if($tipo=="link_video"){
             $form = $this->createForm(new GaleriaLinkVideoType(), $entity, array(
                 'action' => $this->generateUrl('galerias_create'),
@@ -108,8 +136,9 @@ class GaleriaController extends Controller
             if($tipo == "link_video"){
                 $entity->setTipoArchivo(RpsStms::TIPO_ARCHIVO_LINK);
                 $clase = $request->query->get('clase');
-                $idClase = $request->query->get('idClase');
-                
+                $idContenedor = $request->query->get('idContenedor');
+                $return = $request->query->get('return');
+                $this->setFilters(array('clase'=>$clase,'id'=>$idContenedor,'return'=>$return));
             }
         }
         
@@ -129,6 +158,7 @@ class GaleriaController extends Controller
             return $this->render('GaleriasBundle:Galeria:new.html.twig' ,array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
+				'tipo'=>$tipo
             ));
         }
     }

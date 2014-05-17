@@ -37,7 +37,7 @@ class GaleriaLinkVideoType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Richpolis\GaleriasBundle\Entity\Galeria',
-            'csrf_protection' => false
+            'csrf_protection' => true
         ));
     }
 
@@ -46,6 +46,6 @@ class GaleriaLinkVideoType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'galeria';
     }
 }
