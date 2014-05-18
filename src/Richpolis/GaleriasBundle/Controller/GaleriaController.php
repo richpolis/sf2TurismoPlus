@@ -66,27 +66,8 @@ class GaleriaController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            $filtro = $this->getFilters();
-            if(isset($filtro['clase'])){
-            	if($filtro['clase']=='autobus'){
-            	    $autobus = $em->getRepository('FrontendBundle:Autobus')->find($filtro['id']);
-            	    $autobus->getGalerias()->add($entity);
-                    $em->flush();
-                    $return = $filtro['return'];
-                    $this->setFilters(array());
-            	    return $this->redirect($return);    
-            	}elseif($filtro['clase']=='pagina'){
-            	    $autobus = $em->getRepository('PaginasBundle:Pagina')->find($filtro['id']);
-            	    $autobus->getGalerias()->add($entity);
-                    $em->flush();
-                    $return = $filtro['return'];
-                    $this->setFilters(array());
-            	    return $this->redirect($return);
-            	}
-            }else{
-            	$em->flush();
-            	return $this->redirect($this->generateUrl('galerias_show', array('id' => $entity->getId())));
-            }
+            $em->flush();
+            return $this->redirect($this->generateUrl('galerias_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -131,14 +112,11 @@ class GaleriaController extends Controller
     {
         $entity = new Galeria();
         $tipo = "imagen";
+        $return = $this->generateUrl('galerias');
         if($request->query->has('tipo')){
             $tipo = $request->query->get('tipo');
             if($tipo == "link_video"){
                 $entity->setTipoArchivo(RpsStms::TIPO_ARCHIVO_LINK);
-                $clase = $request->query->get('clase');
-                $idContenedor = $request->query->get('idContenedor');
-                $return = $request->query->get('return');
-                $this->setFilters(array('clase'=>$clase,'id'=>$idContenedor,'return'=>$return));
             }
         }
         
@@ -158,7 +136,8 @@ class GaleriaController extends Controller
             return $this->render('GaleriasBundle:Galeria:new.html.twig' ,array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
-				'tipo'=>$tipo
+		'tipo'   => $tipo,
+                'return' =>$return
             ));
         }
     }

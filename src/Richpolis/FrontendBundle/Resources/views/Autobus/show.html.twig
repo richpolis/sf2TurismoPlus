@@ -51,7 +51,7 @@
                 <Divider/>
                 <span class="divider">/</span> 
                 <a href="{{path('autobuses')}}" class="bread-current">Autobuses</a>
-                <a href="{{path('autobuses_new')}}" class="btn btn-info pull-right">Crear autobus</a>
+                <a href="{{path('autobuses_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear autobus</a>
             </div>
 
             <div class="clearfix"></div>
@@ -154,7 +154,8 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    <button onclick="javascript:editarRegistro('{{path('galerias_new')}}?tipo=link_video&clase=autobus&idContenedor={{entity.id}}&return={{path('autobuses_show',{'id':entity.id})}}#galeria')" class="botonUploadVideoLink">Crear Video Link</button>
+                                                                    <!--button onclick="javascript:editarRegistro('{{path('galerias_new')}}?tipo=link_video&clase=autobus&idContenedor={{entity.id}}&return={{path('autobuses_show',{'id':entity.id})}}#galeria')" class="botonUploadVideoLink">Crear Video Link</button-->
+                                                                    <button onclick="javascript:crearVideoLink()" class="botonUploadVideoLink">Crear Video Link</button>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -254,6 +255,7 @@ var eliminarRegistro = function(){
 </script>
 
 {% include 'GaleriasBundle:Galeria:formulariosGaleria.js.twig' with {'entity': entity, 'url_delete': url_delete, 'get_galerias': get_galerias, 'post_galerias': post_galerias } %}
+
  <script>
  $(document).on('ready',function(){
      createUploader();

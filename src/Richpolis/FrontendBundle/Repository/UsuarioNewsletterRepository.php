@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class UsuarioNewsletterRepository extends EntityRepository
 {
+    public function findEntreFechas($desde,$hasta){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+                    SELECT u 
+                    FROM FrontendBundle:UsuarioNewsletter u 
+                    WHERE u.createdAt BETWEEN :desde AND :hasta 
+                    ORDER BY u.nombre
+                ')->setParameters(array(
+                    'desde'=>  $desde." 00:00:00",
+                    'hasta'=>  $hasta." 23:59:59",
+                ));
+        return $query->getResult();
+    }
 }

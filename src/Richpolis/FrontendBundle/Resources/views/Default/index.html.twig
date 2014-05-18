@@ -36,6 +36,14 @@
         top: 0px;
         left: 0px;
     }
+    .container header.encabezado.inicio{
+        background: url("{{fondo1}}") no-repeat top center;
+        -webkit-animation: autobusesInicio 80s ease-in infinite 7s;
+        -moz-animation: autobusesInicio 80s ease-in infinite 7s;
+        -ms-animation: autobusesInicio 80s ease-in infinite 7s;
+        -o-animation: autobusesInicio 80s ease-in infinite 7s;
+        animation: autobusesInicio 80s ease-in infinite 7s;
+    }
     @-moz-keyframes autobusesInicio {
     0% {
       background: url("{{fondo1}}") no-repeat top center;
@@ -205,7 +213,7 @@
                 </div>
             </article>
             <article class="twitters">
-                {# render(controller("FrontendBundle:Default:lastTweets",{'username': 'TurismoPlusMG'})) #}
+                {{ render(controller("FrontendBundle:Default:lastTweets",{'username': 'TurismoPlusMG'})) }}
                 <div class="experiencias">
                     <span class="titulo-experiencias">{{"Experiencias MG"|trans}}</span>
                     <div class="contenedor-experiencias carousel-inner">

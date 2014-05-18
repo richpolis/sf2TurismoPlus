@@ -49,7 +49,8 @@
           <span class="divider">/</span> 
           <a href="{{path('users_newsletter')}}" class="bread-current">Usuarios Newsletter</a>
           {% if is_granted('ROLE_ADMIN') %}
-          <a href="{{path('users_newsletter_new')}}" class="btn btn-info pull-right">Crear usuario</a>
+          <a href="{{path('users_newsletter_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear usuario</a>
+          <a href="{{path('users_newsletter_exportar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Exportar</a>
           {% endif %}
         </div>
         
@@ -173,9 +174,10 @@ var activarRegistro = function(url,id){
   $.ajax({
      url: url,
      type: 'PATCH',
-     data: {isActive: true},
+     data: {isActive: 1},
      dataType: 'html',
      success: function(data){
+         debugger;
          $(id).html(data);
          noty({
             text: 'Activación realizada',
@@ -194,9 +196,10 @@ var inactivarRegistro = function(url,id){
   $.ajax({
      url: url,
      type: 'PATCH',
-     data: {isActive: false},
+     data: {isActive: 0},
      dataType: 'html',
      success: function(data){
+         debugger;
          $(id).html(data);
          noty({
             text: 'Inactivación realizada',

@@ -341,7 +341,6 @@ EOF;
     }
     static public function getLinkLargeYoutube($link){
         $arreglo=explode("/", $link);
-        var_dump($arreglo);
         if($arreglo['2']=="youtu.be"){
            $arreglo2=explode('&',$arreglo[3]); 
            $linkArreglado="http://www.youtube.com/watch?v=".$arreglo2[0];

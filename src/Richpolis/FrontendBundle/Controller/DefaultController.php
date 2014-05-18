@@ -442,16 +442,15 @@ class DefaultController extends Controller
         return array('mensaje'=>$configuracion->getTexto());
     }
 	
-	/**
+    /**
      * @Route("/{_locale}/prueba", name="homepage_prueba", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
      */
-    public function pruebaAction()
+    public function pruebaAction() 
     {
-		$youtube = RpsStms::getTitleAndImageVideoYoutube('http://www.youtube.com/watch?v=59PyU_7iqaU');
-		
-
+        $youtube = RpsStms::getTitleAndImageVideoYoutube('http://youtu.be/vwndyuafDkY');
         $response = new JsonResponse();
-        $response->setData($result);
+        $response->setData($youtube);
         return $response;
     }
+
 }

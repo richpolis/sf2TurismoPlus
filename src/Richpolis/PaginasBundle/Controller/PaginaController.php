@@ -346,6 +346,32 @@ class PaginaController extends Controller
     }
     
     /**
+     * Crea una galeria link video de una pagina.
+     *
+     * @Route("/{id}/galerias/link/video", name="pagina_galerias_link_video", requirements={"id" = "\d+"})
+     * @Method({"POST","GET"})
+     */
+    public function galeriasLinkVideoAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('PaginasBundle:Pagina')->find($id);
+        $parameters = $request->request->all();
+      
+        if(isset($parameters['archivo'])){ 
+            $registro = new Galeria();
+            $registro->setArchivo($parameters['archivo']);
+            $registro->setIsActive($parameters['isActive']);
+            $registro->setPosition($parameters['position']);
+            $registro->setTipoArchivo($parameters['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($parameters);
+        return $response;
+    }
+    
+    /**
      * Deletes una Galeria entity de una Pagina.
      *
      * @Route("/{id}/galerias/{idGaleria}", name="paginas_galerias_delete")

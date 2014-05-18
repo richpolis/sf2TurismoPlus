@@ -120,14 +120,18 @@
     function crearRegistroGaleriaVideoLink(){
         debugger;
         $('#image-loader').show();
-        var url='{{ post_galerias | raw }}';
+        var $form = $("#contenidoVideoLink form ");
+        var url='{{ post_galerias | raw }}/link/video';
+        var archivo = $form.find("#galeria_archivo").val();
+        var position = $form.find("#galeria_position").val();
+        var tipoArchivo = $form.find("#galeria_tipoArchivo").val();
         $.ajax({
            url: url,
            type: 'POST',
-           data: $("#contenidoVideoLink form").serialize(),
-           dataType: 'html',
+           data: {archivo: archivo, 'tipoArchivo': tipoArchivo,'isActive': true,'position': position},
+           dataType: 'json',
            success: function(data){
-              console.log(data);
+              debugger;
               refrescarGaleria();
               $('#image-loader').hide();
            },
@@ -182,7 +186,7 @@
     function guardarVideoLinkFormModal(){
         debugger;
         var bValid = true;
-        var archivo=$("input#archivo");
+        var archivo=$("input#galeria_archivo");
         
         bValid=(archivo.val().length>0 && archivo.val()!="archivo")?true:false;
         /*bValid=(fieldDescription.val().length>0 && fieldDescription.val()!="Descripcion")?true:false;*/

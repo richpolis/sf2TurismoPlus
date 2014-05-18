@@ -106,7 +106,7 @@ class UsuarioNewsletterController extends Controller
     /**
      * Finds and displays a UsuarioNewsletter entity.
      *
-     * @Route("/{id}", name="users_newsletter_show")
+     * @Route("/{id}", name="users_newsletter_show", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -131,7 +131,7 @@ class UsuarioNewsletterController extends Controller
     /**
      * Displays a form to edit an existing UsuarioNewsletter entity.
      *
-     * @Route("/{id}/edit", name="users_newsletter_edit")
+     * @Route("/{id}/edit", name="users_newsletter_edit", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -178,7 +178,7 @@ class UsuarioNewsletterController extends Controller
     /**
      * Edits an existing UsuarioNewsletter entity.
      *
-     * @Route("/{id}", name="users_newsletter_update")
+     * @Route("/{id}", name="users_newsletter_update", requirements={"id" = "\d+"})
      * @Method("PUT")
      * @Template("FrontendBundle:UsuarioNewsletter:edit.html.twig")
      */
@@ -213,7 +213,7 @@ class UsuarioNewsletterController extends Controller
     /**
      * Edits an existing UsuarioNewsletter entity.
      *
-     * @Route("/{id}", name="users_newsletter_actualizar")
+     * @Route("/{id}", name="users_newsletter_actualizar", requirements={"id" = "\d+"})
      * @Method("PATCH")
      * @Template("FrontendBundle:UsuarioNewsletter:item.html.twig")
      */
@@ -226,13 +226,11 @@ class UsuarioNewsletterController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UsuarioNewsletter entity.');
         }
-        $editForm = $this->createEditForm($entity, false);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-        }
-
+        $status = $request->request->get('isActive');
+        
+        $entity->setIsActive($status);
+        $em->flush();
+        
         return array(
             'entity'      => $entity,
         );
@@ -241,7 +239,7 @@ class UsuarioNewsletterController extends Controller
     /**
      * Deletes a UsuarioNewsletter entity.
      *
-     * @Route("/{id}", name="users_newsletter_delete")
+     * @Route("/{id}", name="users_newsletter_delete", requirements={"id" = "\d+"})
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -283,5 +281,31 @@ class UsuarioNewsletterController extends Controller
             )))*/
             ->getForm()
         ;
+    }
+    
+    /**
+     * @Route("/exportar", name="users_newsletter_exportar")
+     * @Method({"GET", "POST"})
+     */
+    public function exportarAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == 'POST') {
+            if($request->request->has('exportarTodos') && $request->request->get('exportarTodos')){
+                $entities = $em->getRepository('FrontendBundle:UsuarioNewsletter')->findAll();
+            }elseif($request->request->has('inputDesde') && 
+                    $request->request->has('inputHasta')){
+                $entities = $em->getRepository('FrontendBundle:UsuarioNewsletter')
+                        ->findEntreFechas($request->request->get('inputDesde'),$request->request->get('inputHasta'));
+            }
+            $filename = "export_".date("Y_m_d").".xls"; 
+            $response=$this->render('FrontendBundle:UsuarioNewsletter:tablaExportar.html.twig', array('entities'=>$entities)); 
+            $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8'); 
+            $response->headers->set('Content-Disposition', 'attachment; filename='.$filename); 
+            $response->headers->set('Pragma', 'public'); 
+            $response->headers->set('Cache-Control', 'maxage=1');
+            return $response;
+        }
+        
+        return $this->render("FrontendBundle:UsuarioNewsletter:exportar.html.twig");
     }
 }

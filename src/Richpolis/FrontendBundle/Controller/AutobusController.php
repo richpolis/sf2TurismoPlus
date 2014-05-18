@@ -118,7 +118,7 @@ class AutobusController extends Controller
     /**
      * Finds and displays a Autobus entity.
      *
-     * @Route("/{id}", name="autobuses_show")
+     * @Route("/{id}", name="autobuses_show", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -146,7 +146,7 @@ class AutobusController extends Controller
     /**
      * Displays a form to edit an existing Autobus entity.
      *
-     * @Route("/{id}/edit", name="autobuses_edit")
+     * @Route("/{id}/edit", name="autobuses_edit", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -192,7 +192,7 @@ class AutobusController extends Controller
     /**
      * Edits an existing Autobus entity.
      *
-     * @Route("/{id}", name="autobuses_update")
+     * @Route("/{id}", name="autobuses_update", requirements={"id" = "\d+"})
      * @Method({"PUT","PATCH"})
      * @Template("FrontendBundle:Autobus:edit.html.twig")
      */
@@ -226,7 +226,7 @@ class AutobusController extends Controller
     /**
      * Deletes a Autobus entity.
      *
-     * @Route("/{id}", name="autobuses_delete")
+     * @Route("/{id}", name="autobuses_delete", requirements={"id" = "\d+"})
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -273,7 +273,7 @@ class AutobusController extends Controller
     /**
      * Lists all Autobus galerias entities.
      *
-     * @Route("/{id}/galerias", name="autobuses_galerias")
+     * @Route("/{id}/galerias", name="autobuses_galerias", requirements={"id" = "\d+"})
      * @Method("GET")
      */
     public function galeriasAction($id)
@@ -298,7 +298,7 @@ class AutobusController extends Controller
     /**
      * Crea una galeria de una autobus.
      *
-     * @Route("/{id}/galerias", name="autobuses_galerias_upload")
+     * @Route("/{id}/galerias", name="autobuses_galerias_upload", requirements={"id" = "\d+"})
      * @Method("POST")
      */
     public function galeriasUploadAction(Request $request,$id){
@@ -354,35 +354,33 @@ class AutobusController extends Controller
     /**
      * Crea una galeria link video de una autobus.
      *
-     * @Route("/{id}/galerias/link/video", name="autobuses_galerias_link_video")
+     * @Route("/{id}/galerias/link/video", name="autobuses_galerias_link_video", requirements={"id" = "\d+"})
      * @Method({"POST","GET"})
      */
     public function galeriasLinkVideoAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
         $autobus=$em->getRepository('FrontendBundle:Autobus')->find($id);
-        $result = array();
-        var_dump($request->request->all());
-        var_dump($request->query->all());
-        if($request->request->has('tipoArchivo') || $request->query->has('tipoArchivo')){ 
-            $result = $request->request->all(); 
+        $parameters = $request->request->all();
+      
+        if(isset($parameters['archivo'])){ 
             $registro = new Galeria();
-            $registro->setArchivo($result["archivo"]);
-            $registro->setIsActive($result['isActive']);
-            $registro->setPosition($result['position']);
-            $registro->setTipoArchivo($result['tipoArchivo']);
+            $registro->setArchivo($parameters['archivo']);
+            $registro->setIsActive($parameters['isActive']);
+            $registro->setPosition($parameters['position']);
+            $registro->setTipoArchivo($parameters['tipoArchivo']);
             $em->persist($registro);
             $autobus->getGalerias()->add($registro);
             $em->flush();  
         }
         $response = new \Symfony\Component\HttpFoundation\JsonResponse();
-        $response->setData($result);
+        $response->setData($parameters);
         return $response;
     }
     
     /**
      * Deletes una Galeria entity de una Autobus.
      *
-     * @Route("/{id}/galerias/{idGaleria}", name="autobuses_galerias_delete")
+     * @Route("/{id}/galerias/{idGaleria}", name="autobuses_galerias_delete", requirements={"id" = "\d+","idGaleria"="\d+"})
      * @Method("DELETE")
      */
     public function deleteGaleriaAction(Request $request, $id, $idGaleria)

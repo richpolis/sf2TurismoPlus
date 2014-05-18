@@ -15,7 +15,7 @@ class GaleriaLinkVideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('archivo','text',array('label'=>'Link Video','attr'=>array(
+            ->add('archivo','url',array('label'=>'Link Video','attr'=>array(
                 'class'=>'validate[required] form-control placeholder',
                 'placeholder'=>'Link Video',
                 'data-bind'=>'value: link video'
