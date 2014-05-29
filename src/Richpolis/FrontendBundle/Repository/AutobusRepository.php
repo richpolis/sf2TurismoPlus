@@ -28,12 +28,10 @@ class AutobusRepository extends EntityRepository
     public function findActivos(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
-               SELECT a,g 
+               SELECT a 
                FROM FrontendBundle:Autobus a 
-               JOIN a.galerias g 
                WHERE a.isActive = :autobus 
-               AND g.isActive = :galeria 
-               ORDER BY a.position ASC,g.position ASC
+               ORDER BY a.position ASC
         ')->setParameters(array('autobus'=> true,'galeria'=>true));
         
         return $query->getResult();

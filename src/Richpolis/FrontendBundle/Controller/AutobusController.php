@@ -139,6 +139,7 @@ class AutobusController extends Controller
             'delete_form' => $deleteForm->createView(),
             'get_galerias' =>$this->generateUrl('autobuses_galerias',array('id'=>$entity->getId())),
             'post_galerias' =>$this->generateUrl('autobuses_galerias_upload', array('id'=>$entity->getId())),
+			'post_galerias_link_video' =>$this->generateUrl('autobuses_galerias_link_video', array('id'=>$entity->getId())),
             'url_delete' => $this->generateUrl('autobuses_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0')),
         );
     }
@@ -182,7 +183,7 @@ class AutobusController extends Controller
     {
         $form = $this->createForm(new AutobusType(), $entity, array(
             'action' => $this->generateUrl('autobuses_update', array('id' => $entity->getId())),
-            'method' => 'PATCH',
+            'method' => 'PUT',
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));
@@ -193,7 +194,7 @@ class AutobusController extends Controller
      * Edits an existing Autobus entity.
      *
      * @Route("/{id}", name="autobuses_update", requirements={"id" = "\d+"})
-     * @Method({"PUT","PATCH"})
+     * @Method("PUT")
      * @Template("FrontendBundle:Autobus:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -208,7 +209,9 @@ class AutobusController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
+		$parameters = $request->request->all();
         $editForm->handleRequest($request);
+        //$editForm->submit($request->request->get($editForm->getName()),false);
 
         if ($editForm->isValid()) {
             $em->flush();
@@ -234,7 +237,7 @@ class AutobusController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('FrontendBundle:Autobus')->find($id);
 
@@ -244,7 +247,7 @@ class AutobusController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('autobuses'));
     }
@@ -285,12 +288,14 @@ class AutobusController extends Controller
         $galerias = $autobus->getGalerias();
         $get_galerias = $this->generateUrl('autobuses_galerias',array('id'=>$autobus->getId()));
         $post_galerias = $this->generateUrl('autobuses_galerias_upload', array('id'=>$autobus->getId()));
+		$post_galerias_link_video = $this->generateUrl('autobuses_galerias_link_video',array('id'=>$autobus->getId()));
         $url_delete = $this->generateUrl('autobuses_galerias_delete',array('id'=>$autobus->getId(),'idGaleria'=>'0'));
         
         return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
             'galerias'=>$galerias,
             'get_galerias' =>$get_galerias,
             'post_galerias' =>$post_galerias,
+			'post_galerias_link_video' =>$post_galerias_link_video,
             'url_delete' => $url_delete,
         ));
     }
@@ -354,7 +359,7 @@ class AutobusController extends Controller
     /**
      * Crea una galeria link video de una autobus.
      *
-     * @Route("/{id}/galerias/link/video", name="autobuses_galerias_link_video", requirements={"id" = "\d+"})
+     * @Route("/{id}/galerias/link/video", name="autobuses_galerias_link_video_2", requirements={"id" = "\d+"})
      * @Method({"POST","GET"})
      */
     public function galeriasLinkVideoAction(Request $request,$id){

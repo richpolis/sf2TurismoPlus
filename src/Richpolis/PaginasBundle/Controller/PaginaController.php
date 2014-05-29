@@ -132,6 +132,7 @@ class PaginaController extends Controller
             'delete_form' => $deleteForm->createView(),
             'get_galerias' =>$this->generateUrl('paginas_galerias',array('id'=>$entity->getId()),true),
             'post_galerias' =>$this->generateUrl('paginas_galerias_upload', array('id'=>$entity->getId()),true),
+			'post_galerias_link_video' =>$this->generateUrl('paginas_galerias_link_video', array('id'=>$entity->getId()),true),
             'url_delete' => $this->generateUrl('paginas_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0'),true),
         );
     }
@@ -175,7 +176,7 @@ class PaginaController extends Controller
     {
         $form = $this->createForm(new PaginaType(), $entity, array(
             'action' => $this->generateUrl('paginas_update', array('id' => $entity->getId())),
-            'method' => 'PATCH',
+            'method' => 'PUT',
         ));
 
         //$form->add('submit', 'submit', array('label' => 'Update'));
@@ -186,7 +187,7 @@ class PaginaController extends Controller
      * Edits an existing Pagina entity.
      *
      * @Route("/{id}", name="paginas_update")
-     * @Method({"PUT","PATCH"})
+     * @Method("PUT")
      * @Template("PaginasBundle:Pagina:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -202,6 +203,7 @@ class PaginaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+        //$editForm->submit($request->request->get($editForm->getName()),false);
 
         if ($editForm->isValid()) {
             $em->flush();
@@ -228,7 +230,7 @@ class PaginaController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('PaginasBundle:Pagina')->find($id);
 
@@ -238,7 +240,7 @@ class PaginaController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('paginas'));
     }
@@ -279,12 +281,14 @@ class PaginaController extends Controller
         $galerias = $pagina->getGalerias();
         $get_galerias = $this->generateUrl('paginas_galerias',array('id'=>$pagina->getId()),true);
         $post_galerias = $this->generateUrl('paginas_galerias_upload', array('id'=>$pagina->getId()),true);
+		$post_galerias_link_video = $this->generateUrl('paginas_galerias_link_video', array('id'=>$pagina->getId()),true);
         $url_delete = $this->generateUrl('paginas_galerias_delete',array('id'=>$pagina->getId(),'idGaleria'=>'0'),true);
         
         return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
             'galerias'=>$galerias,
             'get_galerias' =>$get_galerias,
             'post_galerias' =>$post_galerias,
+			'post_galerias_link_video' =>$post_galerias_link_video,
             'url_delete' => $url_delete,
         ));
     }
@@ -348,7 +352,7 @@ class PaginaController extends Controller
     /**
      * Crea una galeria link video de una pagina.
      *
-     * @Route("/{id}/galerias/link/video", name="pagina_galerias_link_video", requirements={"id" = "\d+"})
+     * @Route("/{id}/galerias/link/video", name="pagina_galerias_link_video_2", requirements={"id" = "\d+"})
      * @Method({"POST","GET"})
      */
     public function galeriasLinkVideoAction(Request $request,$id){

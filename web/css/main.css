@@ -36,9 +36,11 @@ body {
 }
 .container header.encabezado #lenguajes-redes-sociales .lenguajes {
   position: absolute;
-  top: 5px;
-  right: 200px;
+  top: 0px;
+  right: 192px;
   color: #00f;
+  background-color: rgba(255,255,255,0.8);
+  padding: 10px;
 }
 .container header.encabezado #lenguajes-redes-sociales .redes-sociales {
   float: right;
@@ -60,7 +62,7 @@ body {
   margin: 0;
 }
 .container header.encabezado #lenguajes-redes-sociales .redes-sociales span.twitter {
-  background-position: 0px 0px;
+	background-position: 0px 0px;
 }
 .container header.encabezado #lenguajes-redes-sociales .redes-sociales span.twitter:hover {
   background-position: 0px -39px;

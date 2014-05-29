@@ -121,14 +121,14 @@
         debugger;
         $('#image-loader').show();
         var $form = $("#contenidoVideoLink form ");
-        var url='{{ post_galerias | raw }}/link/video';
+        var url='{{ post_galerias_link_video | raw }}';
         var archivo = $form.find("#galeria_archivo").val();
         var position = $form.find("#galeria_position").val();
         var tipoArchivo = $form.find("#galeria_tipoArchivo").val();
         $.ajax({
            url: url,
-           type: 'POST',
-           data: {archivo: archivo, 'tipoArchivo': tipoArchivo,'isActive': true,'position': position},
+           type: 'GET',
+           data: {archivo: archivo, 'tipoArchivo': tipoArchivo,'isActive': 1,'position': position},
            dataType: 'json',
            success: function(data){
               debugger;

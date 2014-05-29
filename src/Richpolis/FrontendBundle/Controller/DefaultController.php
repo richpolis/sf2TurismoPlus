@@ -18,8 +18,10 @@ use Richpolis\FrontendBundle\Form\ContactoType;
 use Richpolis\FrontendBundle\Entity\Cotizador;
 use Richpolis\FrontendBundle\Form\CotizadorType;
 
-use \Richpolis\FrontendBundle\Entity\UsuarioNewsletter;
-use \Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
+use Richpolis\FrontendBundle\Entity\UsuarioNewsletter;
+use Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
+
+use Richpolis\GaleriasBundle\Entity\Galeria;
 
 class DefaultController extends Controller
 {
@@ -450,6 +452,68 @@ class DefaultController extends Controller
         $youtube = RpsStms::getTitleAndImageVideoYoutube('http://youtu.be/vwndyuafDkY');
         $response = new JsonResponse();
         $response->setData($youtube);
+        return $response;
+    }
+	
+	/**
+     * Crea una galeria link video de una autobus.
+     *
+     * @Route("/autobuses/{id}/galerias/link/video", name="autobuses_galerias_link_video", requirements={"id" = "\d+"})
+     * @Method("GET")
+     */
+    public function autobusesGaleriasLVAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('FrontendBundle:Autobus')->find($id);
+        $parameters['archivo'] = $request->query->get('archivo');
+		$parameters['position'] = $request->query->get('position');
+        $parameters['tipoArchivo'] = $request->query->get('tipoArchivo');
+		$parameters['isActive'] = $request->query->get('isActive');
+
+        if(isset($parameters['archivo'])){
+
+            $registro = new Galeria();
+            $registro->setArchivo($parameters['archivo']);
+            $registro->setIsActive($parameters['isActive']);
+            $registro->setPosition($parameters['position']);
+            $registro->setTipoArchivo($parameters['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+		
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($parameters);
+        return $response;
+    }
+	
+	/**
+     * Crea una galeria link video de una pagina.
+     *
+     * @Route("/paginas/{id}/galerias/link/video", name="paginas_galerias_link_video", requirements={"id" = "\d+"})
+     * @Method("GET")
+     */
+    public function paginasGaleriasLVAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('PaginasBundle:Pagina')->find($id);
+        $parameters['archivo'] = $request->query->get('archivo');
+		$parameters['position'] = $request->query->get('position');
+        $parameters['tipoArchivo'] = $request->query->get('tipoArchivo');
+		$parameters['isActive'] = $request->query->get('isActive');
+
+        if(isset($parameters['archivo'])){
+
+            $registro = new Galeria();
+            $registro->setArchivo($parameters['archivo']);
+            $registro->setIsActive($parameters['isActive']);
+            $registro->setPosition($parameters['position']);
+            $registro->setTipoArchivo($parameters['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+		
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($parameters);
         return $response;
     }
 

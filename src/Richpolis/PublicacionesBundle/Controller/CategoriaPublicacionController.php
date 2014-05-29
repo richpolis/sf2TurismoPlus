@@ -223,7 +223,7 @@ class CategoriaPublicacionController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->find($id);
 
@@ -233,7 +233,7 @@ class CategoriaPublicacionController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('categorias_publicaciones'));
     }

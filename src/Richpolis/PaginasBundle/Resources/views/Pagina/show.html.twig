@@ -153,9 +153,10 @@
                                                     <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('paginas_edit',{id: entity.id})}}')">Editar</button>
                                                     <div style="float: left; margin-right: 3px;">
                                                         <form id="formEliminar" action="{{ path('paginas_delete', { 'id': entity.id }) }}" method="post">
-                                                            {{ form_widget(delete_form) }}
-                                                            <button class="btn btn-danger " onclick="eliminarRegistro();">Eliminar</button>
-                                                        </form>
+                                                            <input name="_method" value="DELETE" type="hidden"/>
+															{{ form_widget(delete_form) }}
+														</form>
+														<button class="btn btn-danger " onclick="eliminarRegistro();">Eliminar</button>
                                                     </div>        
                                                 </div>
                                             </div>  
@@ -224,7 +225,7 @@ var editarRegistro = function(url){
 };
     
 var eliminarRegistro = function(){
-  {% if is_granted('ROLE_ADMIN') %}
+  {% if is_granted('ROLE_SUPER_ADMIN') %}
     bootbox.confirm("Esta seguro de eliminar el registro?", function(result) {
       if(result){
          $("#formEliminar").submit();
@@ -237,7 +238,7 @@ var eliminarRegistro = function(){
 
 </script>
 
-{% include 'GaleriasBundle:Galeria:formulariosGaleria.js.twig' with {'entity': entity, 'url_delete': url_delete, 'get_galerias': get_galerias, 'post_galerias': post_galerias } %}
+{% include 'GaleriasBundle:Galeria:formulariosGaleria.js.twig' with {'entity': entity, 'url_delete': url_delete, 'get_galerias': get_galerias, 'post_galerias': post_galerias, 'post_galerias_link_video': post_galerias_link_video  } %}
  <script>
  $(document).on('ready',function(){
      createUploader();

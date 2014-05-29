@@ -247,7 +247,7 @@ class UsuarioNewsletterController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('FrontendBundle:UsuarioNewsletter')->find($id);
 
@@ -257,7 +257,7 @@ class UsuarioNewsletterController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('users_newsletter'));
     }
