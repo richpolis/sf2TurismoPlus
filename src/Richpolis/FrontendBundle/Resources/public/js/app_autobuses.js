@@ -37,14 +37,24 @@ Autobuses.Views.Show = Backbone.View.extend({
     },
     render: function() {
         var data = this.model.toJSON();
-        this.$el.html(this.template(data));
+		var self = this;
+		this.$el.fadeOut("fast",function(){
+			self.$el.html(self.template(data));
+			$("ul.galeriaContenedor img").css({opacity: 0});
+			self.$el.fadeIn("fast",function(){
+				self.iniciarComponentes();
+				$("ul.galeriaContenedor img").css({opacity: 1});
+			});
+		});
+        
         return this;
     },
     mostrar: function(){
         var self = this;
         $(".autobuses").fadeOut("slow",function(){
-           self.$el.fadeIn("fast");
-           self.iniciarComponentes();
+           self.$el.fadeIn("fast",function(){
+				self.iniciarComponentes();   
+		   });
         });
         window.api.accion.list=false;
         window.api.accion.show=true;
@@ -119,8 +129,8 @@ Autobuses.Routers.App = Backbone.Router.extend({
             views.show.mostrar();
         }else{
             window.views.show.model= model;
-            views.show.render().$el.fadeIn("fast");
-            window.views.show.iniciarComponentes();
+            views.show.render();
+            /*views.show.iniciarComponentes();*/
         }
     },
 });

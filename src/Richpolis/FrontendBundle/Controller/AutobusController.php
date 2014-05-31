@@ -34,7 +34,7 @@ class AutobusController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FrontendBundle:Autobus')->findActivos();
+        $entities = $em->getRepository('FrontendBundle:Autobus')->findAll();
 
         return array(
             'entities' => $entities,

@@ -31,7 +31,7 @@ class ExperienciasController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FrontendBundle:Experiencias')->findAll();
+        $entities = $em->getRepository('FrontendBundle:Experiencias')->getExperienciasActivas();
 
         return array(
             'entities' => $entities,

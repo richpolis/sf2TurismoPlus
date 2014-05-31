@@ -23,7 +23,13 @@
     {% set fondo4 = (paginaGalerias[3].webPath | apply_filter('inicio_carrusel')) %}
 {% else %}
     {% set fondo4 = 'http://placehold.it/1025x537&text=4' %}
-{% endif %}     
+{% endif %}
+
+{% if paginaGalerias[4] is defined %}    
+    {% set fondo5 = (paginaGalerias[4].webPath | apply_filter('inicio_carrusel')) %}
+{% else %}
+    {% set fondo5 = 'http://placehold.it/1025x537&text=5' %}
+{% endif %}
 
 {% block stylesheets %}
     {{  parent()  }}
@@ -38,116 +44,51 @@
     }
     .container header.encabezado.inicio{
         background: url("{{fondo1}}") no-repeat top center;
-        -webkit-animation: autobusesInicio 80s ease-in infinite 7s;
-        -moz-animation: autobusesInicio 80s ease-in infinite 7s;
-        -ms-animation: autobusesInicio 80s ease-in infinite 7s;
-        -o-animation: autobusesInicio 80s ease-in infinite 7s;
-        animation: autobusesInicio 80s ease-in infinite 7s;
+        -webkit-animation: autobusesInicio 120s ease-in infinite 2s;
+        -moz-animation: autobusesInicio 120s ease-in infinite 2s;
+        -ms-animation: autobusesInicio 120s ease-in infinite 2s;
+        -o-animation: autobusesInicio 120s ease-in infinite 2s;
+        animation: autobusesInicio 120s ease-in infinite 2s;
     }
     @-moz-keyframes autobusesInicio {
-    0% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
-
-    25% {
-      background: url("{{fondo2}}") no-repeat top center;
-    }
-
-    50% {
-      background: url("{{fondo3}}") no-repeat top center;
-    }
-
-    75% {
-      background: url("{{fondo4}}") no-repeat top center;
-    }
-
-    100% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
+   		0%   { background: url("{{fondo1}}") no-repeat top center; }
+		20%  { background: url("{{fondo1}}") no-repeat top center; }
+		40%  { background: url("{{fondo2}}") no-repeat top center; }
+		60%  { background: url("{{fondo3}}") no-repeat top center; }
+	    80%  { background: url("{{fondo4}}") no-repeat top center; }
+		100% { background: url("{{fondo5}}") no-repeat top center; }
   }
   @-webkit-keyframes autobusesInicio {
-    0% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
-
-    25% {
-      background: url("{{fondo2}}") no-repeat top center;
-    }
-
-    50% {
-      background: url("{{fondo3}}") no-repeat top center;
-    }
-
-    75% {
-      background: url("{{fondo4}}") no-repeat top center;
-    }
-
-    100% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
+   		0%   { background: url("{{fondo1}}") no-repeat top center; }
+		20%  { background: url("{{fondo1}}") no-repeat top center; }
+		40%  { background: url("{{fondo2}}") no-repeat top center; }
+		60%  { background: url("{{fondo3}}") no-repeat top center; }
+	    80%  { background: url("{{fondo4}}") no-repeat top center; }
+		100% { background: url("{{fondo5}}") no-repeat top center; }
   }
   @-o-keyframes autobusesInicio {
-    0% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
-
-    25% {
-      background: url("{{fondo2}}") no-repeat top center;
-    }
-
-    50% {
-      background: url("{{fondo3}}") no-repeat top center;
-    }
-
-    75% {
-      background: url("{{fondo4}}") no-repeat top center;
-    }
-
-    100% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
+   		0%   { background: url("{{fondo1}}") no-repeat top center; }
+		20%  { background: url("{{fondo1}}") no-repeat top center; }
+		40%  { background: url("{{fondo2}}") no-repeat top center; }
+		60%  { background: url("{{fondo3}}") no-repeat top center; }
+	    80%  { background: url("{{fondo4}}") no-repeat top center; }
+		100% { background: url("{{fondo5}}") no-repeat top center; }
   }
   @-ms-keyframes autobusesInicio {
-    0% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
-
-    25% {
-      background: url("{{fondo2}}") no-repeat top center;
-    }
-
-    50% {
-      background: url("{{fondo3}}") no-repeat top center;
-    }
-
-    75% {
-      background: url("{{fondo4}}") no-repeat top center;
-    }
-
-    100% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
+   		0%   { background: url("{{fondo1}}") no-repeat top center; }
+		20%  { background: url("{{fondo1}}") no-repeat top center; }
+		40%  { background: url("{{fondo2}}") no-repeat top center; }
+		60%  { background: url("{{fondo3}}") no-repeat top center; }
+	    80%  { background: url("{{fondo4}}") no-repeat top center; }
+		100% { background: url("{{fondo5}}") no-repeat top center; }
   }
   @keyframes autobusesInicio {
-    0% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
-
-    25% {
-      background: url("{{fondo2}}") no-repeat top center;
-    }
-
-    50% {
-      background: url("{{fondo3}}") no-repeat top center;
-    }
-
-    75% {
-      background: url("{{fondo4}}") no-repeat top center;
-    }
-
-    100% {
-      background: url("{{fondo1}}") no-repeat top center;
-    }
+   		0%   { background: url("{{fondo1}}") no-repeat top center; }
+		20%  { background: url("{{fondo1}}") no-repeat top center; }
+		40%  { background: url("{{fondo2}}") no-repeat top center; }
+		60%  { background: url("{{fondo3}}") no-repeat top center; }
+	    80%  { background: url("{{fondo4}}") no-repeat top center; }
+		100% { background: url("{{fondo5}}") no-repeat top center; }
   }
 
     </style>

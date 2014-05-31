@@ -13,6 +13,11 @@ body {
   padding: 0;
   margin-bottom: 10px;
 }
+
+.container #sectionPrincipal{
+	min-height: 400px;	
+}
+
 .container h2,
 .container h3,
 .container h4 {
@@ -21,7 +26,7 @@ body {
 .container header.encabezado {
   background: url("../images/keyarts/menu/backmenu3.png") no-repeat;
 }
-.container header.encabezado.inicio {
+.container header.encabezado.in-icio {
   -webkit-animation: autobusesInicio 40s ease-in infinite;
   -moz-animation: autobusesInicio 40s ease-in infinite;
   -ms-animation: autobusesInicio 40s ease-in infinite;

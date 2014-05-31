@@ -100,7 +100,7 @@
                                 <td>{{ entity.descripcionEs | raw }}</td>
                                 <td>
                                     {% if entity.imagen | length > 0 %}
-                                        <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
+                                        <img src="{{ entity.webPath }}" style="max-width: 200px; max-height: 200px;"/>
                                     {% else %}    
                                         sin imagen
                                     {% endif %}

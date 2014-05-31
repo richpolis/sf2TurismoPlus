@@ -25,13 +25,27 @@ class AutobusRepository extends EntityRepository
         return $max[0]['value'];
     }
     
+	public function findAll(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+               SELECT a
+               FROM FrontendBundle:Autobus a 
+               WHERE a.isActive = :autobus 
+               ORDER BY a.position ASC 
+        ')->setParameters(array('autobus'=> true));
+        
+        return $query->getResult();
+    }
+	
     public function findActivos(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
-               SELECT a 
+               SELECT a, g
                FROM FrontendBundle:Autobus a 
+			   JOIN a.galerias g 
                WHERE a.isActive = :autobus 
-               ORDER BY a.position ASC
+			   AND g.isActive = :galeria 
+               ORDER BY a.position ASC, g.position ASC 
         ')->setParameters(array('autobus'=> true,'galeria'=>true));
         
         return $query->getResult();
