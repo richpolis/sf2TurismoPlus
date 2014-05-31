@@ -25,7 +25,7 @@
             <div class="lista">
                 {% for autobus in autobuses %}
                     <div class="item">
-                        <a href="#show/{{autobus.id}}">
+                        <a href="#autobus/{{autobus.slug}}">
                         <figure>
                             <img src="{{ autobus.galerias[0].webPath | apply_filter('autobuses')  }}" title="{{ autobus.nombre}}">
                             <div class="descripcion-autobus" style="width: 100%;">

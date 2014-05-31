@@ -63,13 +63,13 @@ Autobuses.Views.Show = Backbone.View.extend({
         e.preventDefault();
         debugger;
         var id = $(".control-anterior").data('anterior');
-        window.routers.app.navigate("show/"+id,true);
+        window.routers.app.navigate("autobus/"+id,true);
     },
     siguiente: function(e){
         e.preventDefault();
         debugger;
         var id = $(".control-siguiente").data('siguiente');
-        window.routers.app.navigate("show/"+id,true);
+        window.routers.app.navigate("autobus/"+id,true);
     },
     iniciarComponentes: function(){
         iniciarSlider();
@@ -105,7 +105,7 @@ Autobuses.Views.ListView = Backbone.View.extend({
 Autobuses.Routers.App = Backbone.Router.extend({
     routes: {
         "" : "root",
-        "show/:id" : "show"
+        "autobus/:slug" : "show"
     },
     root: function() {
         debugger;
@@ -116,19 +116,23 @@ Autobuses.Routers.App = Backbone.Router.extend({
             views.listview.mostrar();
         }
     },
-    show: function(id) {
+    show: function(slug) {
         debugger;
-        var model = window.collections.autobuses.get(id);
+        var models = window.collections.autobuses.where({slug: slug});
+        if(!models[0]){
+            window.routers.app.navigate("/",true);
+        }
+        
         if(!window.api.accion.show){
             if(!window.views.show){
-                window.views.show = new  Autobuses.Views.Show({model: model});
+                window.views.show = new  Autobuses.Views.Show({model: models[0]});
             }else{
-                window.views.show.model= model;
+                window.views.show.model= models[0];
             }
             views.show.render();
             views.show.mostrar();
         }else{
-            window.views.show.model= model;
+            window.views.show.model= models[0];
             views.show.render();
             /*views.show.iniciarComponentes();*/
         }

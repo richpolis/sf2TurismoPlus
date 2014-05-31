@@ -31,13 +31,14 @@ class AppKernel extends Kernel
             new Richpolis\FrontendBundle\FrontendBundle(),
             new Richpolis\PublicacionesBundle\PublicacionesBundle(),
             new Richpolis\PaginasBundle\PaginasBundle(),
+            new Richpolis\GaleriasBundle\GaleriasBundle(),
             
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Knp\Bundle\LastTweetsBundle\KnpLastTweetsBundle(),
             new Inori\TwitterAppBundle\InoriTwitterAppBundle(),
-            new Richpolis\GaleriasBundle\GaleriasBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

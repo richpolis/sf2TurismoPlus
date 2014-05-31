@@ -396,6 +396,7 @@ class DefaultController extends Controller
         foreach($autobuses as $autobus){
             $item = array(
               'id'=>$autobus->getId(),
+              'slug'=>$autobus->getSlug(),  
               'nombre'=>$autobus->getNombre(),
               'descripcion'=>$autobus->getDescripcion($locale),
               'detalles'=>$autobus->getDetalles($locale),
@@ -415,11 +416,11 @@ class DefaultController extends Controller
                 );
             }
             if(isset($autobuses[$cont+1])){
-                $item['siguiente']=$autobuses[$cont+1]->getId();
+                $item['siguiente']=$autobuses[$cont+1]->getSlug();
                 $item['siguienteNombre']=$autobuses[$cont+1]->getNombre();
             }
             if($cont>0){
-                $item['anterior']=$autobuses[$cont-1]->getId();
+                $item['anterior']=$autobuses[$cont-1]->getSlug();
                 $item['anteriorNombre']=$autobuses[$cont-1]->getNombre();
             }
             $item['galerias']=$galerias;
