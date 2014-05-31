@@ -209,9 +209,7 @@ class AutobusController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-		$parameters = $request->request->all();
         $editForm->handleRequest($request);
-        //$editForm->submit($request->request->get($editForm->getName()),false);
 
         if ($editForm->isValid()) {
             $em->flush();

@@ -410,8 +410,9 @@ body {
   margin: 20px 0px 0px;
   padding: 0px;
   overflow: hidden;
+  position: relative;
 }
-.container .nosotros ul.mision-vision-valores li {
+.container .nosotros ul.mision-vision-valores > li {
   float: left;
   width: 33%;
   list-style: none;
@@ -421,7 +422,19 @@ body {
   box-sizing: border-box;
   padding: 0px 10px;
   text-align: center;
+  min-height: 440px;
 }
+.container .nosotros ul.mision-vision-valores li ul{
+   padding: 0;
+ 
+ } 
+
+
+.container .nosotros ul.mision-vision-valores li li{
+   text-align: left;
+   list-style: none;
+ } 
+
 .container .nosotros ul.mision-vision-valores li:nth-child(1) {
   border-left: none;
 }
