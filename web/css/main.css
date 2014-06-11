@@ -26,7 +26,7 @@ body {
 .container header.encabezado {
   background: url("../images/keyarts/menu/backmenu3.png") no-repeat;
 }
-.container header.encabezado.in-icio {
+.container header.encabezado.inicio {
   -webkit-animation: autobusesInicio 40s ease-in infinite;
   -moz-animation: autobusesInicio 40s ease-in infinite;
   -ms-animation: autobusesInicio 40s ease-in infinite;
@@ -42,7 +42,7 @@ body {
 .container header.encabezado #lenguajes-redes-sociales .lenguajes {
   position: absolute;
   top: 0px;
-  right: 192px;
+  right: 288px;
   color: #00f;
   background-color: rgba(255,255,255,0.8);
   padding: 10px;
@@ -50,10 +50,10 @@ body {
 .container header.encabezado #lenguajes-redes-sociales .redes-sociales {
   float: right;
   height: 38px;
-  width: 192px;
+  width: 288px;
 }
 .container header.encabezado #lenguajes-redes-sociales .redes-sociales span {
-  background: url("../images/keyarts/inicio/socialmedia.png") no-repeat;
+  background: url("../images/keyarts/inicio/socialmedia2.png") no-repeat;
   float: left;
   vertical-align: top;
   width: 48px;
@@ -84,11 +84,23 @@ body {
 .container header.encabezado #lenguajes-redes-sociales .redes-sociales span.youtube:hover {
   background-position: -94px -39px;
 }
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.email {
+.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.linkedin {
   background-position: -141px 0px;
 }
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.email:hover {
+.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.linkedin:hover {
   background-position: -141px -39px;
+}
+.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.google-plus {
+  background-position: -188px 0px;
+}
+.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.google-plus:hover {
+  background-position: -188px -39px;
+}
+.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.email {
+  background-position: -235px 0px;
+}
+.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.email:hover {
+  background-position: -235px -39px;
 }
 .container header.encabezado nav {
   width: 100%;
@@ -136,7 +148,7 @@ body {
   position: absolute;
   top: 30px;
   left: 30px;
-  z-index: 2000;
+  z-index: 1000;
 }
 .container > footer {
   height: 77px;
@@ -879,7 +891,7 @@ li.image-large a.image-wrap:hover .lupa{
     opacity: 1;
 }
 
-#formulario_newsletter,#mensaje_sitio {
+/*#formulario_newsletter {
   background-color: #fff;
   text-align: left;
   padding: 40px;
@@ -894,8 +906,21 @@ li.image-large a.image-wrap:hover .lupa{
   -o-border-radius: 20px;
   border-radius: 20px;
   z-index: 9999;
-}
+}*/
 
 label{
     text-transform: capitalize;
+    display: block;
+    text-align: left;
+    padding-top: 5px;
 }
+
+/*#formMensajeSitio{
+  padding: 40px;
+  width: 600px;
+  z-index: 9999;
+}
+
+#formMensajeSitio .modal-body{
+  text-align: left;
+}*/

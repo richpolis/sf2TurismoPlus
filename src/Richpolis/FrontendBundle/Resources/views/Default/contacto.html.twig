@@ -22,6 +22,24 @@
             </div>
             <div class="imagen-contacto col-lg-4">
                 <img src="{{asset('images/keyarts/contacto/recepcionista.png')}}" alt=""/>
+                <script type="text/javascript" src="//api.skyscanner.net/api.ashx?key=717bebff-8b52-48f4-a5a1-20c7c8c4103a"></script>
+                <script type="text/javascript">
+                   skyscanner.load("snippets","2");
+                   function main(){
+                       var snippet = new skyscanner.snippets.SearchPanelControl();
+                       snippet.setShape("box300x250");
+                       snippet.setCulture("en-GB");
+                       snippet.setCurrency("USD");
+                       snippet.setColourScheme("classicbluedark");
+                       snippet.setProduct("flights","1");
+                       snippet.setProduct("hotels","2");
+                       snippet.setProduct("carhire","3");
+
+                       snippet.draw(document.getElementById("snippet_searchpanel"));
+                   }
+                   skyscanner.setOnLoadCallback(main);
+                </script>
+                <div id="snippet_searchpanel" style="width: auto; height:auto;"></div>
             </div>
             <div class="informacion col-lg-4">
                 <p>

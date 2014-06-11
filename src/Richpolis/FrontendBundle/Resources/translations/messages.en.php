@@ -39,4 +39,5 @@ return array (
   'tipo de unidad' => 'bus model',
   'itinerario' => 'itinerary',
   'comentarios / necesidades especiales' => 'comments / special requirements',
+  'Aviso de privacidad' => 'Privacy Notice',  
 );

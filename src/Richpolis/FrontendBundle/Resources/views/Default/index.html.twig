@@ -51,45 +51,45 @@
         animation: autobusesInicio 100s ease-in infinite 2s;
     }
     @-moz-keyframes autobusesInicio {
-   		0%   { background: url("{{fondo1}}") no-repeat top center; }
-		20%  { background: url("{{fondo2}}") no-repeat top center; }
-		40%  { background: url("{{fondo3}}") no-repeat top center; }
-		60%  { background: url("{{fondo4}}") no-repeat top center; }
-	    80%  { background: url("{{fondo5}}") no-repeat top center; }
-		100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @-webkit-keyframes autobusesInicio {
         0%   { background: url("{{fondo1}}") no-repeat top center; }
         20%  { background: url("{{fondo2}}") no-repeat top center; }
         40%  { background: url("{{fondo3}}") no-repeat top center; }
         60%  { background: url("{{fondo4}}") no-repeat top center; }
         80%  { background: url("{{fondo5}}") no-repeat top center; }
         100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @-o-keyframes autobusesInicio {
+    }
+    @-webkit-keyframes autobusesInicio {
         0%   { background: url("{{fondo1}}") no-repeat top center; }
         20%  { background: url("{{fondo2}}") no-repeat top center; }
         40%  { background: url("{{fondo3}}") no-repeat top center; }
         60%  { background: url("{{fondo4}}") no-repeat top center; }
         80%  { background: url("{{fondo5}}") no-repeat top center; }
         100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @-ms-keyframes autobusesInicio {
+    }
+    @-o-keyframes autobusesInicio {
         0%   { background: url("{{fondo1}}") no-repeat top center; }
         20%  { background: url("{{fondo2}}") no-repeat top center; }
         40%  { background: url("{{fondo3}}") no-repeat top center; }
         60%  { background: url("{{fondo4}}") no-repeat top center; }
         80%  { background: url("{{fondo5}}") no-repeat top center; }
         100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @keyframes autobusesInicio {
+    }
+    @-ms-keyframes autobusesInicio {
         0%   { background: url("{{fondo1}}") no-repeat top center; }
         20%  { background: url("{{fondo2}}") no-repeat top center; }
         40%  { background: url("{{fondo3}}") no-repeat top center; }
         60%  { background: url("{{fondo4}}") no-repeat top center; }
         80%  { background: url("{{fondo5}}") no-repeat top center; }
         100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
+    }
+    @keyframes autobusesInicio {
+        0%   { background: url("{{fondo1}}") no-repeat top center; }
+        20%  { background: url("{{fondo2}}") no-repeat top center; }
+        40%  { background: url("{{fondo3}}") no-repeat top center; }
+        60%  { background: url("{{fondo4}}") no-repeat top center; }
+        80%  { background: url("{{fondo5}}") no-repeat top center; }
+        100% { background: url("{{fondo1}}") no-repeat top center; }
+    }
 
     </style>
 {% endblock %}
@@ -170,12 +170,31 @@
                 </div>
             </article>
 <!-- Modal -->
-<div class="modal fade" id="formNewsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            
+
+        <div class="modal fade" id="formNewsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">{{ "Newsletter" | trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {% include 'FrontendBundle:Default:formNewsletter.html.twig' with { 'form': form } %}
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>        
+
+<!--div class="modal fade" id="formNewsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         {% include 'FrontendBundle:Default:formNewsletter.html.twig' with {'form': form}%}
     </div>    
-</div>                                
-                                
+</div-->                        
+                        
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
