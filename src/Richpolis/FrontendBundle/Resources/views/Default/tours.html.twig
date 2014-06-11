@@ -23,8 +23,8 @@
                                 <span class="lupa"></span>
                             </a>
                             <span class="lupa"></span>
-                            {% if publicacion.precio(locale) > 0 %}
-                                <span class="precio">${{publicacion.precio(locale) | number_format(2,'.',',')}}</span>
+                            {% if publicacion.precio | length > 0 %}
+                                <span class="precio">{{ publicacion.precio }}</span>
                             {% endif%}
                         </figure>
                         <h3>
@@ -51,8 +51,8 @@
                                 <span class="lupa"></span>
                             </a>
                             <span class="lupa"></span>
-                            {% if publicacion.precio(locale) > 0 %}
-                                <span class="precio">${{publicacion.precio(locale) | number_format(2,'.',',')}}</span>
+                            {% if publicacion.precio | length > 0 %}
+                                <span class="precio">{{ publicacion.precio }}</span>
                             {% endif%}
                         </figure>
                         <h3>
@@ -79,8 +79,8 @@
                                 <span class="lupa"></span>
                             </a>
                             <span class="lupa"></span>
-                            {% if publicacion.precio(locale) > 0 %}
-                                <span class="precio">${{publicacion.precio(locale) | number_format(2,'.',',')}}</span>
+                            {% if publicacion.precio | length > 0 %}
+                                <span class="precio">{{ publicacion.precio }}</span>
                             {% endif%}
                         </figure>
                         <h3>

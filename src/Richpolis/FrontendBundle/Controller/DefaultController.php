@@ -152,7 +152,7 @@ class DefaultController extends Controller
         $contacto = new Contacto();
         $form = $this->createForm(new ContactoType(), $contacto);
         $request = $this->getRequest();
-        
+        $em = $this->getDoctrine()->getManager();
         if ($request->getMethod() == 'POST') {
             
             $form->handleRequest($request);
@@ -160,7 +160,7 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $datos=$form->getData();
                 
-                $em = $this->getDoctrine()->getManager();
+               
                 $configuracion = $em->getRepository('BackendBundle:Configuraciones')
                                 ->findOneBy(array('slug'=>'email-contacto'));
                 
@@ -200,11 +200,19 @@ class DefaultController extends Controller
             ));
         }
         
+		$pagina = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'contacto'));
+		
+		$mapa = $em->getRepository('BackendBundle:Configuraciones')
+                ->findOneBy(array('slug'=>'mapa'));
+		
         return $this->render('FrontendBundle:Default:contacto.html.twig',array(
               'form' => $form->createView(),
               'ok'=>$ok,
               'error'=>$error,
               'mensaje'=>$mensaje,
+			  'pagina' => $pagina,
+			  'mapa' => $mapa,
         ));
     }
 
@@ -516,6 +524,22 @@ class DefaultController extends Controller
         $response = new \Symfony\Component\HttpFoundation\JsonResponse();
         $response->setData($parameters);
         return $response;
+    }
+	
+	/**
+     * @Route("/{_locale}/pie/pagina", name="get_pie_pagina", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Method({"GET"})
+     * @Template("FrontendBundle:Default:piePagina.html.twig")
+     */
+    public function piePaginaAction(Request $request)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        $locale = $request->getLocale();
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                ->findOneBy(array('slug'=>'footer'));
+        
+        return array('mensaje'=>$configuracion->getTexto());
     }
 
 }

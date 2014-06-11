@@ -151,34 +151,15 @@ class Publicacion
     private $paqueteFr;
     
     /**
-     * @ORM\Column(name="precio_es", type="decimal", scale=2)
+     * @ORM\Column(name="precio", type="string", length=50, nullable=true)
      * 
      * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precioEs")
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("precio")
      * @Serializer\Groups({"list", "details"})
      */
-    protected $precioEs;
-
-    /**
-     * @ORM\Column(name="precio_en", type="decimal", scale=2)
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precioEn")
-     * @Serializer\Groups({"list", "details"})
-     */
-    protected $precioEn;
-    
-    /**
-     * @ORM\Column(name="precio_fr", type="decimal", scale=2)
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precioFr")
-     * @Serializer\Groups({"list", "details"})
-     */
-    protected $precioFr;    
+    protected $precio;
+ 
     
     /**
      * @var integer
@@ -435,43 +416,7 @@ class Publicacion
         }
         return $paquete;
     }
-    
-    /**
-     * Set precioEs
-     *
-     * @param string $precioEs
-     * @return Publicacion
-     */
-    public function setPrecio($precioEs,$locale)
-    {
-        if($locale == "es"){
-            $this->precioEs = $precio;
-        }else if($locale == "en"){
-            $this->precioEn = $precio;
-        }else{
-            $this->precioFr = $precio;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get precioEs
-     *
-     * @return string 
-     */
-    public function getPrecio($locale)
-    {
-        if($locale == "es"){
-            $precio = $this->precioEs;
-        }else if($locale == "en"){
-            $precio = $this->precioEn;
-        }else{
-            $precio = $this->precioFr;
-        }
-        return $precio;
-    }
-    
+       
     /**
      * Set slug
      *
@@ -863,72 +808,26 @@ class Publicacion
     }
 
     /**
-     * Set precioEs
+     * Set precio
      *
-     * @param string $precioEs
+     * @param string $precio
      * @return Publicacion
      */
-    public function setPrecioEs($precioEs)
+    public function setPrecio($precio)
     {
-        $this->precioEs = $precioEs;
+        $this->precio = $precio;
 
         return $this;
     }
 
     /**
-     * Get precioEs
+     * Get precio
      *
      * @return string 
      */
-    public function getPrecioEs()
+    public function getPrecio()
     {
-        return $this->precioEs;
-    }
-
-    /**
-     * Set precioEn
-     *
-     * @param string $precioEn
-     * @return Publicacion
-     */
-    public function setPrecioEn($precioEn)
-    {
-        $this->precioEn = $precioEn;
-
-        return $this;
-    }
-
-    /**
-     * Get precioEn
-     *
-     * @return string 
-     */
-    public function getPrecioEn()
-    {
-        return $this->precioEn;
-    }
-
-    /**
-     * Set precioFr
-     *
-     * @param string $precioFr
-     * @return Publicacion
-     */
-    public function setPrecioFr($precioFr)
-    {
-        $this->precioFr = $precioFr;
-
-        return $this;
-    }
-
-    /**
-     * Get precioFr
-     *
-     * @return string 
-     */
-    public function getPrecioFr()
-    {
-        return $this->precioFr;
+        return $this->precio;
     }
 	
 	/*** uploads ***/
@@ -1145,4 +1044,22 @@ class Publicacion
     {
         return $this->galerias;
     }
+	
+	/**
+     * Get tipoMoneda
+     *
+     * @return string 
+     */
+    public function getTipoMoneda($locale)
+    {
+        if($locale == "es"){
+            $tipo = "MXN";
+        }else if($locale == "en"){
+            $tipo = "USD";
+        }else{
+            $tipo = "ERO";
+        }
+        return $tipo;
+    }
+	
 }

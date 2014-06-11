@@ -76,7 +76,7 @@ class CategoriaPublicacion
      * @var integer
      *
      * @ORM\OneToMany(targetEntity="Publicacion",mappedBy="categoria")
-	 * @ORM\OrderBy({"createdAt" = "DESC"})
+	 * @ORM\OrderBy({"position" = "ASC"})
      */
     private $publicaciones;
 

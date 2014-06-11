@@ -40,17 +40,6 @@ class PublicacionType extends AbstractType
                     'data-bind'=>'value: paquete'
                     )
                 ))
-            ->add('precioEs','money',array(
-                'label'=>'Precio pesos',
-                'required'=>false,
-                'currency'=>'MXN',
-                'attr'=>array(
-                    'class'=>'form-control placeholder',
-                    'placeholder'=>'Precio',
-                    'data-bind'=>'value: precio',
-                    'style'=>'width:250px;'
-                    )
-                ))
             ->add('tituloEn','text',array(
                 'label'=>'Titulo ingles','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
@@ -71,17 +60,6 @@ class PublicacionType extends AbstractType
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Paquete',
                     'data-bind'=>'value: paquete'
-                    )
-                ))
-            ->add('precioEn','money',array(
-                'label'=>'Precio dolares',
-                'required'=>false,
-                'currency'=>'USN',
-                'attr'=>array(
-                    'class'=>'form-control placeholder',
-                    'placeholder'=>'Precio',
-                    'data-bind'=>'value: precio',
-                    'style'=>'width:250px;'
                     )
                 ))
             ->add('tituloFr','text',array(
@@ -106,15 +84,11 @@ class PublicacionType extends AbstractType
                     'data-bind'=>'value: paquete'
                     )
                 ))
-            ->add('precioFr','money',array(
-                'label'=>'Precio euros',
-                'required'=>false,
-                'currency'=>'EUR',
-                'attr'=>array(
+            ->add('precio','text',array(
+                'label'=>'Precio','required'=>false,'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Precio',
-                    'data-bind'=>'value: precio',
-                    'style'=>'width:250px;'
+                    'data-bind'=>'value: precio'
                     )
                 ))     
             ->add('categoria',null,array(
