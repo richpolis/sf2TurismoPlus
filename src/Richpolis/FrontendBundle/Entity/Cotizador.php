@@ -9,17 +9,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Cotizador
 {
     /**
-     * @Assert\NotBlank(message = "name.not_blank")
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
-     * @Assert\Email(message="email.not_valid")
+     * @Assert\Email()
      */
     protected $email;
 
     /**
-     * @Assert\NotBlank(message="telephone.not_blank")
+     * @Assert\NotBlank()
      */
     protected $telefono;
     
@@ -29,51 +29,49 @@ class Cotizador
     
     /**
      * @Assert\Length(
-     *     min=3,
-     *     minMessage="message.length_min_tres"
+     *     min=3
      * )
      */
     protected $salida;
 
 
     /**
-     * @Assert\Date()
+     * @Assert\NotBlank()
      */
     protected $fechaSalida;
 
 
     /**
-     * @Assert\Time()
+     * @Assert\NotBlank()
      */
     protected $horaSalida;
     
     /**
      * @Assert\Length(
-     *     min=3,
-     *     minMessage="message.length_min_tres"
+     *     min=3
      * )
      */
     protected $destino;
     
     /**
      * @Assert\GreaterThanOrEqual(
-     *     value = 1, message="pasajeros.mayor_o_igual"
+     *     value = 1
      * )
      */
     protected $pasajeros;
     
     /**
-     * @Assert\NotBlank(message="autobus.not_blank")
+     * @Assert\NotBlank()
      */
     protected $autobus;
     
     /**
-     * @Assert\Date()
+     * @Assert\NotBlank()
      */
     protected $fechaRegreso;
 
     /**
-     * @Assert\Time()
+     * @Assert\NotBlank()
      */
     protected $horaRegreso;
 

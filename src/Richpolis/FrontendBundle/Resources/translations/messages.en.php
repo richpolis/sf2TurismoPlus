@@ -18,6 +18,7 @@ return array (
   'teléfono' => 'phone',
   'email' => 'email',
   'pais' => 'contry',
+  'ciudad' => 'city',
   'origen' => 'origin',
   'destino' => 'destination',
   'Fecha' => 'Date',
@@ -39,5 +40,5 @@ return array (
   'tipo de unidad' => 'bus model',
   'itinerario' => 'itinerary',
   'comentarios / necesidades especiales' => 'comments / special requirements',
-  'Aviso de privacidad' => 'Privacy Notice',  
+  'Aviso de privacidad' => 'Privacy Notice',
 );

@@ -104,7 +104,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">{{"fecha"|trans}}</label>
-                    <div class="fecha-salida input-append col-lg-4">
+                    <div class="fecha-salida input-append col-lg-4" data-date-format="DD/MM/YYYY">
                         {{ form_widget(form.fechaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
                         <span class="add-on">
                             <i class="fa fa-calendar btn btn-info"></i>
@@ -168,7 +168,7 @@
                 <legend>{{"Regreso"|trans}}</legend>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">{{"fecha"|trans}}</label>
-                            <div class="fecha-salida input-append col-lg-4">
+                            <div class="fecha-salida input-append col-lg-4" data-date-format="DD/MM/YYYY">
                                 {{ form_widget(form.fechaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
                                 <span class="add-on">
                                     <i class="fa fa-calendar btn btn-info"></i>
@@ -213,16 +213,18 @@
 {{ parent() }}
 <script src="{{asset('js/moment.js')}}"></script>
 <script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
+<script src="{{asset('js/locales/bootstrap-datetimepicker.' ~ locale ~ '.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
 <script>
 $(function() {
     $('.fecha-salida, .fecha-regreso').datetimepicker({
         pickTime: false,
-
+        language: '{{locale}}',
     });
     $('.hora-salida, .hora-regreso').datetimepicker({
         pickDate: false,
 		pickSeconds: false,
+        language: '{{locale}}',
     });
     
     $(".form-response-output").fadeIn("fast");
