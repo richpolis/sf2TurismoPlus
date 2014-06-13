@@ -220,3 +220,7 @@ Enjoy!
 [18]: https://github.com/willdurand/BazingaHateoasBundle
 [19]: https://github.com/hautelook/TemplatedUriBundle
 [20]: https://github.com/willdurand/BazingaRestExtraBundle
+
+
+cambios:
+secondTemplate:'<span data-action="showSeconds" data-time-component="seconds" class="timepicker-second"></span>'

@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{  parent()  }}
-    <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.css')}}">
     <style>
         .dtpicker{
             max-width:120px;
@@ -107,7 +107,7 @@
                     <div class="fecha-salida input-append col-lg-4">
                         {{ form_widget(form.fechaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
                         <span class="add-on">
-                            <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                            <i class="fa fa-calendar btn btn-info"></i>
                         </span>
                         <span class="errores"> 
                             {{ form_errors(form.fechaSalida) }}
@@ -117,9 +117,9 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">{{"hora"|trans}}</label>
                     <div class="hora-salida input-append col-lg-4">
-                        {{ form_widget(form.horaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm:ss"}}) }}
+                        {{ form_widget(form.horaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm"}}) }}
                         <span class="add-on">
-                            <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                            <i class="fa fa-clock-o btn btn-info"></i>
                         </span>
                         <span class="errores"> 
                             {{ form_errors(form.horaSalida) }}
@@ -171,7 +171,7 @@
                             <div class="fecha-salida input-append col-lg-4">
                                 {{ form_widget(form.fechaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
                                 <span class="add-on">
-                                    <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                    <i class="fa fa-calendar btn btn-info"></i>
                                 </span>
                                 <span class="errores"> 
                                     {{ form_errors(form.fechaRegreso) }}
@@ -181,9 +181,9 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">{{"hora"|trans}}</label>
                             <div class="hora-salida input-append col-lg-4">
-                                {{ form_widget(form.horaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm:ss"}}) }}
+                                {{ form_widget(form.horaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm"}}) }}
                                 <span class="add-on">
-                                    <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
+                                    <i class="fa fa-clock-o btn btn-info"></i>
                                 </span>
                                 <span class="errores"> 
                                     {{ form_errors(form.horaRegreso) }}
@@ -211,16 +211,18 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{asset('js/moment.js')}}"></script>
+<script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
 <script>
 $(function() {
     $('.fecha-salida, .fecha-regreso').datetimepicker({
-        pickTime: false
+        pickTime: false,
+
     });
     $('.hora-salida, .hora-regreso').datetimepicker({
         pickDate: false,
-		viewSelect: 'hour',
+		pickSeconds: false,
     });
     
     $(".form-response-output").fadeIn("fast");
